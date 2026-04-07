@@ -1,0 +1,34 @@
+---
+description: правила работы с Vue
+alwaysApply: true
+---
+
+- стек: Vue 3, Composition API, `<script setup>`, Vite, SCSS
+- при реализации props, использовать type-only props declarations 
+пример ОК
+const props = defineProps<{
+  foo: string
+  bar?: number
+}>()
+- при реализации emit, использовать type-only emit declarations
+пример ОК
+const emit = defineEmits<{
+  (e: 'change', id: number): void
+  (e: 'update', value: string): void
+}>()
+- не реализовывать логику в блоке template без острой необходимости
+- не реализовывать логику в блоке style без острой необходимости
+- не реализовывать стили в блоке template без острой необходимости
+- 
+
+CSS
+- основные правила работы со стилями указаны тут css-rules.mdc
+- стили компонента реализуются только в `<style scoped lang=”scss”>`
+- разметку с инлайн-акцентами без «второго» стилевого блока делай через данные + шаблон (массив сегментов + `v-for`, отдельный дочерний компонент), а не через `v-html`, если из-за этого понадобится не-scoped CSS
+- для элементов из слота, объявленных в родителе, стили с `scoped` задавай в том компоненте, где элемент в шаблоне
+
+JS
+- основные правила работы c JS указаны тут js-rules.mdc
+
+HTML
+- основные правила работы c HTML в указаны тут js-rules.mdc

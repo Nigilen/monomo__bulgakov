@@ -1,0 +1,14 @@
+@use '_variables.scss';
+@use '_base.scss';
+
+
+
+.container {
+  max-width: 1528px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  &--wide {
+    max-width: 1742px;
+  }
+}

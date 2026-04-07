@@ -1,0 +1,7 @@
+---
+description: правила работы с JS
+alwaysApply: true
+---
+
+- по возможности, используй стрелочные функциональные выражения, присвоенные в `const`
+- предпочитать реализовать анимацию при помощи requestAnimationFrame вместо setInterval и setTimeout

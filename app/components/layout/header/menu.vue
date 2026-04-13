@@ -24,7 +24,7 @@ const items = [
 <template>
   <nav class="menu">
     <ul class="menu__list">
-      <li class="menu__item" v-for="item in items" :key="item.label">
+      <li v-for="item in items" :key="item.label">
         <NuxtLink class="menu__link" :to="item.to">{{ item.label }}</NuxtLink>
       </li>
     </ul>
@@ -34,7 +34,6 @@ const items = [
 <style scoped lang="scss">
 
 .menu {
-  margin-inline: 0 auto;
 
   &__list {
     display: flex;
@@ -50,6 +49,18 @@ const items = [
 
     &:hover {
       color: var(--color-accent-primary);
+    }
+  }
+
+  @media (width < 1440px) {
+    &__list {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 30px;
+    }
+
+    &__link {
+      font-size: 20px;
     }
   }
 }

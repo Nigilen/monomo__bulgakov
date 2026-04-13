@@ -4,7 +4,7 @@
 
 <template>
   <footer class="container container--wide">
-    <h1>Footer</h1>
+    <!-- <h1>Footer</h1> -->
   </footer>
 </template>
 

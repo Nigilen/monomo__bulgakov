@@ -9,8 +9,8 @@ export default defineNuxtConfig({
       {
         name: 'Montserrat',
         src: [
-          { url: 'fonts/Montserrat-Regular.woff2', format: 'woff2' },
-          { url: 'fonts/Montserrat-Regular.woff', format: 'woff' }
+          { url: '/fonts/Montserrat-Regular.woff2', format: 'woff2' },
+          { url: '/fonts/Montserrat-Regular.woff', format: 'woff' }
         ],
         weight: 400,
         style: 'normal',
@@ -19,8 +19,8 @@ export default defineNuxtConfig({
       {
         name: 'Montserrat',
         src: [
-          { url: 'fonts/Montserrat-Medium.woff2', format: 'woff2' },
-          { url: 'fonts/Montserrat-Medium.woff', format: 'woff' }
+          { url: '/fonts/Montserrat-Medium.woff2', format: 'woff2' },
+          { url: '/fonts/Montserrat-Medium.woff', format: 'woff' }
         ],
         weight: 500,
         style: 'normal',
@@ -29,8 +29,8 @@ export default defineNuxtConfig({
       {
         name: 'Montserrat',
         src: [
-          { url: 'fonts/Montserrat-SemiBold.woff2', format: 'woff2' },
-          { url: 'fonts/Montserrat-SemiBold.woff', format: 'woff' }
+          { url: '/fonts/Montserrat-SemiBold.woff2', format: 'woff2' },
+          { url: '/fonts/Montserrat-SemiBold.woff', format: 'woff' }
         ],
         weight: 600,
         style: 'normal',
@@ -39,8 +39,8 @@ export default defineNuxtConfig({
       {
         name: 'Montserrat',
         src: [
-          { url: 'fonts/Montserrat-Italic.woff2', format: 'woff2' },
-          { url: 'fonts/Montserrat-Italic.woff', format: 'woff' }
+          { url: '/fonts/Montserrat-Italic.woff2', format: 'woff2' },
+          { url: '/fonts/Montserrat-Italic.woff', format: 'woff' }
         ],
         weight: 400,
         style: 'italic',
@@ -49,8 +49,8 @@ export default defineNuxtConfig({
       {
         name: 'Inter',
         src: [
-          { url: 'fonts/Inter-Regular.woff2', format: 'woff2' },
-          { url: 'fonts/Inter-Regular.woff', format: 'woff' }
+          { url: '/fonts/Inter-Regular.woff2', format: 'woff2' },
+          { url: '/fonts/Inter-Regular.woff', format: 'woff' }
         ],
         weight: 400,
         style: 'normal',
@@ -68,5 +68,11 @@ export default defineNuxtConfig({
     clientBundle: {
       includeCustomCollections: true,
     },
-  }
+  },
+  image: {
+    quality: 100,
+    format: ['webp', 'avif', 'svg'],
+    dir: 'assets/images',
+  },
+
 })

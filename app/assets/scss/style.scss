@@ -4,11 +4,26 @@
 
 
 .container {
-  max-width: 1528px;
-  margin: 0 auto;
-  padding: 0 16px;
+  max-width: 1920px;
+  margin-inline: clamp(136px, calc(180 / 1920 * 100vw), 180px);
 
   &--wide {
-    max-width: 1742px;
+    margin-inline: clamp(52px, calc(72 / 1440 * 100vw), 72px);
+  }
+
+  @media (width < 1440px) {
+    margin-inline: clamp(16px, calc(136 / 1440 * 100vw), 136px);
+
+    &--wide {
+      margin-inline: clamp(36px, calc(136 / 1440 * 100vw), 136px);
+    }
+  }
+  
+  @media (width < 768px) {
+    margin-inline: clamp(16px, calc(30 / 768 * 100vw), 30px);
+
+    &--wide {
+      margin-inline: clamp(16px, calc(30 / 768 * 100vw), 30px);
+    }
   }
 }

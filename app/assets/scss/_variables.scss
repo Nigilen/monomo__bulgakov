@@ -15,11 +15,19 @@
   --color-background-secondary: #2C2C2C;
 
   --color-border-primary: #3E3E3E;
+  --color-border-secondary: #B18C68;
 
   --border-radius-primary: 16px;
+
+  --section-margin-block-end: 225px;
 
   --font-primary: 'Montserrat', 'Arial', 'Helvetica', sans-serif;
   --font-secondary: 'Inter', 'Arial', 'Helvetica', sans-serif;
 
   --font-size: 1rem;
+
+
+  @media (width < 576px) {
+    --section-margin-block-end: 100px;
+  }
 }

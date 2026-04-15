@@ -4,9 +4,20 @@
 </script>
 
 <template>
-  <SectionHero />
-  <SectionApproach />
-  <SectionPrice />
+  <!-- [ ] <SectionHero /> -->
+  <!-- [ ] <SectionApproach /> -->
+  <!-- [ ] <SectionPrice /> -->
+  <!-- [v] <SectionCta /> -->
+  <!-- [v] <SectionBonus /> -->
+  <SectionCalculator />
+  <!-- [ ] <SectionAbout /> -->
+  <!-- [ ] <SectionAdvantages /> -->
+  <!-- [ ] <SectionStats /> -->
+  <!-- [ ] <SectionPortfolio /> -->
+  <!-- [ ] <SectionReviews /> -->
+  <!-- [ ] <SectionRoadmap /> -->
+  <!-- [ ] <SectionFaq /> -->
+  <!-- <SectionRequest /> -->
 </template>
 
 <style scoped lang="scss">

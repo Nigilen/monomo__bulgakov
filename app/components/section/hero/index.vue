@@ -28,7 +28,9 @@ const badges: Array<{
   <section class="hero">
     <div class="hero__container container">
       <h1 class="hero__title">
-        <span class="hero__title-highlight">Ремонт под ключ</span> когда вы можете <br>забыть о стройке
+        <span class="hero__title-part hero__title-highlight">Ремонт под ключ </span> 
+        <span class="hero__title-part">когда вы можете</span>
+        <span class="hero__title-part">забыть о стройке</span>
       </h1>
       <div class="hero__description">
         <Icon name="icons:diamonds3" />
@@ -37,12 +39,16 @@ const badges: Array<{
         </p>
       </div>
       <div class="hero__buttons">
-        <UiButton variant="primary">
-          Обсудить проект
-        </UiButton>
-        <UiButton variant="secondary">
-          Рассчитать
-        </UiButton>
+        <button class="button button--primary" type="button">
+          <span class="button__label">
+            Обсудить проект
+          </span>
+        </button>
+        <button class="button button--secondary" type="button">
+          <span class="button__label">
+            Рассчитать
+          </span>
+        </button>
       </div>
       <SectionHeroBadges :badges="badges" />
     </div>
@@ -51,10 +57,10 @@ const badges: Array<{
 
 <style scoped lang="scss">
 .hero {
-  min-block-size: 1085px;
+  min-block-size: 56.5vi;
   inline-size: 100%;
   background-image: url('/hero-background.png');
-  background-size: cover;
+  background-size: 100% 100%;
   background-position: top;
   background-repeat: no-repeat;
   margin-block-end: var(--section-margin-block-end);
@@ -62,17 +68,21 @@ const badges: Array<{
   &__container {
     display: flex;
     flex-direction: column;
-    padding-block-start: min(266px, 25vb);
+    padding-block-start: 13.9vi;
+    container-type: inline-size;
   }
 
   &__title {
-    font-size: clamp(28px, 3.4vi, 68px);
+    font-size: 4.3cqi;
     font-weight: 400;
-    line-height: 1.47;
+    line-height: 1.5em;
     text-transform: uppercase;
     color: var(--color-text-primary);
-    margin-block-end: min(46px, 2.4vi);
-    inline-size: min(750px, 90%);
+    margin-block-end: 2.9cqi;
+
+    &-part {
+      display: block;
+    }
 
     &-highlight {
       color: var(--color-accent-primary);
@@ -83,14 +93,14 @@ const badges: Array<{
   &__description {
     display: flex;
     align-items: baseline;
-    gap: min(16px, 0.8vi);
-    margin-block-end: min(40px, 4.2vi);
+    gap: 0.9cqi;
+    margin-block-end: 2.6cqi;
 
     &-text {
-      font-size: clamp(16px, 0.9vi, 18px);
+      font-size: min(1.4cqi, 18px);
       font-weight: 500;
-      line-height: 1.66;
-      inline-size: min(700px, 100%);
+      line-height: 1.5em;
+      inline-size: min(50cqi, 100%);
       color: var(--color-text-secondary);
     }
   }
@@ -98,9 +108,9 @@ const badges: Array<{
   &__buttons {
     display: flex;
     align-items: center;
-    column-gap: min(16px, 0.9vi);
+    column-gap: 2.5cqi;
     row-gap: 20px;
-    margin-block-end: min(100px, 9.4vi);
+    margin-block-end: 6.6cqi;
   }
 
   @media (width < 576px) {
@@ -122,6 +132,60 @@ const badges: Array<{
     &__buttons {
       flex-direction: column;
       margin-block-end: 80px;
+    }
+  }
+}
+
+.button {
+  font-weight: 500;
+  line-height: 1.3;
+  inline-size: clamp(225px, 18vi, 350px);
+  block-size: auto;
+  aspect-ratio: 350 / 100;
+  border-radius: 0.9vi;
+  text-transform: uppercase;
+  cursor: pointer;
+  container-type: inline-size;
+
+  &__label {
+    font-size: 6.1cqi;
+    position: relative;
+    z-index: 1;
+  }
+
+  &--primary {
+    color: var(--color-button-text-primary);
+    background-image: var(--color-button-background-primary);
+    box-shadow: 0 0.45cqi 0px #7C5E49;
+  }
+
+  &--secondary {
+    position: relative;
+    color: var(--color-button-text-secondary);
+    background-color: var(--color-button-background-secondary);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      box-sizing: content-box;
+      inline-size: 100%;
+      block-size: 100%;
+      border: 2px solid var(--color-border-secondary);
+      border-radius: 0.9vi;
+      z-index: 0;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -0.6cqi;
+      box-sizing: content-box;
+      inline-size: 100%;
+      block-size: calc(100% + 2cqi);
+      border: 0.6cqi solid #7C5E49;
+      border-radius: 0.9vi;
+      z-index: 0;
     }
   }
 }

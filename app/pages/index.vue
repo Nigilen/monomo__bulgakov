@@ -4,20 +4,24 @@
 </script>
 
 <template>
-  <!-- [ ] <SectionHero /> -->
-  <!-- [ ] <SectionApproach /> -->
-  <!-- [ ] <SectionPrice /> -->
+  <!-- [?] Header -->
+  <!-- [?] <SectionHero /> -->
+  <!-- [?] <SectionApproach /> -->
+  <!-- [?] <SectionPrice /> -->
   <!-- [v] <SectionCta /> -->
   <!-- [v] <SectionBonus /> -->
-  <SectionCalculator />
-  <!-- [ ] <SectionAbout /> -->
-  <!-- [ ] <SectionAdvantages /> -->
-  <!-- [ ] <SectionStats /> -->
-  <!-- [ ] <SectionPortfolio /> -->
-  <!-- [ ] <SectionReviews /> -->
-  <!-- [ ] <SectionRoadmap /> -->
-  <!-- [ ] <SectionFaq /> -->
-  <!-- <SectionRequest /> -->
+  <!-- [?] <SectionCalculator /> -->
+  <!-- [v] <SectionAbout /> -->
+  <!-- [v] <SectionAdvantages /> -->
+  <!-- [v] <SectionStats /> -->
+  <!-- [v] <SectionPortfolio /> -->
+  <!-- [?] <SectionReviews /> -->
+  <!-- [v] <SectionRoadmap /> -->
+  <!-- [v] <SectionFaq /> -->
+<SectionRequest />
+  <!-- [ ] Footer -->
+  <!-- [ ] Popup -->
+  <!-- [?] Mobile Menu -->
 </template>
 
 <style scoped lang="scss">

@@ -93,6 +93,7 @@ const items = [
 
   &__item {
     list-style: none; 
+    
     &-title {
       font-size: min(28px, 1.46vi);
       display: inline-flex;

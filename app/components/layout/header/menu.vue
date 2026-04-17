@@ -38,11 +38,11 @@ const items = [
   &__list {
     display: flex;
     align-items: center;
-    gap: min(60px, 3.5cqi);
+    gap: 3.27cqi;
   }
 
   &__link {
-    font-size: min(22px, 1.3cqi);
+    font-size: 1.2cqi;
     font-weight: 500;
     transition: color 0.3s ease;
     white-space: nowrap;
@@ -52,7 +52,8 @@ const items = [
     }
   }
 
-  @media (width < 1440px) {
+
+  @media (width < 768px) {
     &__list {
       flex-direction: column;
       align-items: flex-start;

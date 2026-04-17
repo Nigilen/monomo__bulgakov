@@ -3,9 +3,9 @@
 </script>
 
 <template>
-  <LayoutHeader />
+  <!-- <LayoutHeader /> -->
   <main>
     <slot />
   </main>
-  <LayoutFooter />
+  <!-- <LayoutFooter /> -->
 </template>

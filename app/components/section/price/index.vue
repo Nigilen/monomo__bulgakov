@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import {
   priceSectionHeaderTitleSegments,
   priceSectionItems,
@@ -16,18 +15,25 @@ const {
   onPointerDown,
   onPointerUp,
 } = usePriceSlider(() => priceSectionItems.length);
-
 </script>
 
 <template>
   <section class="price">
-
     <div class="price__top container">
-      <UiSectionHeader
-        :title-segments="priceSectionHeaderTitleSegments"
-        description="Все пакеты включают работу и материалы. Цена фиксированная и не меняется в процессе."
-      />
+      <h2 class="section-header__title">
+        <template v-for="(segment, index) in priceSectionHeaderTitleSegments" :key="index">
+          <span
+            v-if="segment.highlight"
+            class="section-header__title_highlight"
+          >{{ segment.text }}</span>
+          <span v-else>{{ segment.text }}</span>
+        </template>
+      </h2>
+      <p class="section-header__description">
+        Все пакеты включают работу и материалы. Цена фиксированная и не меняется в процессе.
+      </p>
     </div>
+
     <div class="price__body">
       <div class="price__slider">
         <button
@@ -41,8 +47,12 @@ const {
             class="price__arrow-graphic price__arrow-graphic_desktop-prev"
             name="icons:slider-arrow"
           />
-          <Icon class="price__arrow-graphic price__arrow-graphic_mobile-prev" name="icons:arrow-button" />
+          <Icon
+            class="price__arrow-graphic price__arrow-graphic_mobile-prev"
+            name="icons:arrow-button"
+          />
         </button>
+
         <div
           ref="viewportRef"
           class="price__viewport"
@@ -51,7 +61,11 @@ const {
           @pointercancel="onPointerUp"
           @selectstart.prevent
         >
-          <ul ref="trackRef" class="price__list" :style="trackStyle">
+          <ul
+            ref="trackRef"
+            class="price__list"
+            :style="trackStyle"
+          >
             <SectionPriceItem
               v-for="item in priceSectionItems"
               :key="item.title"
@@ -63,6 +77,7 @@ const {
             />
           </ul>
         </div>
+
         <button
           class="price__arrow price__arrow_next"
           type="button"
@@ -85,7 +100,6 @@ const {
 </template>
 
 <style scoped lang="scss">
-
 .price {
   margin-block-end: var(--section-margin-block-end);
 
@@ -93,7 +107,11 @@ const {
     display: flex;
     column-gap: 1.042vi;
     row-gap: 32px;
-    margin-block-end: 80px;
+    margin-block-end: 4.2vi;
+
+    @media (width < 768px) {
+      flex-direction: column;
+    }
   }
 
   &__body {
@@ -102,8 +120,8 @@ const {
 
   &__slider {
     position: relative;
-    inline-size: 100vw;
-    margin-inline-start: calc(50% - 50vw);
+    inline-size: 100vi;
+    margin-inline-start: calc(50% - 50vi);
 
     @media (width < 768px) {
       margin-block-end: 25px;
@@ -129,7 +147,7 @@ const {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    column-gap: clamp(30px, 7.8vmin, 45px);
+    column-gap: clamp(30px, 4.2vi, 80px);
     margin-block-start: 0;
     margin-block-end: 0;
     margin-inline-start: 0;
@@ -179,15 +197,13 @@ const {
     }
 
     &_prev {
-      @media (width >= 768px) {
-        inset-inline-start: 0;
-        inset-inline-end: auto;
-        justify-content: flex-end;
-        background-color: transparent;
-        background-image: linear-gradient(to right, #252525, rgba(37, 37, 37, 0));
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-      }
+      inset-inline-start: 0;
+      inset-inline-end: auto;
+      justify-content: flex-end;
+      background-color: transparent;
+      background-image: linear-gradient(to right, #252525, rgba(37, 37, 37, 0));
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
 
       @media (width < 768px) {
         inset-inline-start: auto;
@@ -268,12 +284,34 @@ const {
       transform: scaleX(-1);
     }
   }
-
-  @media (width < 768px) {
-    &__top {
-      flex-direction: column;
-    }
-  }
 }
 
+.section-header {
+  &__title {
+    font-size: clamp(32px, calc(6px + 2.92vi), 62px);
+    font-weight: 400;
+    line-height: 1.45;
+    text-transform: uppercase;
+    flex-basis: 0;
+    flex-grow: 1;
+    min-inline-size: 0;
+
+    &_highlight {
+      font-weight: 500;
+      color: var(--color-accent-primary);
+    }
+  }
+
+  &__description {
+    font-size: clamp(14px, calc(-4px + 1.25vi), 20px);
+    color: var(--color-text-secondary);
+    line-height: 1.75em;
+    font-weight: 400;
+    font-style: italic;
+    align-self: center;
+    flex-basis: 0;
+    flex-grow: 1;
+    min-inline-size: 0;
+  }
+}
 </style>

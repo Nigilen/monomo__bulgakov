@@ -49,13 +49,13 @@ export default defineNuxtConfig({
       {
         name: 'Inter',
         src: [
-          { url: '/fonts/Inter-Regular.woff2', format: 'woff2' },
-          { url: '/fonts/Inter-Regular.woff', format: 'woff' }
+          { url: '/fonts/Inter-Black.woff2', format: 'woff2' },
+          { url: '/fonts/Inter-Black.woff', format: 'woff' }
         ],
-        weight: 400,
+        weight: 900,
         style: 'normal',
         display: 'swap',
-      }
+      },
     ],
   },
   icon: {

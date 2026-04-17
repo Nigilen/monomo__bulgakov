@@ -42,8 +42,9 @@ const socials = [
   &__socials {
     display: flex;
     align-items: center;
-    gap: min(35px, 2cqi);
-    margin-inline: 0 min(50px, 2.9cqi);
+    gap: 1.95cqi;
+    margin-inline-start: 0;
+    margin-inline-end: 3cqi;
 
     &-item {
       margin: 0;
@@ -55,7 +56,7 @@ const socials = [
       justify-content: center;
       font-weight: 500;
       transition: color 0.3s ease;
-      inline-size: min(1.8cqi, 40px);
+      inline-size: 2cqi;
       block-size: auto;
       aspect-ratio: 1 / 1;
 
@@ -78,12 +79,12 @@ const socials = [
   }
   
   &__phone {
-    font-size: min(24px, 1.4cqi);
+    font-size: 1.35cqi;
     white-space: nowrap;
   }
   
   &__label {
-    font-size: min(16px, 0.9cqi);
+    font-size: 0.9cqi;
     color: var(--color-text-secondary);
     white-space: nowrap;
   }
@@ -91,21 +92,20 @@ const socials = [
   &__button {
     display: block;
     background-color: var(--color-button-background-primary);
-    padding: min(28px, 1.7cqi) min(46px, 2.7cqi);
-    inline-size: min(300px, 16.9cqi);
+    inline-size: 16.9cqi;
     block-size: auto;
     aspect-ratio: 300 / 80;
-    margin-inline: min(72px, 4.1cqi) 0;
-    border-radius: var(--border-radius-primary);
+    margin-inline-start: 4.1cqi;
+    margin-inline-end: 0;
+    border-radius: 0.9vi;
     border: 2px solid var(--color-border-secondary);
-    font-size: min(20px, 1.1cqi);
+    font-size: 1.2cqi;
     color: var(--color-button-text-secondary);
     text-transform: uppercase;
-    line-height: 1.24;
     white-space: nowrap;
   }
 
-  @media (width < 1440px) {
+  @media (width < 768px) {
     display: flex;
     flex-direction: column;
     align-items: center;

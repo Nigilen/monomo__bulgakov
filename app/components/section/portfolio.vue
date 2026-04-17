@@ -1,0 +1,325 @@
+<script setup lang="ts">
+
+const items = [
+  {
+    id: 1,
+    image: '/portfolio-img-01.png',
+    title: 'г. Пионерск',
+    description: 'Ремонт квартиры в городе Пионерск. Дизайн-проект от Анны Шатик. Ремонт по просьбе заказчиков сделать за 45 дней был готов на 101%.',
+  },
+  {
+    id: 2,
+    image: '/portfolio-img-02.png',
+    title: 'г. Калининград',
+    description: 'Удаленный ремонт двухкомнатной квартиры в  Калининграде. Заказчики из Якутии. Все работы провели онлайн. Дизайн-проект от Александра и Оксаны. Срок исполнения – 120 дней.',
+  },
+  {
+    id: 3,
+    image: '/portfolio-img-03.png',
+    title: 'г. Пионерск',
+    description: 'Однокомнатная квартира в городе Пионерск. Квартира по дизайн-проекту от Анны Шатик. Срок исполнения – 75 дней.',
+  },
+  {
+    id: 4,
+    image: '/portfolio-img-04.png',
+    title: 'г. Калининград',
+    description: 'Косметический ремонт двухкомнатной квартиры в Калининграде. Срок исполнения – 35 дней.',
+  },
+];
+</script>
+
+<template>
+  <section class="portfolio container">
+    <div class="header">
+      <h2 class="header__title">
+        <span class="header__title-highlight">Наше портфолио</span> 
+        — это наша гордость
+      </h2>
+      <p class="header__description">
+        Квартиры, дома и реконструкции в Калининграде и Калининградской области.
+      </p>
+    </div>
+    <ul class="portfolio__list">
+      <li class="portfolio-item" v-for="item in items" :key="item.id">
+        <NuxtImg 
+          class="portfolio-item__image" 
+          :src="item.image" 
+          alt="Portfolio Image" 
+          width="760"
+          height="760"
+        />
+        <div class="portfolio-item__content">
+          <h3 class="portfolio-item__title">{{ item.title }}</h3>
+          <p class="portfolio-item__description">{{ item.description }}</p>
+          <button class="portfolio-item__button" type="button">
+            Узнать подробнее
+          </button>
+        </div>
+      </li>
+    </ul>
+  </section>
+</template>
+
+
+<style scoped lang="scss">
+
+.header {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1vi;
+  margin-block-end: min(75px, 3.9vi);
+
+  &__title {
+    font-size: min(62px, 3.3vi);
+    font-weight: 600;
+    line-height: 1.4;
+    text-transform: uppercase;
+
+    &-highlight {
+      color: var(--color-accent-primary);
+    }
+  }
+
+  &__description {
+    font-size: min(20px, 1vi);
+    font-weight: 400;
+    line-height: calc(35/20);
+    font-style: italic;
+    color: var(--color-text-secondary);
+  }
+
+  @media (width < 768px) {
+    grid-template-columns: 1fr;
+    gap: 8.5vi;
+    margin-block-end: 12vi;
+
+    &__title {
+      font-size: 8.5vi;
+      letter-spacing: -0.035em;
+
+    }
+
+    &__description {
+      font-size: 4.28vi;
+    }
+  }
+}
+
+.portfolio {
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-item {
+    display: flex;
+    align-items: flex-start;
+
+    &__image {
+      inline-size: 48.75%;
+      // inline-size: min(760px, 39.5vi);
+      block-size: auto;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 0.8vi;
+    }
+    &__content {
+      position: relative;
+      // inline-size: min(860px, 44.8vi);
+      inline-size: 55%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-block: min(55px, 2.9vi);
+      padding-inline-start: min(70px, 3.65vi);
+      padding-inline-end: min(60px, 3.15vi);
+      background-color: var(--color-background-primary);
+      border-radius: 0.8vi;
+
+      container-type: inline-size;
+
+      inset-inline-start: -3.1vi;
+      inset-block-start: 5.7vi;
+    }
+
+    &__title {
+      position: relative;
+      font-size: 4cqi;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--color-accent-primary);
+      padding-block-end: 3.5cqi;
+      margin-block-end: 4.3cqi;
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset-block-end: 0;
+        inset-inline-start: 0;
+        display: block;
+        inline-size: 70%;
+        block-size: 1px;
+        background-color: var(--color-border-secondary);
+      }
+    }
+
+    &__description {
+      font-size: 2.85cqi;
+      font-weight: 400;
+      line-height: calc(40/20);
+      color: var(--color-text-primary);
+      margin-block-end: 8.5cqi;
+    }
+
+    &__button {
+      display: flex;
+      font-size: 2.85cqi;
+      font-weight: 400;
+      color: var(--color-accent-primary);
+      inline-size: max-content;
+      white-space: nowrap;
+
+      &::before {
+        position: absolute;
+        content: '';
+        inset-block-end: 10cqi;
+        inset-inline-start: 0;
+        display: block;
+        inline-size: 8cqi;
+        block-size: 1px;
+        background-color: var(--color-border-secondary);
+        margin-block-start: min(10px, 0.5vi);
+      }
+    }
+
+    &:not(:first-child) {
+      margin-block-start: -3.91vi;
+    }
+
+    &:nth-child(even) {
+      flex-direction: row-reverse;
+      
+      .portfolio-item__content {
+        inset-inline-start: 3.1vi;
+        inset-block-start: 5.7vi;
+        padding-inline-end: min(70px, 3.65vi);
+        padding-inline-start: min(60px, 3.15vi);
+      }
+
+      .portfolio-item__title {
+        align-self: flex-end;
+
+        &::after {
+          inset-inline-start: auto;
+          inset-inline-end: 0;
+        }
+      }
+
+      .portfolio-item__description {
+        text-align: right;
+      }
+
+      .portfolio-item__button {
+        align-self: flex-end;
+        &::before {
+          inset-inline-start: auto;
+          inset-inline-end: 0;
+        }
+      }
+    }
+  }
+
+  @media (width < 768px) {
+
+    &__list {
+      flex-direction: row;
+      gap: 11vi;
+      overflow-x: scroll
+    }
+
+    &-item {
+      flex-direction: column;
+      row-gap: 11vi;
+      inline-size: 100%;
+      flex-shrink: 0;
+
+      &:not(:first-child) {
+        margin-block-start: 0;
+      }
+
+      &:nth-child(even) {
+        margin-block-start: 0;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .portfolio-item__content {
+          inset-inline-start: 0;
+        }
+
+        .portfolio-item__title {
+          align-self: flex-start;
+
+
+          &::after {
+            inset-inline-start: 0;
+          }
+        }
+
+        .portfolio-item__description {
+          text-align: left;
+        }
+
+        .portfolio-item__button {
+          align-self: flex-start;
+
+          &::before {
+            inset-inline-start: auto;
+            inset-inline-end: 0;
+          }
+        }
+      }
+
+      &__image {
+        inline-size: 100%;
+
+      }
+
+      &__content {
+        padding: 4.25vi;
+        inline-size: 100%;
+        inset-inline-start: 0;
+        inset-block-start: 0;
+      }
+
+      &__title {
+        font-size: 5.7cqi;
+        padding-block-end: 5.05cqi;
+        margin-block-end: 7.55cqi;
+      }
+
+      &__description {
+        font-size: 5.05cqi;
+        line-height: calc(24/16);
+        margin-block-end: 5.05cqi;
+      }
+      
+      &__button {
+        font-size: 5.05cqi;
+        display: flex;
+        align-items: center;
+        margin-inline: auto 0;
+        inline-size: 100%;
+        gap: 3cqi;
+        justify-content: space-between;
+
+        &::before {
+         position: static;
+         inline-size: 100%;
+        }
+      }
+    }
+  }
+}
+
+</style>

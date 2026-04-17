@@ -67,7 +67,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-block: 30px;
+  padding-block: min(30px, 1.54vi);
   container-type: inline-size;
   position: absolute;
   inset-inline: 0;
@@ -76,10 +76,11 @@ onUnmounted(() => {
 
   &__logo {
     display: block;
-    inline-size: clamp(94px, 12.5cqi, 213px);
+    inline-size: clamp(94px, 12cqi, 213px);
     block-size: auto;
     aspect-ratio: 213 / 117;
-    margin-inline: 0 min(100px, 5.8cqi);
+    margin-inline-start: 0;
+    margin-inline-end: 5.6cqi;
   }
 
   &__phone {
@@ -101,7 +102,8 @@ onUnmounted(() => {
   }
 }
 
-@media (width < 1440px) {
+
+@media (width < 768px) {
   .header {
     padding-block: 16px;
 
@@ -121,7 +123,6 @@ onUnmounted(() => {
       background-color: var(--color-background-primary);
       flex-direction: column;
       align-items: flex-start;
-      gap: min(20px, 1.2cqi);
       padding-block: 50px;
       padding-inline: 40px;
 

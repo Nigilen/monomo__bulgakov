@@ -42,9 +42,9 @@ const socials = [
   &__socials {
     display: flex;
     align-items: center;
-    gap: 1.95cqi;
+    gap: 1.82vi;
     margin-inline-start: 0;
-    margin-inline-end: 3cqi;
+    margin-inline-end: 2.87vi;
 
     &-item {
       margin: 0;
@@ -56,7 +56,7 @@ const socials = [
       justify-content: center;
       font-weight: 500;
       transition: color 0.3s ease;
-      inline-size: 2cqi;
+      inline-size: 1.7vi;
       block-size: auto;
       aspect-ratio: 1 / 1;
 
@@ -75,16 +75,16 @@ const socials = [
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 0.2vi;
   }
   
   &__phone {
-    font-size: 1.35cqi;
+    font-size: 1.25vi;
     white-space: nowrap;
   }
   
   &__label {
-    font-size: 0.9cqi;
+    font-size: 0.835vi;
     color: var(--color-text-secondary);
     white-space: nowrap;
   }
@@ -92,14 +92,14 @@ const socials = [
   &__button {
     display: block;
     background-color: var(--color-button-background-primary);
-    inline-size: 16.9cqi;
+    inline-size: 15.65vi;
     block-size: auto;
     aspect-ratio: 300 / 80;
-    margin-inline-start: 4.1cqi;
+    margin-inline-start: 3.75vi;
     margin-inline-end: 0;
-    border-radius: 0.9vi;
+    border-radius: 0.8vi;
     border: 2px solid var(--color-border-secondary);
-    font-size: 1.2cqi;
+    font-size: 1.045vi;
     color: var(--color-button-text-secondary);
     text-transform: uppercase;
     white-space: nowrap;
@@ -111,14 +111,15 @@ const socials = [
     align-items: center;
     justify-content: center;
     margin-inline: auto;
-    gap: 35px;
+    gap: 9.3vi;
     inline-size: 100%;
 
     &__socials {
       margin-inline: 0;
+      gap: 5.5vi;
       
       &-link {
-        inline-size: 25px;
+        inline-size: 6.5vi;
       }
     }
 
@@ -127,18 +128,19 @@ const socials = [
     }
 
     &__phone {
-      font-size: 20px;
+      font-size: 6vi;
     }
 
     &__label {
-      font-size: 16px;
+      font-size: 4.3vi;
     }
 
 
     &__button {
       margin-inline: 0;
-      font-size: 20px;
+      font-size: 4.3vi;
       inline-size: 100%;
+      border-radius: 4.3vi;
     }
   }
 }

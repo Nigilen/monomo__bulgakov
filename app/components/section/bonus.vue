@@ -42,6 +42,11 @@ const items = [
 
 
 .bonus {
+  margin-block-end: 12vi;
+
+  @media (width < 768px) {
+    margin-block-end: 27vi;
+  }
 }
 
 .header {
@@ -67,6 +72,7 @@ const items = [
     line-height: calc(35/20);
     font-style: italic;
     color: var(--color-text-secondary);
+    margin-block-start: 0.83vi;
   }
 
   @media (width < 768px) {

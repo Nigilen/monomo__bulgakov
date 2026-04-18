@@ -90,6 +90,14 @@ const getQuestionIconName = (id: number) =>
 
 <style scoped lang="scss">
 
+.faq {
+  margin-block-end: 12vi;
+  
+  @media (width < 768px) {
+    margin-block-end: 27vi;
+  }
+}
+
 .header {
   inline-size: min(800px, 100%);
   margin-block-end: min(75px, 3.9vi);

@@ -46,6 +46,14 @@
 <style scoped lang="scss">
 
 
+.about {
+  margin-block-end: 5.2vi;
+
+  @media (width < 768px) {
+    margin-block-end: 12vi;
+  }
+}
+
 .header {
   display: grid;
   grid-template-columns: 2fr 1fr;

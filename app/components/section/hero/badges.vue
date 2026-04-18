@@ -13,7 +13,7 @@ defineProps<{
 <template>
   <dl class="badges">
     <div class="badges__item" v-for="badge in badges" :key="badge.id">
-      c
+      <Icon name="icons:diamonds4" class="badges__icon" />
       <div class="badges__content">
         <dt class="badges__title">
           {{ badge.title }}
@@ -31,21 +31,17 @@ defineProps<{
 .badges {
   display: flex;
   column-gap: 2.1vi;
-  row-gap: 20px;
-  margin-block-start: 0;
-  margin-block-end: 0;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
+  margin: 0;
 
   &__item {
     display: grid;
     grid-template-columns: auto 1fr;
     flex-basis: 0;
     flex-grow: 1;
-    padding-block: 2.2cqi;
-    padding-inline-start: 2.5cqi;
-    padding-inline-end: 2.3cqi;
-    column-gap: 2.5cqi;
+    padding-block: 1.8vi;
+    padding-inline-start: 2.1vi;
+    padding-inline-end: 1.05vi;
+    column-gap: 1.55vi;
     container-type: inline-size;
     border-radius: var(--border-radius-primary);
     background-color: #303030d0;
@@ -54,7 +50,7 @@ defineProps<{
   &__icon {
     display: block;
     align-self: self-start;
-    inline-size: 12cqi;
+    inline-size: 11.6cqi;
     block-size: auto;
     aspect-ratio: 1 / 1;
   }
@@ -62,34 +58,51 @@ defineProps<{
   &__content {
     display: flex;
     flex-direction: column;
-    gap: 3cqi;
+    gap: 2.75cqi;
     inline-size: 100%;
   }
 
   &__title {
-    font-size: 5.2cqi;
+    font-size: 5.1cqi;
     font-weight: 500;
-    line-height: 1.3em;
+    line-height: 1;
     color: var(--color-text-primary);
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin-inline-start: 0;
-    margin-inline-end: 0;
+
   }
 
   &__description {
-    font-size: 4.8cqi;
+    font-size: 4.63cqi;
     font-weight: 400;
-    line-height: 1.3em;
+    line-height: calc(30 / 20);
     color: var(--color-text-secondary);
-    margin-block-start: 0;
-    margin-block-end: 0;
-    margin-inline-start: 0;
-    margin-inline-end: 0;
   }
 
   @media (width < 768px) {
     flex-direction: column;
+    row-gap: 5.85vi;
+
+    &__item {
+      padding: 4.27vi;
+      column-gap: 4.3vi;
+      border-radius: 4.27vi;
+    }
+
+    &__icon {
+      inline-size: 13cqi;
+    }
+
+    &__content {
+      gap: 5cqi;
+    }
+
+    &__title {
+      font-size: 5.8cqi;
+    }
+    
+    &__description {
+      font-size: 5.15cqi;
+      line-height: calc(22 / 16);
+    }
   }
 }
 

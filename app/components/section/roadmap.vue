@@ -68,6 +68,14 @@ const items = [
 
 <style scoped lang="scss">
 
+.roadmap {
+  margin-block-end: 12vi;
+  
+  @media (width < 768px) {
+    margin-block-end: 27vi;
+  }
+}
+
 .header {
   display: grid;
   grid-template-columns: 6fr 4fr;
@@ -91,6 +99,7 @@ const items = [
     line-height: calc(35/20);
     font-style: italic;
     color: var(--color-text-secondary);
+    margin-block-start: 0.83vi;
   }
 
   @media (width < 768px) {

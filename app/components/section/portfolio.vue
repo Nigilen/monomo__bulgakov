@@ -1,6 +1,13 @@
 <script setup lang="ts">
 
-const items = [
+type PortfolioItem = {
+  id: number
+  image: string
+  title: string
+  description: string
+};
+
+const items: PortfolioItem[] = [
   {
     id: 1,
     image: '/portfolio-img-01.png',
@@ -26,28 +33,74 @@ const items = [
     description: 'Косметический ремонт двухкомнатной квартиры в Калининграде. Срок исполнения – 35 дней.',
   },
 ];
+
+/** Как в стилях: (width < 768px). До mounted — десктоп (SSR). */
+const isMobileLayout = ref(false);
+
+const slideCountForSlider = computed(() => (isMobileLayout.value ? items.length : 0));
+
+const {
+  viewportRef,
+  trackRef,
+  trackStyle,
+  canGoPrev,
+  canGoNext,
+  goPrev,
+  goNext,
+  onPointerDown,
+  onPointerUp,
+} = usePriceSlider(slideCountForSlider, {
+  initialActiveIndex: 0,
+  itemSelector: '.portfolio-item',
+  loop: false,
+  loopTripleMode: false,
+  navigationCooldownMs: 360,
+});
+
+const onPortfolioPrevClick = () => {
+  goPrev();
+};
+
+const onPortfolioNextClick = () => {
+  goNext();
+};
+
+let mobileLayoutMediaQuery: MediaQueryList | null = null;
+
+const syncMobileLayout = () => {
+  if (mobileLayoutMediaQuery) {
+    isMobileLayout.value = mobileLayoutMediaQuery.matches;
+  }
+};
+
+onMounted(() => {
+  mobileLayoutMediaQuery = window.matchMedia('(max-width: 767px)');
+  syncMobileLayout();
+  mobileLayoutMediaQuery.addEventListener('change', syncMobileLayout);
+});
+
+onUnmounted(() => {
+  mobileLayoutMediaQuery?.removeEventListener('change', syncMobileLayout);
+  mobileLayoutMediaQuery = null;
+});
+
 </script>
 
 <template>
   <section class="portfolio container">
     <div class="header">
       <h2 class="header__title">
-        <span class="header__title-highlight">Наше портфолио</span> 
+        <span class="header__title-highlight">Наше портфолио</span>
         — это наша гордость
       </h2>
       <p class="header__description">
         Квартиры, дома и реконструкции в Калининграде и Калининградской области.
       </p>
     </div>
-    <ul class="portfolio__list">
-      <li class="portfolio-item" v-for="item in items" :key="item.id">
-        <NuxtImg 
-          class="portfolio-item__image" 
-          :src="item.image" 
-          alt="Portfolio Image" 
-          width="760"
-          height="760"
-        />
+
+    <ul v-if="!isMobileLayout" class="portfolio__list">
+      <li v-for="item in items" :key="item.id" class="portfolio-item">
+        <NuxtImg class="portfolio-item__image" :src="item.image" :alt="item.title" width="760" height="760" />
         <div class="portfolio-item__content">
           <h3 class="portfolio-item__title">{{ item.title }}</h3>
           <p class="portfolio-item__description">{{ item.description }}</p>
@@ -57,12 +110,41 @@ const items = [
         </div>
       </li>
     </ul>
+
+    <div v-else class="portfolio__bleed">
+      <div class="portfolio__slider-inner">
+        <div ref="viewportRef" class="portfolio__viewport" @pointerdown="onPointerDown" @pointerup="onPointerUp"
+          @pointercancel="onPointerUp" @selectstart.prevent>
+          <ul ref="trackRef" class="portfolio__list portfolio__list--slider" :style="trackStyle">
+            <li v-for="item in items" :key="item.id" class="portfolio-item">
+              <NuxtImg class="portfolio-item__image" :src="item.image" :alt="item.title" width="760" height="760" />
+              <div class="portfolio-item__content">
+                <h3 class="portfolio-item__title">{{ item.title }}</h3>
+                <p class="portfolio-item__description">{{ item.description }}</p>
+                <button class="portfolio-item__button" type="button">
+                  Узнать подробнее
+                </button>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="portfolio-controls">
+          <button class="portfolio-controls__button portfolio-controls__button--prev" type="button"
+            aria-label="Предыдущий проект" :disabled="!canGoPrev" @click="onPortfolioPrevClick">
+            <Icon name="icons:arrow-button" class="portfolio-controls__icon" />
+          </button>
+          <button class="portfolio-controls__button portfolio-controls__button--next" type="button"
+            aria-label="Следующий проект" :disabled="!canGoNext" @click="onPortfolioNextClick">
+            <Icon name="icons:arrow-button" class="portfolio-controls__icon portfolio-controls__icon--flip" />
+          </button>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
 
 <style scoped lang="scss">
-
 .header {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -86,6 +168,7 @@ const items = [
     line-height: calc(35/20);
     font-style: italic;
     color: var(--color-text-secondary);
+    margin-block-start: 0.83vi;
   }
 
   @media (width < 768px) {
@@ -106,10 +189,64 @@ const items = [
 }
 
 .portfolio {
+  margin-block-end: 12vi;
+
+  @media (width < 768px) {
+    margin-block-end: 47vi;
+  }
 
   &__list {
     display: flex;
     flex-direction: column;
+  }
+
+  &__bleed {
+    inline-size: 100%;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    box-sizing: border-box;
+  }
+
+  &__slider-inner {
+    position: relative;
+    container-type: inline-size;
+    container-name: portfolio-slider;
+  }
+
+  &__viewport {
+    overflow: hidden;
+    inline-size: 100%;
+    container-type: inline-size;
+    container-name: portfolio-viewport;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  &__list--slider {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-block-start: 0;
+    padding-block-end: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    column-gap: 11vi;
+    will-change: transform;
+    user-select: none;
+    -webkit-user-select: none;
   }
 
   &-item {
@@ -118,15 +255,14 @@ const items = [
 
     &__image {
       inline-size: 48.75%;
-      // inline-size: min(760px, 39.5vi);
       block-size: auto;
       aspect-ratio: 1 / 1;
       object-fit: cover;
       border-radius: 0.8vi;
     }
+
     &__content {
       position: relative;
-      // inline-size: min(860px, 44.8vi);
       inline-size: 55%;
       display: flex;
       flex-direction: column;
@@ -199,15 +335,15 @@ const items = [
 
     &:nth-child(even) {
       flex-direction: row-reverse;
-      
-      .portfolio-item__content {
+
+      & .portfolio-item__content {
         inset-inline-start: 3.1vi;
         inset-block-start: 5.7vi;
         padding-inline-end: min(70px, 3.65vi);
         padding-inline-start: min(60px, 3.15vi);
       }
 
-      .portfolio-item__title {
+      & .portfolio-item__title {
         align-self: flex-end;
 
         &::after {
@@ -216,12 +352,13 @@ const items = [
         }
       }
 
-      .portfolio-item__description {
+      & .portfolio-item__description {
         text-align: right;
       }
 
-      .portfolio-item__button {
+      & .portfolio-item__button {
         align-self: flex-end;
+
         &::before {
           inset-inline-start: auto;
           inset-inline-end: 0;
@@ -232,45 +369,43 @@ const items = [
 
   @media (width < 768px) {
 
-    &__list {
-      flex-direction: row;
-      gap: 11vi;
-      overflow-x: scroll
-    }
-
     &-item {
       flex-direction: column;
       row-gap: 11vi;
       inline-size: 100%;
       flex-shrink: 0;
+      flex-grow: 0;
+      flex-basis: 100cqi;
+      min-inline-size: 100cqi;
+      max-inline-size: 100cqi;
+      box-sizing: border-box;
 
       &:not(:first-child) {
         margin-block-start: 0;
       }
 
       &:nth-child(even) {
-        margin-block-start: 0;
         flex-direction: column;
         align-items: flex-start;
 
-        .portfolio-item__content {
+        & .portfolio-item__content {
           inset-inline-start: 0;
+          inset-block-start: 0;
         }
 
-        .portfolio-item__title {
+        & .portfolio-item__title {
           align-self: flex-start;
-
 
           &::after {
             inset-inline-start: 0;
           }
         }
 
-        .portfolio-item__description {
+        & .portfolio-item__description {
           text-align: left;
         }
 
-        .portfolio-item__button {
+        & .portfolio-item__button {
           align-self: flex-start;
 
           &::before {
@@ -282,12 +417,13 @@ const items = [
 
       &__image {
         inline-size: 100%;
-
+        pointer-events: none;
       }
 
       &__content {
         padding: 4.25vi;
         inline-size: 100%;
+        block-size: 100%;
         inset-inline-start: 0;
         inset-block-start: 0;
       }
@@ -303,7 +439,7 @@ const items = [
         line-height: calc(24/16);
         margin-block-end: 5.05cqi;
       }
-      
+
       &__button {
         font-size: 5.05cqi;
         display: flex;
@@ -312,14 +448,44 @@ const items = [
         inline-size: 100%;
         gap: 3cqi;
         justify-content: space-between;
+        margin-block-start: auto;
 
         &::before {
-         position: static;
-         inline-size: 100%;
+          position: static;
+          inline-size: 100%;
         }
       }
     }
   }
 }
 
+.portfolio-controls {
+  z-index: 2;
+  display: flex;
+  position: absolute;
+  inset-block-end: -20vi;
+  inset-inline-end: 0;
+  gap: 10px;
+
+  &__button {
+    inline-size: 13.5cqi;
+    block-size: auto;
+    aspect-ratio: 1 / 1;
+
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+  }
+
+  &__icon {
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 1 / 1;
+
+    &--flip {
+      transform: rotate(180deg);
+    }
+  }
+}
 </style>

@@ -33,7 +33,7 @@ const badges: Array<{
         <span class="hero__title-part">забыть о стройке</span>
       </h1>
       <div class="hero__description">
-        <Icon name="icons:diamonds3" />
+        <Icon name="icons:diamonds3" class="hero__description-icon" />
         <p class="hero__description-text">
           Создаем готовые пространства для жизни — от планировочных решений и ремонта до мебели, комплектации и декора
         </p>
@@ -57,28 +57,28 @@ const badges: Array<{
 
 <style scoped lang="scss">
 .hero {
-  min-block-size: 56.5vi;
   inline-size: 100%;
   background-image: url('/hero-background.png');
   background-size: 100% 100%;
   background-position: top;
   background-repeat: no-repeat;
-  margin-block-end: var(--section-margin-block-end);
+
+  margin-block-end: 12vi;
+
 
   &__container {
     display: flex;
     flex-direction: column;
-    padding-block-start: 13.9vi;
-    container-type: inline-size;
+    padding-block-start: min(266px,13.855vi);
   }
 
   &__title {
-    font-size: 4.3cqi;
+    font-size: min(68px, 3.54vi);
     font-weight: 400;
-    line-height: 1.5em;
+    line-height: calc(100 / 68);
     text-transform: uppercase;
     color: var(--color-text-primary);
-    margin-block-end: 2.9cqi;
+    margin-block-end: min(46px, 2.4vi);
 
     &-part {
       display: block;
@@ -92,71 +92,95 @@ const badges: Array<{
 
   &__description {
     display: flex;
-    align-items: baseline;
-    gap: 0.9cqi;
-    margin-block-end: 2.6cqi;
+    align-items: flex-start;
+    gap: min(5px, 0.3vi);
+    margin-block-end: min(40px, 2.1vi);
+    inline-size: min(760px, 40vi);
 
     &-text {
-      font-size: min(1.4cqi, 18px);
+      font-size: min(18px, 0.94vi);
       font-weight: 500;
-      line-height: 1.5em;
-      inline-size: min(50cqi, 100%);
+      line-height: calc(30 / 18);
       color: var(--color-text-secondary);
+    }
+
+    &-icon {
+      flex-shrink: 0;
+      display: block;
+      margin-block-start: min(5px, 0.3vi);
+      inline-size: min(48px, 2.5vi);
+      block-size: auto;
+      aspect-ratio: 48 / 22;
     }
   }
 
   &__buttons {
     display: flex;
     align-items: center;
-    column-gap: 2.5cqi;
-    row-gap: 20px;
-    margin-block-end: 6.6cqi;
+    column-gap: min(40px, 2.1vi);
+    margin-block-end: min(103px, 5.4vi);
   }
 
-  @media (width < 576px) {
+  @media (width < 768px) {
     background-image: url('/hero-background-m.png');
-    min-height: 100dvh;
     background-size: cover;
+
+    margin-block-end: 27vi;
+
+    &__container {
+      padding-block-start: 40.53vi;
+    }
 
     &__title {
       margin-block-end: 30px;
+      font-size: 7.5vi;
+      line-height: calc(40 / 28);
     }
 
     &__description {
       flex-direction: column;
       align-items: center;
-      gap: 16px;
-      margin-block-end: 50px;
+      gap: 2.7vi;
+      margin-block-end: 13.5vi;
+      inline-size: 100%;
+
+      &-text {
+        font-size: 4.27vi;
+        line-height: calc(22 / 16);
+      }
+
+      &-icon {
+        inline-size: 9vi;
+      }
     }
 
     &__buttons {
       flex-direction: column;
-      margin-block-end: 80px;
+      margin-block-end: 20.8vi;
+      gap: 5.35vi;
     }
   }
 }
 
 .button {
   font-weight: 500;
-  line-height: 1.3;
-  inline-size: clamp(225px, 18vi, 350px);
+  inline-size: min(350px, 18.23vi);
   block-size: auto;
   aspect-ratio: 350 / 100;
-  border-radius: 0.9vi;
+  border-radius: 0.83vi;
   text-transform: uppercase;
   cursor: pointer;
   container-type: inline-size;
 
   &__label {
-    font-size: 6.1cqi;
+    font-size: 5.8cqi;
     position: relative;
-    z-index: 1;
   }
 
   &--primary {
     color: var(--color-button-text-primary);
     background-image: var(--color-button-background-primary);
-    box-shadow: 0 0.45cqi 0px #7C5E49;
+    box-shadow: 0 0.4cqi 0px #7C5E49;
   }
 
   &--secondary {
@@ -172,20 +196,45 @@ const badges: Array<{
       inline-size: 100%;
       block-size: 100%;
       border: 2px solid var(--color-border-secondary);
-      border-radius: 0.9vi;
+      border-radius: 0.83vi;
       z-index: 0;
     }
 
     &::before {
       content: '';
       position: absolute;
-      inset: -0.6cqi;
+      inset: -0.4cqi;
       box-sizing: content-box;
       inline-size: 100%;
       block-size: calc(100% + 2cqi);
-      border: 0.6cqi solid #7C5E49;
-      border-radius: 0.9vi;
+      border: 0.4cqi solid #7C5E49;
+      border-radius: 0.83vi;
       z-index: 0;
+    }
+  }
+
+  @media (width < 768px) {
+    inline-size: 80vi;
+    aspect-ratio: 300 / 78;
+    border-radius: 4.25vi;
+
+    &__label {
+      font-size: 5.35cqi;
+    }
+
+    &--primary {
+      box-shadow: 0 1.9cqi 0px #7C5E49;
+    }
+
+    &--secondary {
+      &::after {
+        border-radius: 4.25vi;
+        inset: -0.8cqi;
+      }
+      &::before {
+        border-radius: 4.25vi;
+        inset: -0.8cqi;
+      }
     }
   }
 }

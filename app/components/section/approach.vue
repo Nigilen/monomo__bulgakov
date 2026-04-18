@@ -1,9 +1,5 @@
 <script setup lang="ts">
 
-const headerTitleSegments = [
-  { text: 'Качество важнее ', highlight: true },
-  { text: 'количества' },
-];
 
 const items = [
   {
@@ -28,33 +24,24 @@ const items = [
 <template>
   <section id="approach" class="approach">
     <div class="approach__container container">
-      <div class="approach__top">
-        <h2 class="section-header__title">
-          <template v-for="(segment, index) in headerTitleSegments" :key="index">
-            <span
-              v-if="segment.highlight"
-              class="section-header__title_highlight"
-            >{{ segment.text }}</span>
-            <span v-else>{{ segment.text }}</span>
-          </template>
+      <div class="approach__top header">
+        <h2 class="header__title">
+          <span class="header__title-highlight">Качество важнее</span> 
+          количества
         </h2>
-        <p class="section-header__description">
-          Мы сознательно отказались от конвейерного подхода в пользу бутикового сервиса. Для нас важно не количество сданных квадратных метров, а безупречность каждого из них.
-        </p>
+        <p class="header__description">Мы сознательно отказались от конвейерного подхода в пользу бутикового сервиса. Для нас важно не количество сданных квадратных метров, а безупречность каждого из них.</p>
       </div>
       <div class="approach__bottom">
-        <div class="approach__list-host">
-          <ul class="list">
-            <li class="list__item" v-for="item in items" :key="item.id">
-              <h3 class="list__item_title">
-                {{ item.title }}
-              </h3>
-              <p class="list__item_description">
-                {{ item.description }}
-              </p>
-            </li>
-          </ul>
-        </div>
+        <ul class="approach__list list">
+          <li class="list__item" v-for="item in items" :key="item.id">
+            <h3 class="list__item_title">
+              {{ item.title }}
+            </h3>
+            <p class="list__item_description">
+              {{ item.description }}
+            </p>
+          </li>
+        </ul>
         <NuxtImg
           class="approach__image"
           src="/approach-img.png"
@@ -70,45 +57,45 @@ const items = [
 
 <style scoped lang="scss">
 .approach {
-  margin-block-end: var(--section-margin-block-end);
+  margin-block-end: 12vi;
   
   &__container {
     display: flex;
     flex-direction: column;
-    row-gap: 2vi;
   }
 
   &__top,
   &__bottom {
     display: flex;
-    column-gap: 2.042vi;
+    column-gap: 3.5vi;
   }
 
-  &__list-host,
+  &__list,
   &__image {
     flex-basis: 0;
     flex-grow: 1;
     min-inline-size: 0;
   }
 
+  &__list {
+    align-self: flex-end;
+  }
+
   &__image {
-    // display: block;
-    // inline-size: 770px;
-    // block-size: auto;
-    // aspect-ratio: 770 / 715;
-    // border-radius: 16px;
     object-fit: cover;
   }
 
   @media (width < 768px) {
+
+    margin-block-end: 27vi;
+
     &__container {
-      row-gap: 32px;
     }
 
     &__top,
     &__bottom {
       flex-direction: column;
-      row-gap: 32px;
+      row-gap: 8.6vi;
     }
 
     &__list-host {
@@ -122,34 +109,47 @@ const items = [
   }
 }
 
-.section-header {
-  &__title {
-    font-size: clamp(32px, calc(6px + 2.92vi), 62px);
-    font-weight: 400;
-    line-height: 1.45;
-    text-transform: uppercase;
-    flex-basis: 0;
-    flex-grow: 1;
-    min-inline-size: 0;
+.header {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 
-    &_highlight {
-      font-weight: 500;
+  &__title {
+    font-size: min(62px, 3.3vi);
+    font-weight: 600;
+    line-height: 1.4;
+    text-transform: uppercase;
+
+    &-highlight {
       color: var(--color-accent-primary);
     }
   }
 
   &__description {
-    font-size: clamp(14px, calc(-4px + 1.25vi), 20px);
-    color: var(--color-text-secondary);
-    line-height: 1.75em;
+    font-size: min(20px, 1vi);
     font-weight: 400;
+    line-height: calc(35/20);
     font-style: italic;
-    align-self: center;
-    flex-basis: 0;
-    flex-grow: 1;
-    min-inline-size: 0;
+    color: var(--color-text-secondary);
+    margin-block-start: 0.83vi;
+  }
+
+  @media (width < 768px) {
+    grid-template-columns: 1fr;
+    gap: 8.5vi;
+    margin-block-end: 12vi;
+
+    &__title {
+      font-size: 8.5vi;
+      letter-spacing: -0.035em;
+
+    }
+
+    &__description {
+      font-size: 4.28vi;
+    }
   }
 }
+
 
 .list {
   display: flex;
@@ -166,62 +166,78 @@ const items = [
   flex-basis: 0;
   flex-grow: 1;
   min-inline-size: 0;
-  container-type: inline-size;
 
   &__item {
     position: relative;
     inline-size: 100%;
 
-    &::before {
-      content: '';
-      position: absolute;
-      inset-block-start: 0.8cqb;
-      inset-inline-start: 0;
-      display: block;
-      inline-size: 2.6cqmin;
-      block-size: auto;
-      aspect-ratio: 1 / 1;
-      background-image: url('@/assets/icons/list-marker.svg');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
 
     &_title {
-      font-size: clamp(18px, 3.637cqi, 28px);
-      font-weight: 600;
-      margin-block-end: 1.3cqmin;
+      position: relative;
+      font-size: min(28px, 1.46vi);
+      display: inline-flex;
+      vertical-align: middle;
+      font-weight: 700;
+      line-height: 1;
       color: var(--color-accent-primary);
       text-transform: uppercase;
-      margin-inline-start: 3.5cqmin;
+      margin-block-end: min(10px, 0.5vi);
+      margin-inline-start: 1.5vi;
+
+      &::before {
+        content: '';
+        inset-block: 0;
+        position: absolute;
+        inset-inline-start: -1.5vi;
+        margin-block: auto;
+        inline-size: min(20px, 1.05vi);
+        block-size: auto;
+        aspect-ratio: 1 / 1;
+        background-image: url('@/assets/icons/list-marker.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
     }
 
     &_description {
-      font-size: clamp(16px, 2.78cqi, 20px);
-      line-height: 1.75;
+      font-size: min(20px, 1.05vi);
       font-weight: 400;
+      line-height: calc(35/20);
+      color: var(--color-text-primary);
+      
     }
   }
-}
-
-@media (width < 768px) {
-  .list {
+  @media (width < 768px) {
+    order: 2;
+  
     margin-block-start: 0;
-
+  
     &__item {
-      &::before {
-        inset-block-start: 1.3cqmin;
-        inline-size: 20px;
-      }
 
+  
       &_title {
-        margin-inline-start: 32px;
+        font-size: 4.8vi;
+        line-height: calc(30 / 18);
+        margin-block-end: 2.84vi;
+        gap: 2.84vi;
+        margin-inline-start: 9.5vi;
+        
+        &::before {
+          inline-size: 5.3vi;
+          inset-inline-start: -9.5vi;
+          background-position-y: 1.6vi;
+        }
       }
-
+      
       &_description {
-        margin-inline-start: 32px;
+        font-size: 4.28vi;
+        line-height: calc(26 / 16);
+        margin-inline-start: 9.5vi;
       }
     }
+  
   }
 }
+
 </style>

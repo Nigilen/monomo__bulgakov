@@ -38,6 +38,13 @@ const items = [
 <style scoped lang="scss">
 
 .stats {
+
+  margin-block-end: 12vi;
+
+  @media (width < 768px) {
+    margin-block-end: 27vi;
+  }
+
   &__list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);

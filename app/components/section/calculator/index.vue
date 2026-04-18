@@ -27,6 +27,8 @@
   grid-template-columns: auto min(948px, 49.38vi);
   column-gap: 80px;
 
+  margin-block-end: 12vi;
+
   &__content {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
@@ -63,6 +65,8 @@
     grid-template-rows: auto auto auto;
     column-gap: 0;
     row-gap: 8.5vi;
+
+    margin-block-end: 27vi;
 
     &__content {
       grid-column: 1 / -1;

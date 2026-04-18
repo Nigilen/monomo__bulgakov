@@ -143,16 +143,16 @@ const priceIconColors = computed(() => {
 .item {
   display: flex;
   flex-direction: column;
-  padding-block-start: clamp(10px, 1.75vi, 30px);
-  padding-block-end: 40px;
-  padding-inline: clamp(16px, 2.1vi, 40px);
+  padding-block-start: min(30px, 1.6vi);
+  padding-block-end: min(40px, 2.1vi);
+  padding-inline: min(40px, 2.1vi);
   border: 1px solid var(--color-border-primary);
   border-radius: var(--border-radius-primary);
-  inline-size: clamp(343px, 31.3vi, 600px);
+  inline-size: min(600px, 31.3vi);
   container-type: inline-size;
-  row-gap: min(45px, 1.4vi);
   flex-shrink: 0;
   flex-grow: 1;
+  background-color: var(--color-background-secondary);
 
   &--slider {
     flex-grow: 0;
@@ -161,50 +161,50 @@ const priceIconColors = computed(() => {
     -webkit-touch-callout: none;
   }
   
-
-
-
   &__price-icon {
     display: block;
-    inline-size: clamp(64px, 22.3cqi, 115px);
-    block-size: clamp(64px, 22.3cqi, 115px);
+    inline-size: 22cqi;
+    block-size: auto;
+    aspect-ratio: 1 / 1;
   }
 
   &__header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: clamp(8px, 2.1cqmin, 11px);
+    row-gap: 2cqi;
+    margin-block-end: 5.8cqi;
 
     &-title {
-      font-size: min(28px, 5.15cqi);
+      font-size: 5cqi;
       font-weight: 600;
       color: var(--color-accent-primary);
       text-transform: uppercase;
     }
 
     &-subtitle {
-      font-size: min(18px, 3.65cqi);
+      font-size: 3.5cqi;
       color: var(--color-text-secondary);
     }
   }
 
-
-
   &__specs {
     display: flex;
     flex-direction: column;
-    row-gap: min(36px, 1.67vi);
+    row-gap: 7cqi;
+    margin-block-end: 9cqi;
+
   }
 
   &__row {
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
+    row-gap: 2cqi;
 
     &-term {
       position: relative;
-      font-size: min(20px, 4.13cqi);
+      font-size: 3.85cqi;
+      line-height: 1;
       color: var(--color-text-secondary);
 
       &::after {
@@ -212,14 +212,15 @@ const priceIconColors = computed(() => {
         position: relative;
         display: block;
         inline-size: 100%;
-        inset-block-start: 0.2em;
+        inset-block-start: 0.25em;
         block-size: 1px;
         background-color: var(--color-border-primary);
       }
     }
 
     &-definition {
-      font-size: min(18px, 3.65cqi);
+      font-size: 3.5cqi;
+      line-height: 1;
       color: var(--color-text-primary);
     }
   }
@@ -228,32 +229,90 @@ const priceIconColors = computed(() => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    row-gap: clamp(16px, 5cqmin, 25px);
+    row-gap: 4.825cqi;
     margin-block-start: auto;
 
     &-price {
-      font-size: clamp(26px, 6.5cqmin, 28px);
+      font-size: 5.4cqi;
       font-weight: 600;
       color: var(--color-text-primary);
       text-transform: uppercase;
     }
   }
 
+  @media (width < 768px) {
+    inline-size: max(343px, 92dvi);
+    padding-block-start: 2.7vi;
+    padding-inline: 4.3vi;
+    padding-block-end: 11vi;
+
+    &__header {
+      row-gap: 2.6cqi;
+      margin-block-end: 14cqi;
+
+      &-title {
+        font-size: 7.75cqi;
+      }
+      &-subtitle {
+        font-size: 5.2cqi;
+      }
+    }
+
+    &__specs {
+      margin-block-end: 14cqi;
+      row-gap: 8cqi;
+    }
+
+    &__row {
+      row-gap: 3.3cqi;
+      
+      &-term {
+        font-size: 5.8cqi;
+      }
+      &-definition {
+        font-size: 5.2cqi;
+      }
+    }
+
+    &__footer {
+      row-gap: 5.2cqi;
+
+      &-price {
+        font-size: 8.4cqi;
+      }
+
+      .button {
+        inline-size: 100%;
+        border-radius: 5cqi;
+
+        &__label {
+          font-size: 5.2cqi;
+        }
+
+        &::after {
+          border-radius: 5cqi;
+        }
+
+        &::before {
+          border-radius: 5cqi;
+        }
+      }
+    }
+  }
 }
 
 .button {
   font-weight: 500;
-  line-height: 1.3;
-  inline-size: clamp(225px, 18vi, 350px);
+  inline-size: 74.6cqi;
+  line-height: 1;
   block-size: auto;
-  aspect-ratio: 350 / 100;
-  border-radius: 0.9vi;
+  aspect-ratio: 386 / 91;
+  border-radius: 3cqi;
   text-transform: uppercase;
   cursor: pointer;
-  container-type: inline-size;
 
   &__label {
-    font-size: 6.1cqi;
+    font-size: 4cqi;
     position: relative;
     z-index: 1;
   }
@@ -270,22 +329,25 @@ const priceIconColors = computed(() => {
       box-sizing: content-box;
       inline-size: 100%;
       block-size: 100%;
-      border: 2px solid var(--color-border-secondary);
-      border-radius: 0.9vi;
+      border: 0.4cqi solid var(--color-border-secondary);
+      border-radius: 3cqi;
       z-index: 0;
     }
 
     &::before {
       content: '';
       position: absolute;
-      inset: -0.6cqi;
+      inset: -0.4cqi;
       box-sizing: content-box;
       inline-size: 100%;
-      block-size: calc(100% + 2cqi);
-      border: 0.6cqi solid #7C5E49;
-      border-radius: 0.9vi;
+      block-size: calc(100% + 1.5cqi);
+      border: 0.4cqi solid #7C5E49;
+      border-radius: 3cqi;
       z-index: 0;
     }
+  }
+
+  @media (width < 768px) {
   }
 }
 

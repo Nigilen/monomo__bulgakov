@@ -9,12 +9,48 @@ import {
   type MaybeRefOrGetter,
 } from 'vue';
 
+/**
+ * Слайдер с центрированием активного слайда по ширине viewport.
+ *
+ * Режимы:
+ * - без loop: крайние слайды, resistance при перетаскивании;
+ * - loop: кольцо по индексу;
+ * - loopTripleMode: три копии набора в DOM, «бесшовный» переход через мгновенный сдвиг
+ *   индекса после анимации (снап по transitionend + запасной таймер).
+ */
+
+const isTransformTransitionProperty = (name: string) =>
+  name === 'transform' || name === '-webkit-transform';
+
 const SWIPE_THRESHOLD_PX = 60;
 const AXIS_LOCK_PX = 12;
+
+/** Длительность анимации transform трека (согласовать с navigationCooldownMs в секции-обёртке). */
+const TRACK_TRANSFORM_DURATION_S = 0.35;
+const TRACK_TRANSFORM_EASING = 'ease';
+
+/**
+ * Если transitionend не пришёл (редко), всё равно применить снап тройного цикла.
+ * Берём запас относительно длительности transition + небольшой буфер.
+ */
+const TRIPLE_SNAP_FALLBACK_MS = Math.round(TRACK_TRANSFORM_DURATION_S * 1000) + 70;
+
+/** Два кадра подряд — снять instant transition после применения transform без анимации. */
+const runAfterNextPaint = (fn: () => void) => {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(fn);
+  });
+};
 
 export type UsePriceSliderOptions = {
   initialActiveIndex?: number
   itemSelector?: string
+  loop?: boolean
+  /** Три полных набора слайдов подряд; activeIndex 0…3n−1, старт с n; снап после края */
+  loopTripleMode?: boolean
+  autoPlayIntervalMs?: number
+  /** Минимальный интервал между шагами по кнопкам/свайпу (мс); автоплей не ограничивается */
+  navigationCooldownMs?: number
 };
 
 export const usePriceSlider = (
@@ -22,11 +58,35 @@ export const usePriceSlider = (
   options?: UsePriceSliderOptions,
 ) => {
   const itemSelector = options?.itemSelector ?? '.item';
+  const loop = options?.loop ?? false;
+  const loopTripleMode = options?.loopTripleMode ?? false;
+  const autoPlayIntervalMs = options?.autoPlayIntervalMs;
+  const navigationCooldownMs = options?.navigationCooldownMs;
+
+  // --- Состояние навигации (ручной кулдаун) ---
+  const lastManualNavigationAtMs = ref(0);
+
+  const markManualNavigationTime = () => {
+    if (navigationCooldownMs && navigationCooldownMs > 0) {
+      lastManualNavigationAtMs.value = performance.now();
+    }
+  };
+
+  const isManualNavigationAllowed = () => {
+    if (!navigationCooldownMs || navigationCooldownMs <= 0) {
+      return true;
+    }
+    return performance.now() - lastManualNavigationAtMs.value >= navigationCooldownMs;
+  };
 
   const count = computed(() => Math.max(0, toValue(slideCount)));
   const lastIndex = computed(() => Math.max(0, count.value - 1));
 
+  // --- Индекс и визуальное состояние трека ---
   const activeIndex = ref(options?.initialActiveIndex ?? 1);
+  const instantTransition = ref(false);
+  const pendingTripleSnap = ref<'none' | 'thirdToMiddle' | 'firstToMiddle'>('none');
+  const skipInitialTransformAnimation = ref(loopTripleMode);
   const translateX = ref(0);
   const dragOffset = ref(0);
   const viewportRef = ref<HTMLElement | null>(null);
@@ -38,15 +98,33 @@ export const usePriceSlider = (
   const isDragActive = ref(false);
   const swipeAxisLocked = ref<'none' | 'horizontal' | 'vertical'>('none');
 
-  watch(lastIndex, (maxIdx) => {
-    if (activeIndex.value > maxIdx) {
-      activeIndex.value = maxIdx;
+  if (!loopTripleMode) {
+    watch(lastIndex, (maxIdx) => {
+      if (activeIndex.value > maxIdx) {
+        activeIndex.value = maxIdx;
+      }
+    }, { immediate: true });
+  }
+
+  const canGoPrev = computed(() => {
+    if (count.value < 2) {
+      return false;
     }
-  }, { immediate: true });
+    if (loopTripleMode) {
+      return true;
+    }
+    return loop ? true : activeIndex.value > 0;
+  });
 
-  const canGoPrev = computed(() => activeIndex.value > 0);
-
-  const canGoNext = computed(() => activeIndex.value < lastIndex.value);
+  const canGoNext = computed(() => {
+    if (count.value < 2) {
+      return false;
+    }
+    if (loopTripleMode) {
+      return true;
+    }
+    return loop ? true : activeIndex.value < lastIndex.value;
+  });
 
   const isDragPanning = computed(
     () => swipeAxisLocked.value === 'horizontal' && isDragActive.value,
@@ -57,8 +135,14 @@ export const usePriceSlider = (
     const style: Record<string, string> = {
       transform: `translate3d(${x}px, 0, 0)`,
     };
-    if (isDragPanning.value) {
+    if (
+      isDragPanning.value
+      || instantTransition.value
+      || skipInitialTransformAnimation.value
+    ) {
       style.transition = 'none';
+    } else {
+      style.transition = `transform ${TRACK_TRANSFORM_DURATION_S}s ${TRACK_TRANSFORM_EASING}`;
     }
     return style;
   });
@@ -85,18 +169,132 @@ export const usePriceSlider = (
     });
   };
 
-  const goPrev = () => {
-    if (!canGoPrev.value) {
-      return;
-    }
-    activeIndex.value -= 1;
+  const endInstantTransition = () => {
+    instantTransition.value = false;
   };
 
-  const goNext = () => {
-    if (!canGoNext.value) {
+  const applyPendingTripleSnap = () => {
+    if (!loopTripleMode) {
       return;
     }
-    activeIndex.value += 1;
+    if (instantTransition.value) {
+      return;
+    }
+    const n = count.value;
+    if (n < 2) {
+      return;
+    }
+    const shouldSnapThird
+      = pendingTripleSnap.value === 'thirdToMiddle' && activeIndex.value === 2 * n;
+    const shouldSnapFirst
+      = pendingTripleSnap.value === 'firstToMiddle' && activeIndex.value === n - 1;
+
+    const snapToIndex = (nextIndex: number) => {
+      pendingTripleSnap.value = 'none';
+      instantTransition.value = true;
+      activeIndex.value = nextIndex;
+      updatePosition();
+      runAfterNextPaint(endInstantTransition);
+    };
+
+    if (shouldSnapThird) {
+      snapToIndex(n);
+    } else if (shouldSnapFirst) {
+      snapToIndex(2 * n - 1);
+    }
+  };
+
+  const scheduleTripleSnapFallback = () => {
+    if (!loopTripleMode) {
+      return;
+    }
+    const startMs = performance.now();
+    const tick = (now: number) => {
+      if (pendingTripleSnap.value === 'none') {
+        return;
+      }
+      if (now - startMs >= TRIPLE_SNAP_FALLBACK_MS) {
+        applyPendingTripleSnap();
+        return;
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+
+  const autoPlayPaused = ref(false);
+  const autoPlayAnchorMs = ref(0);
+
+  const goPrev = () => {
+    if (count.value < 2) {
+      return;
+    }
+    if (!isManualNavigationAllowed()) {
+      return;
+    }
+    if (loopTripleMode) {
+      const n = count.value;
+      if (activeIndex.value <= 0) {
+        return;
+      }
+      pendingTripleSnap.value = activeIndex.value === n ? 'firstToMiddle' : 'none';
+      activeIndex.value -= 1;
+      updatePosition();
+      if (pendingTripleSnap.value === 'firstToMiddle' && activeIndex.value === n - 1) {
+        scheduleTripleSnapFallback();
+      }
+    } else if (loop) {
+      activeIndex.value = (activeIndex.value - 1 + count.value) % count.value;
+    } else if (!canGoPrev.value) {
+      return;
+    } else {
+      activeIndex.value -= 1;
+    }
+    markManualNavigationTime();
+    if (autoPlayIntervalMs && autoPlayIntervalMs > 0) {
+      autoPlayAnchorMs.value = 0;
+    }
+  };
+
+  const goNext = (fromAutoplay?: boolean) => {
+    if (count.value < 2) {
+      return;
+    }
+    const isFromAutoplay = fromAutoplay === true;
+    if (!isFromAutoplay && !isManualNavigationAllowed()) {
+      return;
+    }
+    if (loopTripleMode) {
+      const n = count.value;
+      // Уход из третьей копии в среднюю без визуального скачка
+      if (activeIndex.value >= 2 * n) {
+        instantTransition.value = true;
+        activeIndex.value -= n;
+        updatePosition();
+        runAfterNextPaint(endInstantTransition);
+      }
+      if (activeIndex.value >= 3 * n - 1) {
+        return;
+      }
+      pendingTripleSnap.value = activeIndex.value === 2 * n - 1 ? 'thirdToMiddle' : 'none';
+      activeIndex.value += 1;
+      updatePosition();
+      if (pendingTripleSnap.value === 'thirdToMiddle' && activeIndex.value === 2 * n) {
+        scheduleTripleSnapFallback();
+      }
+    } else if (loop) {
+      activeIndex.value = (activeIndex.value + 1) % count.value;
+    } else if (!canGoNext.value) {
+      return;
+    } else {
+      activeIndex.value += 1;
+    }
+    if (!isFromAutoplay) {
+      markManualNavigationTime();
+    }
+    if (autoPlayIntervalMs && autoPlayIntervalMs > 0) {
+      autoPlayAnchorMs.value = 0;
+    }
   };
 
   const clearTextSelection = () => {
@@ -107,6 +305,9 @@ export const usePriceSlider = (
   };
 
   const applyEdgeResistance = (delta: number) => {
+    if (loop || loopTripleMode) {
+      return delta;
+    }
     if (activeIndex.value === 0 && delta > 0) {
       return delta * 0.35;
     }
@@ -114,6 +315,37 @@ export const usePriceSlider = (
       return delta * 0.35;
     }
     return delta;
+  };
+
+  let autoPlayRafId: number | null = null;
+
+  const stopAutoPlayLoop = () => {
+    if (autoPlayRafId !== null) {
+      cancelAnimationFrame(autoPlayRafId);
+      autoPlayRafId = null;
+    }
+  };
+
+  const runAutoPlayFrame = (now: number) => {
+    autoPlayRafId = requestAnimationFrame(runAutoPlayFrame);
+    if (!autoPlayIntervalMs || count.value < 2) {
+      return;
+    }
+    if (loopTripleMode && instantTransition.value) {
+      return;
+    }
+    if (autoPlayPaused.value) {
+      autoPlayAnchorMs.value = 0;
+      return;
+    }
+    if (autoPlayAnchorMs.value === 0) {
+      autoPlayAnchorMs.value = now;
+      return;
+    }
+    if (now - autoPlayAnchorMs.value >= autoPlayIntervalMs) {
+      goNext(true);
+      autoPlayAnchorMs.value = now;
+    }
   };
 
   const isPrimaryPointerButton = (event: PointerEvent) => event.button === 0;
@@ -144,6 +376,8 @@ export const usePriceSlider = (
       return;
     }
 
+    autoPlayPaused.value = true;
+
     activePointerId.value = event.pointerId;
     pointerStartX.value = event.clientX;
     pointerStartY.value = event.clientY;
@@ -172,6 +406,8 @@ export const usePriceSlider = (
       if (Math.abs(dy) >= Math.abs(dx)) {
         releaseActivePointer(event);
         resetDragGesture();
+        autoPlayPaused.value = false;
+        autoPlayAnchorMs.value = 0;
         return;
       }
       swipeAxisLocked.value = 'horizontal';
@@ -194,22 +430,53 @@ export const usePriceSlider = (
     if (swipeAxisLocked.value === 'horizontal' && isDragActive.value) {
       const delta = dragOffset.value;
       if (delta < -SWIPE_THRESHOLD_PX && canGoNext.value) {
-        activeIndex.value += 1;
+        goNext();
       } else if (delta > SWIPE_THRESHOLD_PX && canGoPrev.value) {
-        activeIndex.value -= 1;
+        goPrev();
       }
     }
 
     releaseActivePointer(event);
     resetDragGesture();
+    autoPlayPaused.value = false;
+    autoPlayAnchorMs.value = 0;
+  };
+
+  const onTrackTransitionEnd = (event: TransitionEvent) => {
+    if (!loopTripleMode) {
+      return;
+    }
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+    if (!isTransformTransitionProperty(event.propertyName)) {
+      return;
+    }
+    applyPendingTripleSnap();
   };
 
   let resizeObserver: ResizeObserver | null = null;
   let pointerMoveCleanup: (() => void) | null = null;
+  let transitionEndCleanup: (() => void) | null = null;
 
   watch(activeIndex, () => {
     nextTick(scheduleUpdatePosition);
   });
+
+  watch(trackRef, (element) => {
+    transitionEndCleanup?.();
+    transitionEndCleanup = null;
+    if (!element || !loopTripleMode) {
+      return;
+    }
+    const handler = (event: TransitionEvent) => {
+      onTrackTransitionEnd(event);
+    };
+    element.addEventListener('transitionend', handler);
+    transitionEndCleanup = () => {
+      element.removeEventListener('transitionend', handler);
+    };
+  }, { immediate: true });
 
   watch(viewportRef, (element) => {
     pointerMoveCleanup?.();
@@ -228,9 +495,14 @@ export const usePriceSlider = (
 
   onMounted(() => {
     nextTick(() => {
-      scheduleUpdatePosition();
+      updatePosition();
       requestAnimationFrame(() => {
-        scheduleUpdatePosition();
+        updatePosition();
+        if (loopTripleMode) {
+          requestAnimationFrame(() => {
+            skipInitialTransformAnimation.value = false;
+          });
+        }
       });
       resizeObserver = new ResizeObserver(() => {
         scheduleUpdatePosition();
@@ -238,10 +510,18 @@ export const usePriceSlider = (
       if (viewportRef.value) {
         resizeObserver.observe(viewportRef.value);
       }
+      if (autoPlayIntervalMs && autoPlayIntervalMs > 0) {
+        autoPlayAnchorMs.value = 0;
+        stopAutoPlayLoop();
+        autoPlayRafId = requestAnimationFrame(runAutoPlayFrame);
+      }
     });
   });
 
   onUnmounted(() => {
+    stopAutoPlayLoop();
+    transitionEndCleanup?.();
+    transitionEndCleanup = null;
     resizeObserver?.disconnect();
     resizeObserver = null;
     pointerMoveCleanup?.();

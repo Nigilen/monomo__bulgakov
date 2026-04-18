@@ -37,12 +37,6 @@ const items = [
 
 <template>
   <section class="advantages container">
-    <!-- <ul class="advantages__list"> -->
-      <!-- <li class="advantages__item" v-for="item in items" :key="item.id">
-        <NuxtIcon class="advantages__item-icon" name="icons:practicality" />
-        <h3 class="advantages__item-title">{{ item.title }}</h3>
-        <p class="advantages__item-description">{{ item.description }}</p>
-      </li> -->
 
     <ul class="list">
       <li class="list__item" v-for="item in items" :key="item.id">
@@ -50,11 +44,18 @@ const items = [
         <p class="list__item-description">{{ item.description }}</p>
       </li>
     </ul>
-    <!-- </ul> -->
   </section>
 </template>
 
 <style scoped lang="scss">
+
+.advantages {
+  margin-block-end: 5.2vi;
+  
+  @media (width < 768px) {
+    margin-block-end: 16vi;
+  }
+}
 
 .list {
   display: grid;

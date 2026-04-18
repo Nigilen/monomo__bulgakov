@@ -38,13 +38,12 @@ const items = [
   &__list {
     display: flex;
     align-items: center;
-    gap: 3.27cqi;
+    gap: 3.13vi;
   }
 
   &__link {
-    font-size: 1.2cqi;
+    font-size: 1.15vi;
     font-weight: 500;
-    transition: color 0.3s ease;
     white-space: nowrap;
 
     &:hover {
@@ -57,11 +56,11 @@ const items = [
     &__list {
       flex-direction: column;
       align-items: flex-start;
-      gap: 30px;
+      gap: 8vi;
     }
 
     &__link {
-      font-size: 20px;
+      font-size: 5.35vi;
     }
   }
 }

@@ -88,12 +88,16 @@
 <style scoped lang="scss">
 
 .cta {
+  margin-block-end: 12vi;
+
   display: grid;
   grid-template-columns: 6fr 5fr;
   justify-content: space-between;
   column-gap: min(30px, 1.6vi);
 
   @media (width < 768px) {
+    margin-block-end: 27vi;
+
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
     row-gap: 8vi;
@@ -320,5 +324,7 @@
     block-size: 100%;
   }
 }
+
+
 
 </style>

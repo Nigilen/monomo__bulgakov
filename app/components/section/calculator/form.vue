@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-const area = ref(50);
+const area = ref(0);
 
 
 </script>
@@ -52,8 +52,6 @@ const area = ref(50);
 </template>
 
 <style scoped lang="scss">
-
-
 .form {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -115,7 +113,7 @@ const area = ref(50);
       align-items: flex-end;
       margin-block: auto 0;
     }
-    
+
   }
 
 
@@ -124,7 +122,7 @@ const area = ref(50);
     &--tariff {
       display: none;
 
-      &:checked + .form__label--tariff {
+      &:checked+.form__label--tariff {
         background-color: var(--color-accent-primary);
         color: var(--color-text-primary);
       }
@@ -133,7 +131,7 @@ const area = ref(50);
     &--type {
       display: none;
 
-      &:checked + .form__label--type {
+      &:checked+.form__label--type {
         &::before {
           background-color: var(--color-accent-primary);
         }
@@ -237,8 +235,9 @@ const area = ref(50);
     &--area {
       position: absolute;
       inset-block-start: -4cqi;
-      inset-inline-start: 50cqi;
-      transform: translateX(calc(var(--area-value) * 1cqi - 50cqi - 2.5cqi));
+      inset-inline-start: 0;
+      text-align: center;
+      transform: translateX(calc(var(--area-value) * 0.94cqi));
       font-size: 2.65cqi;
       font-weight: 400;
       line-height: 1;
@@ -261,12 +260,12 @@ const area = ref(50);
         inline-size: 8cqi;
         border-width: 1.5cqi;
       }
-      
+
       &--area::-moz-range-thumb {
         inline-size: 8cqi;
         border-width: 1.5cqi;
       }
-      
+
       &--area::-ms-thumb {
         inline-size: 8cqi;
         border-width: 1.5cqi;
@@ -280,20 +279,18 @@ const area = ref(50);
         gap: 5cqi;
       }
 
-      &--type {
-
-      }
+      &--type {}
 
       &--price {
         grid-column: 1 / -1;
         grid-row: 4 / 5;
         align-items: center;
-      } 
+      }
 
     }
 
     &__options {
-      
+
       &--tariff {
         flex-grow: 0;
         flex-shrink: 1;
@@ -325,7 +322,7 @@ const area = ref(50);
 
     &__label {
       font-size: 5.15cqi;
-      
+
       &--tariff {
         inline-size: 100%;
       }
@@ -338,10 +335,10 @@ const area = ref(50);
 
       &--area {
         font-size: 5.15cqi;
-        transform: translateX(calc(var(--area-value) * 1cqi - 50cqi - 5.15cqi));
+        inset-block-start: -8cqi;
+        transform: translateX(calc(var(--area-value) * 0.9cqi));
       }
     }
   }
 }
-
 </style>

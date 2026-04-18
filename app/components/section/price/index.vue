@@ -19,19 +19,13 @@ const {
 
 <template>
   <section class="price">
-    <div class="price__top container">
-      <h2 class="section-header__title">
-        <template v-for="(segment, index) in priceSectionHeaderTitleSegments" :key="index">
-          <span
-            v-if="segment.highlight"
-            class="section-header__title_highlight"
-          >{{ segment.text }}</span>
-          <span v-else>{{ segment.text }}</span>
-        </template>
-      </h2>
-      <p class="section-header__description">
-        Все пакеты включают работу и материалы. Цена фиксированная и не меняется в процессе.
-      </p>
+    <div class="price__top header container">
+        <h2 class="header__title">
+          Наши 
+          <span class="header__title-highlight">тарифы и цены</span> 
+          на услуги
+        </h2>
+        <p class="header__description">Все пакеты включают работу и материалы. Цена фиксированная и не меняется в процессе.</p>
     </div>
 
     <div class="price__body">
@@ -101,7 +95,7 @@ const {
 
 <style scoped lang="scss">
 .price {
-  margin-block-end: var(--section-margin-block-end);
+  margin-block-end: 12vi;
 
   &__top {
     display: flex;
@@ -192,7 +186,7 @@ const {
 
     @media (width < 768px) {
       inset-block-start: auto;
-      inset-block-end: -25px;
+      inset-block-end: -8vi;
       transform: none;
     }
 
@@ -206,8 +200,9 @@ const {
       background-size: 100% 100%;
 
       @media (width < 768px) {
+        background-image: none;
         inset-inline-start: auto;
-        inset-inline-end: calc(16px + 50px + 12px);
+        inset-inline-end: calc(16px + 12.8vi + 12px);
       }
     }
 
@@ -236,8 +231,9 @@ const {
   &__arrow-graphic_desktop-prev {
     @media (width >= 768px) {
       display: block;
-      block-size: 253px;
-      inline-size: 57px;
+      inline-size: min(56px, 2.9vi);
+      block-size: auto;
+      aspect-ratio: 57 / 253;
       transform: scaleX(-1);
       margin-inline: 9vw auto;
     }
@@ -250,8 +246,9 @@ const {
   &__arrow-graphic_desktop-next {
     @media (width >= 768px) {
       display: block;
-      block-size: 253px;
-      inline-size: 57px;
+      inline-size: min(56px, 2.9vi);
+      block-size: auto;
+      aspect-ratio: 57 / 253;
       margin-inline: auto 9vw;
     }
 
@@ -267,8 +264,9 @@ const {
 
     @media (width < 768px) {
       display: block;
-      inline-size: 50px;
-      block-size: 50px;
+      inline-size: 12.8vi;
+      aspect-ratio: 1 / 1;
+      block-size: auto;
     }
   }
 
@@ -279,39 +277,58 @@ const {
 
     @media (width < 768px) {
       display: block;
-      inline-size: 50px;
-      block-size: 50px;
+      inline-size: 12.8vi;
+      aspect-ratio: 1 / 1;
+      block-size: auto;
       transform: scaleX(-1);
     }
   }
+
+  @media (width < 768px) {
+    margin-block-end: 27vi;
+  }
 }
 
-.section-header {
-  &__title {
-    font-size: clamp(32px, calc(6px + 2.92vi), 62px);
-    font-weight: 400;
-    line-height: 1.45;
-    text-transform: uppercase;
-    flex-basis: 0;
-    flex-grow: 1;
-    min-inline-size: 0;
+.header {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1vi;
+  margin-block-end: min(75px, 3.9vi);
 
-    &_highlight {
-      font-weight: 500;
+  &__title {
+    font-size: min(62px, 3.3vi);
+    font-weight: 600;
+    line-height: 1.4;
+    text-transform: uppercase;
+
+    &-highlight {
       color: var(--color-accent-primary);
     }
   }
 
   &__description {
-    font-size: clamp(14px, calc(-4px + 1.25vi), 20px);
-    color: var(--color-text-secondary);
-    line-height: 1.75em;
+    font-size: min(20px, 1vi);
     font-weight: 400;
+    line-height: calc(35/20);
     font-style: italic;
-    align-self: center;
-    flex-basis: 0;
-    flex-grow: 1;
-    min-inline-size: 0;
+    color: var(--color-text-secondary);
+    margin-block-start: 0.83vi;
+  }
+
+  @media (width < 768px) {
+    grid-template-columns: 1fr;
+    gap: 8.5vi;
+    margin-block-end: 12vi;
+
+    &__title {
+      font-size: 8.5vi;
+      letter-spacing: -0.035em;
+
+    }
+
+    &__description {
+      font-size: 4.28vi;
+    }
   }
 }
 </style>

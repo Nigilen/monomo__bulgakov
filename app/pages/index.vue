@@ -4,24 +4,22 @@
 </script>
 
 <template>
-  <!-- [?] Header -->
-  <!-- [?] <SectionHero /> -->
-  <!-- [?] <SectionApproach /> -->
-  <!-- [?] <SectionPrice /> -->
-  <!-- [v] <SectionCta /> -->
-  <!-- [v] <SectionBonus /> -->
-  <!-- [?] <SectionCalculator /> -->
-  <!-- [v] <SectionAbout /> -->
-  <!-- [v] <SectionAdvantages /> -->
-  <!-- [v] <SectionStats /> -->
-  <!-- [v] <SectionPortfolio /> -->
-  <!-- [?] <SectionReviews /> -->
-  <!-- [v] <SectionRoadmap /> -->
-  <!-- [v] <SectionFaq /> -->
-<SectionRequest />
-  <!-- [ ] Footer -->
-  <!-- [ ] Popup -->
-  <!-- [?] Mobile Menu -->
+  <SectionHero />
+  <SectionApproach />
+  <SectionPrice />
+  <SectionCta />
+  <SectionBonus />
+  <SectionCalculator />
+  <SectionAbout />
+  <SectionAdvantages />
+  <SectionStats />
+  <SectionPortfolio />
+  <SectionReviews />
+  <SectionRoadmap />
+  <SectionFaq />
+  <SectionRequest />
+  <!-- UiModal -->
+  <!-- <ModalsThank /> -->
 </template>
 
 <style scoped lang="scss">

@@ -203,6 +203,7 @@ const items = [
       padding-block-start: 16vi;
       padding-block-end: 8.55vi;
       row-gap: 6.4vi;
+      overflow: hidden;
 
       &:first-child {
 

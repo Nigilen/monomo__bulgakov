@@ -423,7 +423,7 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
       display: flex;
       position: absolute;
       inset-block-end: -10vi;
-      inset-inline-end: 0;
+      inset-inline-end: 4.25vi;;
       z-index: 1;
       gap: 10px;
 

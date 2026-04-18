@@ -120,22 +120,22 @@
 
   &__image {
     border-radius: 16px;
-    block-size: 100%;
     object-fit: cover;
-
+    
     &--first {
       grid-column: 1 / 2;
       grid-row: 1 / 2;
     }
-
+    
     &--second {
       grid-column: 1 / 2;
       grid-row: 2 / 3;
     }
-
+    
     &--third {
       grid-column: 2 / 3;
       grid-row: span 2;
+      block-size: 100%;
     }
   }
 }

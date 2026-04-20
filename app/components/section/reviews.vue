@@ -320,17 +320,17 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
 
   @media (width < 768px) {
     grid-template-columns: 1fr;
-    gap: 8.5vi;
-    margin-block-end: 12vi;
+    gap: 32px;
+    margin-block-end: 45px;
 
     &__title {
-      font-size: 8.5vi;
+      font-size: 32px;
       letter-spacing: -0.035em;
 
     }
 
     &__description {
-      font-size: 4.28vi;
+      font-size: 16px;
     }
   }
 }
@@ -339,7 +339,7 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
   margin-block-end: 12vi;
 
   @media (width < 768px) {
-    margin-block-end: 27vi;
+    margin-block-end: 100px;
   }
 
   &__viewport {
@@ -422,14 +422,14 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
     &-controls {
       display: flex;
       position: absolute;
-      inset-block-end: -10vi;
-      inset-inline-end: 4.25vi;;
+      inset-block-end: -50px;
+      inset-inline-end: 16px;
       z-index: 1;
       gap: 10px;
 
       &__button {
         position: static;
-        inline-size: 13.5cqi;
+        inline-size: 50px;
         transform: none;
         inset-block-start: 0;
         inset-inline-end: 0;
@@ -530,29 +530,29 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
   @media (width < 768px) {
 
     &-item {
-      padding-inline-start: clamp(16px, 4.27vi, 32px);
-      padding-inline-end: clamp(16px, 4.27vi, 32px);
+      padding-inline-start: 16px;
+      padding-inline-end: 16px;
     }
 
     &-item__card {
       display: flex;
       flex-direction: column;
-      gap: 4.27vi;
-      padding: 4.27vi;
-      padding-block-end: 8.54vi;
+      gap: 16px;
+      padding: 16px;
+      padding-block-end: 32px;
       inline-size: 100%;
-      border-radius: 4.3vi;
+      border-radius: 16px;
     }
 
     &-item__video {
       inline-size: 100%;
       block-size: auto;
       aspect-ratio: 1 / 1;
-      border-radius: 4.3vi;
+      border-radius: 16px;
     }
 
     &-item__video-button-icon {
-      inline-size: 30cqi;
+      inline-size: 30px;
     }
 
     &-item__content {
@@ -561,20 +561,20 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
     }
 
     &-item__author {
-      font-size: 5.85cqi;
+      font-size: 18px;
       font-weight: 600;
-      margin-block-end: 2.6cqi;
+      margin-block-end: 16px;
     }
 
     &-item__stars {
-      inline-size: 30cqi;
+      inline-size: 100px;
       block-size: auto;
       aspect-ratio: 95 / 17;
-      margin-block-end: 4.05cqi;
+      margin-block-end: 16px;
     }
 
     &-item__description {
-      font-size: 5.2cqi;
+      font-size: 16px;
       line-height: calc(24 / 16);
     }
   }

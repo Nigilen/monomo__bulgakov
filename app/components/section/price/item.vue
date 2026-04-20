@@ -246,8 +246,12 @@ const priceIconColors = computed(() => {
     padding-inline: 16px;
     padding-block-end: 40px;
 
+    &__price-icon {
+      inline-size: 64px;
+    }
+
     &__header {
-      row-gap: 10px;
+      row-gap: 8px;
       margin-block-end: 40px;
 
       &-title {
@@ -281,22 +285,7 @@ const priceIconColors = computed(() => {
         font-size: 26px;
       }
 
-      .button {
-        inline-size: 100%;
-        border-radius: 16px;
-
-        &__label {
-          font-size: 16px;
-        }
-
-        &::after {
-          border-radius: 16px;
-        }
-
-        &::before {
-          border-radius: 16px;
-        }
-      }
+      
     }
   }
 }
@@ -348,6 +337,28 @@ const priceIconColors = computed(() => {
   }
 
   @media (width < 768px) {
+    inline-size: 100%;
+    border-radius: 16px;
+
+    &--secondary {
+      border-radius: 16px;
+
+      border-width: 2px;
+      inset: -2px;
+    }
+
+    &__label {
+      font-size: 16px;
+    }
+
+    &::after {
+      border-radius: 16px;
+
+    }
+
+    &::before {
+      border-radius: 16px;
+    }
   }
 }
 

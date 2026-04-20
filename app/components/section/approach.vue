@@ -190,7 +190,6 @@ const items = [
         inset-block: 0;
         position: absolute;
         inset-inline-start: -1.5vi;
-        margin-block: auto;
         inline-size: min(20px, 1.05vi);
         block-size: auto;
         aspect-ratio: 1 / 1;
@@ -227,7 +226,8 @@ const items = [
         &::before {
           inline-size: 20px;
           inset-inline-start: -34px;
-          background-position-y: 6px;
+          inset-block-start: 5px;
+          background-position: top;
         }
       }
       

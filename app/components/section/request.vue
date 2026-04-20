@@ -136,28 +136,27 @@
     margin-block-end: 0;
 
     &__title {
-      font-size: 8.5vi;
-      margin-block-end: 4.2vi;
+      font-size: 32px;
+      margin-block-end: 16px;
       inline-size: 100%;
     }
     
     
     &__description {
-      font-size: 4.5vi;
-      gap: 1.2vi;
+      font-size: 16px;
+      gap: 16px;
       inline-size: 100%;
 
       &-container {
         flex-direction: column;
         align-items: center;
-        gap: 1.2vi;
+        gap: 16px;
       }
 
       &-icon {
-        inline-size: min(47px, 12.6vi);
+        inline-size: 50px;
         block-size: auto;
-        aspect-ratio: 47 / 22;
-        margin-block-end: 4vi;
+        aspect-ratio: 30 / 16;
       }
     }
   }
@@ -274,34 +273,35 @@
   @media (width < 768px) {
     grid-column: 1 / -1;
     grid-row: 3 / 4;
-    padding: 4.2vi;
+    padding: 16px;
+    border-radius: 16px;
 
     &__title {
-      font-size: 7.8cqi;
-      margin-block-end: 13cqi;
+      font-size: 24px;
+      margin-block-end: 40px;
     }
 
     &__content {
-      gap: 8.5vi;
-      margin-block-end: 8.5vi;
+      gap: 32px;
+      margin-block-end: 32px;
 
       &-item {
         &-label {
-          font-size: 5.2cqi;
+          font-size: 16px;
         }
         &-input {
-          font-size: 5.2cqi;
-          padding: 0 0 2.6cqi 0;
-          border-bottom: 0.3cqi solid var(--color-border-secondary);
+          font-size: 16px;
+          padding: 0 0 8px 0;
+          border-bottom: 1px solid var(--color-border-secondary);
         }
       }
       &-button {
-        padding-block: 9cqi;
-        font-size: 5.2cqi;
-        border-radius: 5.2cqi;
+        padding-block: 32px;
+        font-size: 16px;
+        border-radius: 16px;
       }
       &-description {
-        font-size: 4.5cqi;
+        font-size: 14px;
       }
     }
   }
@@ -351,23 +351,23 @@
 
   @media (width < 768px) {
     &__title {
-      margin-block-end: 10.3cqi;
+      margin-block-end: 32px;
 
       &-first {
-        font-size: 5.2cqi;
+        font-size: 16px;
       }
       &-second {
-        font-size: 4.5cqi;
+        font-size: 14px;
       }
     }
     &__list {
-      gap: 4vi;
+      gap: 16px;
     }
 
     &__item {
       &-link {
         &-icon {
-          inline-size: 9.5cqi;
+          inline-size: 30px;
         }
       }
     }

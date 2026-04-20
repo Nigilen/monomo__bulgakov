@@ -173,17 +173,17 @@ onUnmounted(() => {
 
   @media (width < 768px) {
     grid-template-columns: 1fr;
-    gap: 8.5vi;
-    margin-block-end: 12vi;
+    gap: 32px;
+    margin-block-end: 45px;
 
     &__title {
-      font-size: 8.5vi;
+      font-size: 32px;
       letter-spacing: -0.035em;
 
     }
 
     &__description {
-      font-size: 4.28vi;
+      font-size: 16px;
     }
   }
 }
@@ -192,7 +192,7 @@ onUnmounted(() => {
   margin-block-end: 12vi;
 
   @media (width < 768px) {
-    margin-block-end: 47vi;
+    margin-block-end: 200px;
   }
 
   &__list {
@@ -371,13 +371,13 @@ onUnmounted(() => {
 
     &-item {
       flex-direction: column;
-      row-gap: 11vi;
+      row-gap: 32px;
       inline-size: 100%;
       flex-shrink: 0;
       flex-grow: 0;
-      flex-basis: 100cqi;
-      min-inline-size: 100cqi;
-      max-inline-size: 100cqi;
+      flex-basis: 100%;
+      min-inline-size: 100%;
+      max-inline-size: 100%;
       box-sizing: border-box;
 
       &:not(:first-child) {
@@ -421,7 +421,7 @@ onUnmounted(() => {
       }
 
       &__content {
-        padding: 4.25vi;
+        padding: 16px;
         inline-size: 100%;
         block-size: 100%;
         inset-inline-start: 0;
@@ -429,24 +429,24 @@ onUnmounted(() => {
       }
 
       &__title {
-        font-size: 5.7cqi;
-        padding-block-end: 5.05cqi;
-        margin-block-end: 7.55cqi;
+        font-size: 18px;
+        padding-block-end: 16px;
+        margin-block-end: 16px;
       }
 
       &__description {
-        font-size: 5.05cqi;
+        font-size: 16px;
         line-height: calc(24/16);
-        margin-block-end: 5.05cqi;
+        margin-block-end: 16px;
       }
 
       &__button {
-        font-size: 5.05cqi;
+        font-size: 16px;
         display: flex;
         align-items: center;
         margin-inline: auto 0;
         inline-size: 100%;
-        gap: 3cqi;
+        gap: 8px;
         justify-content: space-between;
         margin-block-start: auto;
 
@@ -485,6 +485,22 @@ onUnmounted(() => {
 
     &--flip {
       transform: rotate(180deg);
+    }
+  }
+
+  @media (width < 768px) {
+    inset-block-end: -100px;
+
+    &__button {
+      inline-size: 40px;
+      block-size: auto;
+      aspect-ratio: 1 / 1;
+    }
+
+    &__icon {
+      inline-size: 100%;
+      block-size: auto;
+      aspect-ratio: 1 / 1;
     }
   }
 }

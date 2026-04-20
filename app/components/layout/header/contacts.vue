@@ -111,15 +111,15 @@ const socials = [
     align-items: center;
     justify-content: center;
     margin-inline: auto;
-    gap: 9.3vi;
+    gap: 32px;
     inline-size: 100%;
 
     &__socials {
       margin-inline: 0;
-      gap: 5.5vi;
+      gap: 20px;
       
       &-link {
-        inline-size: 6.5vi;
+        inline-size: 20px;
       }
     }
 
@@ -128,19 +128,21 @@ const socials = [
     }
 
     &__phone {
-      font-size: 6vi;
+      font-size: 18px;
     }
 
     &__label {
-      font-size: 4.3vi;
+      font-size: 16px;
     }
 
 
     &__button {
       margin-inline: 0;
-      font-size: 4.3vi;
+      font-size: 16px;
+      aspect-ratio: none;
+      block-size: 80px;
       inline-size: 100%;
-      border-radius: 4.3vi;
+      border-radius: 16px;
     }
   }
 }

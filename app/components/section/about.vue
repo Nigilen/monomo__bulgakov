@@ -50,7 +50,7 @@
   margin-block-end: 5.2vi;
 
   @media (width < 768px) {
-    margin-block-end: 12vi;
+    margin-block-end: 100px;
   }
 }
 
@@ -83,17 +83,17 @@
 
   @media (width < 768px) {
     grid-template-columns: 1fr;
-    gap: 8.5vi;
-    margin-block-end: 12vi;
+    gap: 32px;
+    margin-block-end: 45px;
 
     &__title {
-      font-size: 8.5vi;
+      font-size: 32px;
       letter-spacing: -0.035em;
 
     }
 
     &__description {
-      font-size: 4.28vi;
+      font-size: 16px;
       justify-self: flex-start;
 
     }
@@ -200,12 +200,12 @@
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
     column-gap: 0;
-    row-gap: 12vi;
+    row-gap: 42px;
 
     &__image {
       grid-column: 1 / 2;
       grid-row: 1 / 2;
-      border-radius: 4.4vi;
+      border-radius: 16px;
       aspect-ratio: 1 / 1;
       object-fit: cover;
     }
@@ -213,18 +213,18 @@
     &__text {
       grid-column: 1 / 2;
       grid-row: 2 / 3;
-      gap: 8.5vi;
+      gap: 32px;
     }
 
     &__title {
-      font-size: 4.8vi;
+      font-size: 18px;
     }
 
     &__description {
-      font-size: 4.28vi;
+      font-size: 16px;
       flex-direction: column;
-      gap: 4.28vi;
-      font-size: 4.28vi;
+      gap: 16px;
+      font-size: 16px;
 
     }
 
@@ -233,15 +233,15 @@
       grid-row: 3 / 4;
 
       &-text {
-        font-size: 4.28vi;
-        padding-block: 7.5vi;
+        font-size: 16px;
+        padding-block: 26px;
 
       }
   
       &-author {
-        font-size: 7vi;    
-        inset-block-end: -4.5vi;
-        inset-inline-end: 0.5vi;
+        font-size: 24px;    
+        inset-block-end: -26px;
+        inset-inline-end: 16px;
       }
     }
 

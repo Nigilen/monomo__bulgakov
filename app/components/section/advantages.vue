@@ -53,7 +53,7 @@ const items = [
   margin-block-end: 5.2vi;
   
   @media (width < 768px) {
-    margin-block-end: 16vi;
+    margin-block-end: 100px;
   }
 }
 
@@ -102,20 +102,20 @@ const items = [
 
   @media (width < 768px) {
     grid-template-columns: 1fr;
-    gap: 8.5vi;
+    gap: 32px;
 
     &__item {
       &-title {
-        font-size: 4.8vi;
-        margin-block-end: 4.8vi;
+        font-size: 18px;
+        margin-block-end: 16px;
 
         &::before {
-          inline-size: 3.75vi;
+          inline-size: 20px;
         }
       }
 
       &-description {
-        font-size: 4.28vi;
+        font-size: 16px;
       }
     }
   }

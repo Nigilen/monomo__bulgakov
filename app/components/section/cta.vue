@@ -96,11 +96,11 @@
   column-gap: min(30px, 1.6vi);
 
   @media (width < 768px) {
-    margin-block-end: 27vi;
+    margin-block-end: 100px;
 
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
-    row-gap: 8vi;
+    row-gap: 33px;
 
     .images-group {
       order: 2;
@@ -196,15 +196,15 @@
   }
 
   @media (width < 768px) {
-    gap: 7cqi;
-    margin-block-end: 9.85cqi;
+    gap: 28px;
+    margin-block-end: 30px;
 
     &__title {
-      font-size: 10cqi;
+      font-size: 32px;
     }
 
     &__text {
-      font-size: 4.92cqi;
+      font-size: 16px;
     }
   }
 }
@@ -282,22 +282,22 @@
   @media (width < 768px) {
 
     &__input {
-      font-size: 5.18cqi;
+      font-size: 16px;
 
       &::placeholder {
-        font-size: 5.18cqi;
+        font-size: 16px;
       }
     }
 
     &__text {
-      font-size: 4.5cqi;
-      margin-block-end: 10cqi;
+      font-size: 16px;
+      margin-block-end: 32px;
     }
 
     &__button {
-      font-size: 4.92cqi;
-      margin-block-end: 10cqi;
-      block-size: 23.3cqi;
+      font-size: 16px;
+      margin-block-end: 32px;
+      block-size: 75px;
       border-radius: 16px;
     }
 
@@ -322,6 +322,15 @@
   &__icon {
     inline-size: 100%;
     block-size: 100%;
+  }
+
+  @media (width < 768px) {
+    gap: 16px;
+
+    &__link {
+      inline-size: 28px;
+      block-size: 28px;
+    }
   }
 }
 

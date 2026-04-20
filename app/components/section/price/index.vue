@@ -156,7 +156,6 @@ const {
     will-change: transform;
     user-select: none;
     -webkit-user-select: none;
-
   }
 
   &__arrow {

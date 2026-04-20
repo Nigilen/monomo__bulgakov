@@ -52,8 +52,8 @@
 
   @media (width < 768px) {
     flex-direction: column;
-    row-gap: min(42px, 11.2vi);
-    padding-block: min(102px, 27.2vi) min(26px, 7vi);
+    row-gap: 42px;
+    padding-block: 102px 26px;
   }
 }
 
@@ -79,18 +79,18 @@
 
   @media (width < 768px) {
     flex-direction: column;
-    row-gap: min(42px, 11.2vi);
+    row-gap: 42px;
 
     &__image {
-      inline-size: 44cqi;
+      inline-size: 150px;
     }
 
     &__caption {
       padding: 0;
       border: none;
       text-align: center;
-      font-size: 4.7cqi;
-      inline-size: 70cqi;
+      font-size: 16px;
+      inline-size: 240px;
       line-height: calc(24 / 16);
     }
   }
@@ -105,8 +105,8 @@
   text-align: center;
 
   @media (width < 768px) {
-    font-size: 4.7cqi;
-    inline-size: 80cqi;
+    font-size: 16px;
+    inline-size: 268px;
   }
 }
 .socials {
@@ -122,10 +122,10 @@
   }
 
   @media (width < 768px) {
-    gap: 8cqi;
+    gap: 20px;
 
     &__icon {
-      inline-size: 8cqi;
+      inline-size: 24px;
     }
   }
 }
@@ -150,10 +150,10 @@
   @media (width < 768px) {
 
     &__link {
-      font-size: 5.7cqi;
+      font-size: 18px;
     }
     &__description {
-      font-size: 4.7cqi;
+      font-size: 16px;
     }
   }
 }

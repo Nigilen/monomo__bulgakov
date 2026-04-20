@@ -42,7 +42,7 @@ const items = [
   margin-block-end: 12vi;
 
   @media (width < 768px) {
-    margin-block-end: 27vi;
+    margin-block-end: 100px;
   }
 
   &__list {
@@ -73,6 +73,9 @@ const items = [
   @media (width < 768px) {
     &__list {
       grid-template-columns: auto;
+      justify-content: stretch;
+      inline-size: 100%;
+      margin-inline: auto;
     }
 
     &__item {
@@ -82,11 +85,11 @@ const items = [
       gap: 10px;
 
       &-value {
-        font-size: 16vi;
+        font-size: 60px;
       }
 
       &-label {
-        font-size: 4.82vi;
+        font-size: 18px;
         text-align: end;
       }
     }

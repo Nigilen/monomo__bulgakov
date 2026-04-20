@@ -246,10 +246,10 @@ const area = ref(0);
   }
 
   @media (width < 768px) {
-    row-gap: 10.5vi;
-    padding-block: 7vi;
-    padding-inline: 4.25vi;
-    border-radius: 4.25vi;
+    row-gap: 40px;
+    padding-block: 26px;
+    padding-inline: 16px;
+    border-radius: 16px;
 
     &__input {
       &--area {
@@ -257,18 +257,18 @@ const area = ref(0);
       }
 
       &--area::-webkit-slider-thumb {
-        inline-size: 8cqi;
-        border-width: 1.5cqi;
+        inline-size: 20px;
+        border-width: 2px;
       }
 
       &--area::-moz-range-thumb {
-        inline-size: 8cqi;
-        border-width: 1.5cqi;
+        inline-size: 20px;
+        border-width: 2px;
       }
 
       &--area::-ms-thumb {
-        inline-size: 8cqi;
-        border-width: 1.5cqi;
+        inline-size: 20px;
+        border-width: 2px;
       }
     }
 
@@ -276,7 +276,7 @@ const area = ref(0);
       flex-wrap: wrap;
 
       &--tariff {
-        gap: 5cqi;
+        gap: 16px;
       }
 
       &--type {}
@@ -294,34 +294,34 @@ const area = ref(0);
       &--tariff {
         flex-grow: 0;
         flex-shrink: 1;
-        flex-basis: calc((100% - 5cqi) / 2);
+        flex-basis: calc((100% - 16px) / 2);
       }
     }
 
     &__legend {
-      font-size: 5.15cqi;
-      margin-block-end: 7cqi;
+      font-size: 16px;
+      margin-block-end: 20px;
 
       &--tariff {
-        margin-block-end: 8cqi;
+        margin-block-end: 20px;
       }
 
       &--type {
-        margin-block-end: 5.15cqi;
+        margin-block-end: 16px;
       }
 
       &--area {
-        margin-block-end: 19cqi;
+        margin-block-end: 56px;
       }
 
       &--price {
-        margin-block-end: 5.15cqi;
+        margin-block-end: 16px;
       }
 
     }
 
     &__label {
-      font-size: 5.15cqi;
+      font-size: 16px;
 
       &--tariff {
         inline-size: 100%;
@@ -331,12 +331,12 @@ const area = ref(0);
     }
 
     &__value {
-      font-size: 9cqi;
+      font-size: 24px;
 
       &--area {
-        font-size: 5.15cqi;
-        inset-block-start: -8cqi;
-        transform: translateX(calc(var(--area-value) * 0.9cqi));
+        font-size: 16px;
+        inset-block-start: -20px;
+        transform: translateX(calc(var(--area-value) * 2.7px));
       }
     }
   }

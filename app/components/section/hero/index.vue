@@ -159,7 +159,7 @@ const badges: Array<{
     &__buttons {
       flex-direction: column;
       margin-block-end: 80px;
-      gap: 5.35vi;
+      gap: 20px;
     }
   }
 }

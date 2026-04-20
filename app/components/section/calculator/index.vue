@@ -64,14 +64,15 @@
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
     column-gap: 0;
-    row-gap: 8.5vi;
+    row-gap: 42px;
 
-    margin-block-end: 27vi;
+    margin-block-end: 100px;
 
     &__content {
       grid-column: 1 / -1;
       grid-row: 1 / 2;
-      gap: 8.5vi;
+      gap: 32px;
+      
     }
 
     &__button {
@@ -79,14 +80,20 @@
       grid-row: 3 / 4;
 
       inline-size: 100%;
-      font-size: 4.28vi;
-      border-radius: 4.28vi;
+      aspect-ratio: 343 / 76;
+      margin-inline: auto;
+      font-size: 16px;
+      border-radius: 16px;
+      inline-size: 343px;
+
     }
 
     &__form {
       grid-column: 1 / -1;
       grid-row: 2 / 3;
-      margin-block-start: 2.7cqi;
+      margin-block-start: 0;
+      inline-size: 343px;
+      margin-inline: auto;
     }
   }
 
@@ -116,12 +123,12 @@
 
     
     &__title {
-      font-size: 8.5vi;
+      font-size: 32px;
       letter-spacing: -0.035em;
     }
 
     &__description {
-      font-size: 4.28vi;
+      font-size: 16px;
     }
   }
 }

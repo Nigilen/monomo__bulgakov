@@ -94,7 +94,7 @@ const getQuestionIconName = (id: number) =>
   margin-block-end: 12vi;
   
   @media (width < 768px) {
-    margin-block-end: 27vi;
+    margin-block-end: 100px;
   }
 }
 
@@ -114,10 +114,10 @@ const getQuestionIconName = (id: number) =>
   }
 
   @media (width < 768px) {
-    margin-block-end: 12vi;
+    margin-block-end: 100px;
 
     &__title {
-      font-size: 8.5vi;
+      font-size: 32px;
       letter-spacing: -0.035em;
     }
   }
@@ -189,20 +189,20 @@ const getQuestionIconName = (id: number) =>
 
 
       &__question {
-        padding-block: 5.5vi;
-        padding-inline-end: 5.5vi;
+        padding-block: 16px;
+        padding-inline-end: 16px;
 
         &-title {
-          font-size: 4.65cqi;
+          font-size: 18px;
         }
 
         &-icon {
-          inline-size: 8cqi;
+          inline-size: 30px;
         }
       }
 
       &__answer-text {
-        font-size: 4.65cqi;
+        font-size: 16px;
       }
     }
   }

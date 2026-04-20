@@ -45,7 +45,7 @@ const items = [
   margin-block-end: 12vi;
 
   @media (width < 768px) {
-    margin-block-end: 27vi;
+    margin-block-end: 100px;
   }
 }
 
@@ -77,17 +77,15 @@ const items = [
 
   @media (width < 768px) {
     grid-template-columns: 1fr;
-    gap: 8.5vi;
-    margin-block-end: 12vi;
+    gap: 32px;
+    margin-block-end: 42px;
 
     &__title {
-      font-size: 8.5vi;
-      letter-spacing: -0.035em;
-
+      font-size: 32px;
     }
 
     &__description {
-      font-size: 4.28vi;
+      font-size: 16px;
     }
   }
 }
@@ -136,20 +134,22 @@ const items = [
 
   @media (width < 768px) {
     grid-template-columns: 1fr;
-    gap: 8.5vi;
+    gap: 32px;
 
     &__item {
       &-title {
-        font-size: 4.8vi;
-        margin-block-end: 4.8vi;
+        font-size: 18px;
+        margin-block-end: 16px;
+        gap: 5px;
+        align-items: center;
 
         &::before {
-          inline-size: 3.75vi;
+          inline-size: 20px;
         }
       }
 
       &-description {
-        font-size: 4.28vi;
+        font-size: 16px;
       }
     }
   }

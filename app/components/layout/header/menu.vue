@@ -56,11 +56,11 @@ const items = [
     &__list {
       flex-direction: column;
       align-items: flex-start;
-      gap: 8vi;
+      gap: 20px;
     }
 
     &__link {
-      font-size: 5.35vi;
+      font-size: 18px;
     }
   }
 }

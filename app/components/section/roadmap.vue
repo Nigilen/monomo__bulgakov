@@ -72,7 +72,7 @@ const items = [
   margin-block-end: 12vi;
   
   @media (width < 768px) {
-    margin-block-end: 27vi;
+    margin-block-end: 100px;
   }
 }
 
@@ -104,17 +104,17 @@ const items = [
 
   @media (width < 768px) {
     grid-template-columns: 1fr;
-    gap: 8.5vi;
-    margin-block-end: 12vi;
+    gap: 32px;
+    margin-block-end: 45px;
 
     &__title {
-      font-size: 8.5vi;
+      font-size: 32px;
       letter-spacing: -0.035em;
 
     }
 
     &__description {
-      font-size: 4.28vi;
+      font-size: 16px;
     }
   }
 }
@@ -200,15 +200,15 @@ const items = [
     &__item {
       grid-template-columns: 1fr;
       padding-inline: 0;
-      padding-block-start: 16vi;
-      padding-block-end: 8.55vi;
-      row-gap: 6.4vi;
+      padding-block-start: 50px;
+      padding-block-end: 32px;
+      row-gap: 24px;
       overflow: hidden;
 
       &:first-child {
 
         & .roadmap__item-number {
-          inset-inline-end: -10cqi;
+          inset-inline-end: -20px;
         }
       }
 
@@ -219,11 +219,11 @@ const items = [
       
       &-title {
         text-align: start;
-        font-size: 7.6cqi;
+        font-size: 26px;
       }
       
       &-description {
-        font-size: 4.7cqi;
+        font-size: 16px;
       }
     }
   }

@@ -126,7 +126,7 @@ onUnmounted(() => {
       background-color: var(--color-background-primary);
       flex-direction: column;
       align-items: flex-start;
-      padding-block: 12vi;
+      padding-block: 40px;
       padding-inline: 9.85vi;
 
       &--open {

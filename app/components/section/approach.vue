@@ -87,15 +87,16 @@ const items = [
 
   @media (width < 768px) {
 
-    margin-block-end: 27vi;
+    margin-block-end: 124px;
 
     &__container {
+      
     }
 
     &__top,
     &__bottom {
       flex-direction: column;
-      row-gap: 8.6vi;
+      row-gap: 32px;
     }
 
     &__list-host {
@@ -135,17 +136,17 @@ const items = [
 
   @media (width < 768px) {
     grid-template-columns: 1fr;
-    gap: 8.5vi;
-    margin-block-end: 12vi;
+    gap: 32px;
+    margin-block-end: 40px;
 
     &__title {
-      font-size: 8.5vi;
+      font-size: 32px;
       letter-spacing: -0.035em;
 
     }
 
     &__description {
-      font-size: 4.28vi;
+      font-size: 16px;
     }
   }
 }
@@ -217,23 +218,23 @@ const items = [
 
   
       &_title {
-        font-size: 4.8vi;
+        font-size: 18px;
         line-height: calc(30 / 18);
-        margin-block-end: 2.84vi;
-        gap: 2.84vi;
-        margin-inline-start: 9.5vi;
+        margin-block-end: 16px;
+        gap: 10px;
+        margin-inline-start: 42px;
         
         &::before {
-          inline-size: 5.3vi;
-          inset-inline-start: -9.5vi;
-          background-position-y: 1.6vi;
+          inline-size: 20px;
+          inset-inline-start: -34px;
+          background-position-y: 6px;
         }
       }
       
       &_description {
-        font-size: 4.28vi;
+        font-size: 16px;
         line-height: calc(26 / 16);
-        margin-inline-start: 9.5vi;
+        margin-inline-start: 42px;
       }
     }
   

@@ -241,60 +241,60 @@ const priceIconColors = computed(() => {
   }
 
   @media (width < 768px) {
-    inline-size: max(343px, 92dvi);
-    padding-block-start: 2.7vi;
-    padding-inline: 4.3vi;
-    padding-block-end: 11vi;
+    inline-size: 343px;
+    padding-block-start: 10px;
+    padding-inline: 16px;
+    padding-block-end: 40px;
 
     &__header {
-      row-gap: 2.6cqi;
-      margin-block-end: 14cqi;
+      row-gap: 10px;
+      margin-block-end: 40px;
 
       &-title {
-        font-size: 7.75cqi;
+        font-size: 24px;
       }
       &-subtitle {
-        font-size: 5.2cqi;
+        font-size: 16px;
       }
     }
 
     &__specs {
-      margin-block-end: 14cqi;
-      row-gap: 8cqi;
+      margin-block-end: 44px;
+      row-gap: 26px;
     }
 
     &__row {
-      row-gap: 3.3cqi;
+      row-gap: 10px;
       
       &-term {
-        font-size: 5.8cqi;
+        font-size: 18px;
       }
       &-definition {
-        font-size: 5.2cqi;
+        font-size: 16px;
       }
     }
 
     &__footer {
-      row-gap: 5.2cqi;
+      row-gap: 16px;
 
       &-price {
-        font-size: 8.4cqi;
+        font-size: 26px;
       }
 
       .button {
         inline-size: 100%;
-        border-radius: 5cqi;
+        border-radius: 16px;
 
         &__label {
-          font-size: 5.2cqi;
+          font-size: 16px;
         }
 
         &::after {
-          border-radius: 5cqi;
+          border-radius: 16px;
         }
 
         &::before {
-          border-radius: 5cqi;
+          border-radius: 16px;
         }
       }
     }

@@ -156,6 +156,7 @@ const {
     will-change: transform;
     user-select: none;
     -webkit-user-select: none;
+
   }
 
   &__arrow {
@@ -180,13 +181,13 @@ const {
     @media (width >= 768px) {
       inset-block-start: 0;
       inset-block-end: 0;
-      inline-size: clamp(343px, 55.6vmin, 600px);
+      inline-size: 343px;
       transform: none;
     }
 
     @media (width < 768px) {
       inset-block-start: auto;
-      inset-block-end: -8vi;
+      inset-block-end: -32px;
       transform: none;
     }
 
@@ -202,7 +203,7 @@ const {
       @media (width < 768px) {
         background-image: none;
         inset-inline-start: auto;
-        inset-inline-end: calc(16px + 12.8vi + 12px);
+        inset-inline-end: 70px;
       }
     }
 
@@ -264,7 +265,7 @@ const {
 
     @media (width < 768px) {
       display: block;
-      inline-size: 12.8vi;
+      inline-size: 48px;
       aspect-ratio: 1 / 1;
       block-size: auto;
     }
@@ -277,7 +278,7 @@ const {
 
     @media (width < 768px) {
       display: block;
-      inline-size: 12.8vi;
+      inline-size: 48px;
       aspect-ratio: 1 / 1;
       block-size: auto;
       transform: scaleX(-1);
@@ -285,7 +286,7 @@ const {
   }
 
   @media (width < 768px) {
-    margin-block-end: 27vi;
+    margin-block-end: 124px;
   }
 }
 
@@ -317,17 +318,17 @@ const {
 
   @media (width < 768px) {
     grid-template-columns: 1fr;
-    gap: 8.5vi;
-    margin-block-end: 12vi;
+    gap: 32px;
+    margin-block-end: 40px;
 
     &__title {
-      font-size: 8.5vi;
+      font-size: 32px;
       letter-spacing: -0.035em;
 
     }
 
     &__description {
-      font-size: 4.28vi;
+      font-size: 16px;
     }
   }
 }

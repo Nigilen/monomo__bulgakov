@@ -241,7 +241,7 @@ const priceIconColors = computed(() => {
   }
 
   @media (width < 768px) {
-    inline-size: 343px;
+    inline-size: min(380px, 90vi);
     padding-block-start: 10px;
     padding-inline: 16px;
     padding-block-end: 40px;

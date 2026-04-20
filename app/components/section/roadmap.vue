@@ -208,7 +208,7 @@ const items = [
       &:first-child {
 
         & .roadmap__item-number {
-          inset-inline-end: -20px;
+          inset-inline-end: -32px;
         }
       }
 

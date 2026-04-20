@@ -53,7 +53,7 @@ const items = [
   margin-block-end: 5.2vi;
   
   @media (width < 768px) {
-    margin-block-end: 100px;
+    margin-block-end: 60px;
   }
 }
 
@@ -111,6 +111,8 @@ const items = [
 
         &::before {
           inline-size: 20px;
+          margin-inline-end: 10px;
+
         }
       }
 

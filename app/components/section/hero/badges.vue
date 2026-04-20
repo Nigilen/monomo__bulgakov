@@ -79,28 +79,31 @@ defineProps<{
 
   @media (width < 768px) {
     flex-direction: column;
-    row-gap: 5.85vi;
+    row-gap: 22px;
+    inline-size: min(100%, 343px);
+    margin-inline: auto;
+    
 
     &__item {
-      padding: 4.27vi;
-      column-gap: 4.3vi;
-      border-radius: 4.27vi;
+      padding: 16px;
+      column-gap: 16px;
+      border-radius: 16px;
     }
 
     &__icon {
-      inline-size: 13cqi;
+      inline-size: 40px;
     }
 
     &__content {
-      gap: 5cqi;
+      gap: 16px;
     }
 
     &__title {
-      font-size: 5.8cqi;
+      font-size: 18px;
     }
     
     &__description {
-      font-size: 5.15cqi;
+      font-size: 16px;
       line-height: calc(22 / 16);
     }
   }

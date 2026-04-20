@@ -104,15 +104,16 @@ onUnmounted(() => {
 
 @media (width < 768px) {
   .header {
-    padding-block: 4.27vi;
+    padding-block: 16px;
 
     &__logo {
-      inline-size: 25vi;
+      inline-size: 94px;
       margin-inline: 0;
     }
 
     &__phone {
       display: block;
+      font-size: 16px;
     }
 
     &__menu {
@@ -136,7 +137,10 @@ onUnmounted(() => {
 
     &__burger {
       display: flex;
-
+    
+      &-icon {
+        inline-size: 28px;
+      }
     }
   }
 }

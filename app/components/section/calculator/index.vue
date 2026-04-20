@@ -92,7 +92,7 @@
       grid-column: 1 / -1;
       grid-row: 2 / 3;
       margin-block-start: 0;
-      inline-size: 343px;
+      inline-size: 100%;
       margin-inline: auto;
     }
   }

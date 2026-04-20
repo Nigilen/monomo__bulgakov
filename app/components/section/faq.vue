@@ -114,7 +114,7 @@ const getQuestionIconName = (id: number) =>
   }
 
   @media (width < 768px) {
-    margin-block-end: 100px;
+    margin-block-end: 32px;
 
     &__title {
       font-size: 32px;

@@ -492,7 +492,7 @@ onUnmounted(() => {
     inset-block-end: -100px;
 
     &__button {
-      inline-size: 40px;
+      inline-size: 48px;
       block-size: auto;
       aspect-ratio: 1 / 1;
     }

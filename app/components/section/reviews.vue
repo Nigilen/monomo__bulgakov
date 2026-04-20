@@ -422,14 +422,14 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
     &-controls {
       display: flex;
       position: absolute;
-      inset-block-end: -50px;
+      inset-block-end: -35px;
       inset-inline-end: 16px;
       z-index: 1;
       gap: 10px;
 
       &__button {
         position: static;
-        inline-size: 50px;
+        inline-size: 48px;
         transform: none;
         inset-block-start: 0;
         inset-inline-end: 0;
@@ -552,7 +552,7 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
     }
 
     &-item__video-button-icon {
-      inline-size: 30px;
+      inline-size: 100px;
     }
 
     &-item__content {

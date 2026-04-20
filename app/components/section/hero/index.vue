@@ -122,41 +122,43 @@ const badges: Array<{
   }
 
   @media (width < 768px) {
-    background-image: url('/hero-background-m.png');
-    background-size: cover;
+    background-image: 
+      linear-gradient(to bottom, transparent 0%, #252525 100%), 
+      url('/hero-background-m.png');
+    background-size: cover, cover;
 
-    margin-block-end: 27vi;
+    margin-block-end: 100px;
 
     &__container {
-      padding-block-start: 40.53vi;
+      padding-block-start: 152px;
     }
 
     &__title {
       margin-block-end: 30px;
-      font-size: 7.5vi;
+      font-size: 28px;
       line-height: calc(40 / 28);
     }
 
     &__description {
       flex-direction: column;
       align-items: center;
-      gap: 2.7vi;
-      margin-block-end: 13.5vi;
+      gap: 10px;
+      margin-block-end: 50px;
       inline-size: 100%;
 
       &-text {
-        font-size: 4.27vi;
+        font-size: 16px;
         line-height: calc(22 / 16);
       }
 
       &-icon {
-        inline-size: 9vi;
+        inline-size: 34px;
       }
     }
 
     &__buttons {
       flex-direction: column;
-      margin-block-end: 20.8vi;
+      margin-block-end: 80px;
       gap: 5.35vi;
     }
   }
@@ -214,26 +216,26 @@ const badges: Array<{
   }
 
   @media (width < 768px) {
-    inline-size: 80vi;
+    inline-size: min(100%, 300px);
     aspect-ratio: 300 / 78;
-    border-radius: 4.25vi;
+    border-radius: 16px;
 
     &__label {
-      font-size: 5.35cqi;
+      font-size: 16px;
     }
 
     &--primary {
-      box-shadow: 0 1.9cqi 0px #7C5E49;
+      box-shadow: 0 8px 0px #7C5E49;
     }
 
     &--secondary {
       &::after {
-        border-radius: 4.25vi;
-        inset: -0.8cqi;
+        border-radius: 16px;
+        inset: -3px;
       }
       &::before {
-        border-radius: 4.25vi;
-        inset: -0.8cqi;
+        border-radius: 16px;
+        inset: -2px;
       }
     }
   }

@@ -6,6 +6,10 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
 };
 
+const closeMenu = () => {
+  isMenuOpen.value = false;
+};
+
 const handleKeyDown = (event: KeyboardEvent) => {
   if (event.key === 'Escape') {
     isMenuOpen.value = false;
@@ -24,9 +28,19 @@ onMounted(() => {
   window.addEventListener('keydown', handleKeyDown);
 });
 
+watch(isMenuOpen, (open) => {
+  if (!import.meta.client) return;
+  const overflow = open ? 'hidden' : '';
+  document.documentElement.style.overflow = overflow;
+  document.body.style.overflow = overflow;
+});
+
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
   window.removeEventListener('keydown', handleKeyDown);
+  if (!import.meta.client) return;
+  document.documentElement.style.overflow = '';
+  document.body.style.overflow = '';
 });
 
 
@@ -36,17 +50,17 @@ onUnmounted(() => {
 <template>
   <header class="container container--wide header">
     <NuxtLink class="header__logo" to="/">
-      <NuxtImg class="header__logo-image" src="/logo.svg" alt="Логотип Bulgakov Prime" width="213" height="117" />
+      <NuxtImg quality="high" class="header__logo-image" src="/logo.svg" alt="Логотип Bulgakov Prime" width="213" height="117" />
     </NuxtLink>
     <div class="header__menu" :class="{ 'header__menu--open': isMenuOpen }" id="header-menu">
-      <LayoutHeaderMenu />
+      <LayoutHeaderMenu @navigate="closeMenu" />
       <LayoutHeaderContacts />
     </div>
 
     <NuxtLink class="header__phone" to="tel:+79682810092">+7 (968) 281-00-92</NuxtLink>
-    <button class="header__burger" type="button" @click="toggleMenu" aria-expanded="false"
+    <button class="header__burger" type="button" @click="toggleMenu" :aria-expanded="isMenuOpen"
       :aria-label="isMenuOpen ? 'Закрыть меню' : 'Открыть меню'"
-      :aria-controls="isMenuOpen ? 'header-menu' : 'header-menu'">
+      aria-controls="header-menu">
       <Icon class="header__burger-icon" :name="isMenuOpen ? 'icons:cross' : 'icons:menu'" />
     </button>
   </header>
@@ -117,10 +131,11 @@ onUnmounted(() => {
     }
 
     &__menu {
-      display: none;
+      display: flex;
       position: absolute;
       inset-inline-end: 0;
       inset-block-start: 0;
+      z-index: 100;
       inline-size: 100vi;
       block-size: 100vb;
       background-color: var(--color-background-primary);
@@ -128,16 +143,40 @@ onUnmounted(() => {
       align-items: flex-start;
       padding-block: 40px;
       padding-inline: 9.85vi;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateX(100%);
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        visibility 0s linear 0.3s;
 
       &--open {
-        display: flex;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateX(0);
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease,
+          visibility 0s linear 0s;
+
+        @media (prefers-reduced-motion: reduce) {
+          transition: none;
+        }
       }
 
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
     }
 
     &__burger {
       display: flex;
-    
+      position: relative;
+      z-index: 101;
+
       &-icon {
         inline-size: 28px;
       }

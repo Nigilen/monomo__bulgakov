@@ -18,7 +18,7 @@ const {
 </script>
 
 <template>
-  <section class="price">
+  <section id="prices" class="price">
     <div class="price__top header container">
         <h2 class="header__title">
           Наши 

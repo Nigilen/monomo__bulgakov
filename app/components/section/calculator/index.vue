@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <section class="calculator container">
+  <section id="calculator" class="calculator container">
     <div class="calculator__content content">
       <h2 class="content__title">
         Рассчитать 

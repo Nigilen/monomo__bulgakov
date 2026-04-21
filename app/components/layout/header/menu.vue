@@ -1,5 +1,9 @@
 <script setup lang="ts">
 
+const emit = defineEmits<{
+  (e: 'navigate'): void;
+}>();
+
 const items = [
   {
     label: 'Цены',
@@ -19,13 +23,17 @@ const items = [
   },
 ];
 
+const onNavigate = () => {
+  emit('navigate');
+};
+
 </script>
 
 <template>
   <nav class="menu">
     <ul class="menu__list">
       <li v-for="item in items" :key="item.label">
-        <NuxtLink class="menu__link" :to="item.to">{{ item.label }}</NuxtLink>
+        <NuxtLink class="menu__link" :to="item.to" @click="onNavigate">{{ item.label }}</NuxtLink>
       </li>
     </ul>
   </nav>

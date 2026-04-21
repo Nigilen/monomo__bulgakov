@@ -43,17 +43,14 @@ const items = [
   },
 ];
 
-const openState = ref<Record<number, boolean>>({});
+const openId = ref<number | null>(null);
 
 const toggleAnswer = (id: number) => {
-  openState.value = {
-    ...openState.value,
-    [id]: !openState.value[id],
-  };
+  openId.value = openId.value === id ? null : id;
 };
 
 const getQuestionIconName = (id: number) =>
-  openState.value[id] ? 'icons:minus' : 'icons:plus';
+  openId.value === id ? 'icons:minus' : 'icons:plus';
 
 </script>
 
@@ -77,7 +74,7 @@ const getQuestionIconName = (id: number) =>
         </div>
         <div
           class="faq-item__answer"
-          :class="{ 'faq-item__answer--open': openState[item.id] }"
+          :class="{ 'faq-item__answer--open': openId === item.id }"
         >
           <div class="faq-item__answer-inner">
             <p class="faq-item__answer-text">{{ item.answer }}</p>

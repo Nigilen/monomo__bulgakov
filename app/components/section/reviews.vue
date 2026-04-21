@@ -69,7 +69,6 @@ const isLoopSlider = items.length >= 2;
 
 const REVIEWS_SLIDER_OPTIONS = {
   itemSelector: '.review-item',
-  autoPlayIntervalMs: 3000,
   /** Немного больше transition трека (0.35s в composable), чтобы не накладывались клики */
   navigationCooldownMs: 360,
 } as const;
@@ -89,7 +88,6 @@ const {
   itemSelector: REVIEWS_SLIDER_OPTIONS.itemSelector,
   loop: isLoopSlider,
   loopTripleMode: isLoopSlider,
-  autoPlayIntervalMs: isLoopSlider ? REVIEWS_SLIDER_OPTIONS.autoPlayIntervalMs : undefined,
   navigationCooldownMs: isLoopSlider ? REVIEWS_SLIDER_OPTIONS.navigationCooldownMs : undefined,
 });
 

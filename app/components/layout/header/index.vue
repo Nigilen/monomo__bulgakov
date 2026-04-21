@@ -139,12 +139,10 @@ onUnmounted(() => {
 
     &__menu {
       display: flex;
-      position: absolute;
-      inset-inline-end: 0;
-      inset-block-start: 0;
+      position: fixed;
+      inset: 0;
       z-index: 100;
-      inline-size: 100vi;
-      block-size: 100vb;
+      box-sizing: border-box;
       background-color: var(--color-background-primary);
       flex-direction: column;
       align-items: flex-start;

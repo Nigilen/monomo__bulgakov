@@ -5,13 +5,14 @@
 <template>
   <footer class="footer container container--wide">
     <div class="footer__logo logo">
-      <img
+      <!-- <img
         class="logo__image" 
         src="/logo.svg" 
         alt="Logo" 
         width="213" 
         height="117" 
-      />
+      /> -->
+      <UiLogo class="logo__image" />
       <p class="logo__caption">
         Ремонт квартир и домов в Калининграде и области
       </p>

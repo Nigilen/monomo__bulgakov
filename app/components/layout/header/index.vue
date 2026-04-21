@@ -50,14 +50,15 @@ onUnmounted(() => {
 <template>
   <header class="container container--wide header">
     <NuxtLink class="header__logo" to="/">
-      <img 
+      <!-- <img 
         class="header__logo-image" 
         src="/logo.svg" 
         alt="Логотип Bulgakov Prime" 
         width="213" 
         height="117" 
         @click="closeMenu"
-      />
+      /> -->
+      <UiLogo class="header__logo-image" />
     </NuxtLink>
     <div class="header__menu" :class="{ 'header__menu--open': isMenuOpen }" id="header-menu">
       <LayoutHeaderMenu @navigate="closeMenu" />

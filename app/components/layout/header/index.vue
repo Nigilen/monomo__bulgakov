@@ -50,8 +50,7 @@ onUnmounted(() => {
 <template>
   <header class="container container--wide header">
     <NuxtLink class="header__logo" to="/">
-      <NuxtImg 
-        quality="high" 
+      <img 
         class="header__logo-image" 
         src="/logo.svg" 
         alt="Логотип Bulgakov Prime" 

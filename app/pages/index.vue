@@ -6,7 +6,7 @@ useSeoMeta({
   description: '...',
   ogTitle: 'Bulgakov',
   ogDescription: '...',
-  ogImage: 'https://bulgakov.ru/og-image.png',
+  ogImage: 'https://bulgakov.ru/logo.svg',
 })
 
 useHead({
@@ -18,7 +18,7 @@ useHead({
   ],
   link: [
     // { rel: 'canonical', href: 'https://bulgakov.ru' },
-    { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+    { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
   ],
 })
 

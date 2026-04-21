@@ -44,11 +44,11 @@ const badges: Array<{
             Обсудить проект
           </span>
         </button>
-        <button class="button button--secondary" type="button">
+        <a href="#calculator" class="button button--secondary">
           <span class="button__label">
             Рассчитать
           </span>
-        </button>
+        </a>
       </div>
       <SectionHeroBadges :badges="badges" />
     </div>
@@ -165,6 +165,9 @@ const badges: Array<{
 }
 
 .button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 500;
   inline-size: min(350px, 18.23vi);
   block-size: auto;

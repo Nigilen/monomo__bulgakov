@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <section class="about container">
+  <section id="about" class="about container">
     <div class="header">
       <h2 class="header__title">
         Рассказываем 

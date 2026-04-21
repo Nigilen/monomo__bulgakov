@@ -87,7 +87,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="portfolio container">
+  <section id="portfolio" class="portfolio container">
     <div class="header">
       <h2 class="header__title">
         <span class="header__title-highlight">Наше портфолио</span>

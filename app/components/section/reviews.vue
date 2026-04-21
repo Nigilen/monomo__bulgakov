@@ -160,7 +160,7 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
 </script>
 
 <template>
-  <section class="reviews container">
+  <section id="reviews" class="reviews container">
     <div class="header">
       <h2 class="header__title">
         <span class="header__title-highlight">100% положительных отзывов </span>

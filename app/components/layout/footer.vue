@@ -12,6 +12,7 @@
         width="213" 
         height="117" 
         loading="lazy"
+        quality="low"
       />
       <p class="logo__caption">
         Ремонт квартир и домов в Калининграде и области

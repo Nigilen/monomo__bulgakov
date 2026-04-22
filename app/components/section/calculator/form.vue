@@ -36,12 +36,18 @@ const area = ref(0);
     <fieldset class="form__item form__item--type">
       <legend class="form__legend form__legend--type">Тип жилья</legend>
       <div class="form__options">
-        <input class="form__input form__input--type" type="radio" name="type" id="type-1">
-        <label class="form__label form__label--type" for="type-1">Новостройка</label>
+        <label class="form__label form__label--type" for="type-1">
+          <span class="form__input-icon form__input-icon--type"></span>
+          <input class="form__input form__input--type" type="radio" name="type" id="type-1">
+          Новостройка
+        </label>
       </div>
       <div class="form__options">
-        <input class="form__input form__input--type" type="radio" name="type" id="type-2">
-        <label class="form__label form__label--type" for="type-2">Вторичка</label>
+        <label class="form__label form__label--type" for="type-2">
+          <span class="form__input-icon form__input-icon--type"></span>
+          <input class="form__input form__input--type" type="radio" name="type" id="type-2">
+          Вторичка
+        </label>
       </div>
     </fieldset>
     <p class="form__item form__item--price">
@@ -118,6 +124,33 @@ const area = ref(0);
 
 
   &__input {
+    position: relative;
+
+    &-icon--type {
+
+      position: relative;
+      display: flex;
+      inline-size: 3.24cqi;
+      block-size: auto;
+      aspect-ratio: 1 / 1;
+      background-color: transparent;
+      border: 1px solid var(--color-text-secondary);
+      border-radius: var(--border-radius-primary);
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        margin: auto;
+        inline-size: 70%;
+        block-size: auto;
+        aspect-ratio: 1 / 1;
+        background-color: transparent;
+        border-radius: var(--border-radius-primary);
+      }
+
+      
+    }
 
     &--tariff {
       display: none;
@@ -131,11 +164,7 @@ const area = ref(0);
     &--type {
       display: none;
 
-      &:checked+.form__label--type {
-        &::before {
-          background-color: var(--color-accent-primary);
-        }
-      }
+      
     }
 
     &--area {
@@ -206,16 +235,12 @@ const area = ref(0);
       color: var(--color-text-primary);
       cursor: pointer;
 
-      &::before {
-        content: '';
-        display: block;
-        inline-size: 3.24cqi;
-        block-size: auto;
-        aspect-ratio: 1 / 1;
-        background-color: transparent;
-        border: 1px solid var(--color-text-secondary);
-        border-radius: var(--border-radius-primary);
+      &:has(.form__input--type:checked) {
+        .form__input-icon--type::before {
+          background-color: var(--color-accent-primary);
+        }
       }
+      
     }
   }
 
@@ -279,8 +304,6 @@ const area = ref(0);
         gap: 16px;
       }
 
-      &--type {}
-
       &--price {
         grid-column: 1 / -1;
         grid-row: 4 / 5;
@@ -336,7 +359,7 @@ const area = ref(0);
       &--area {
         font-size: 16px;
         inset-block-start: -20px;
-        transform: translateX(calc(var(--area-value) * 2.7px));
+        transform: translateX(calc(var(--area-value) * 0.925cqi));
       }
     }
   }

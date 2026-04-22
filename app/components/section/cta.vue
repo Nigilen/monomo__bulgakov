@@ -49,7 +49,7 @@
               class="form__input"
               type="text" 
               id="name" 
-              placeholder="Ваше имя" 
+              placeholder="Имя" 
               name="name" 
               required
             />
@@ -59,7 +59,7 @@
               class="form__input"
               type="tel" 
               id="phone" 
-              placeholder="+7( ___ ) ___ - __ - __" 
+              placeholder="+7 ( ___ ) ___ - __ - __" 
               name="phone" 
               required
             />
@@ -140,6 +140,7 @@
     }
   }
 }
+
 
 
 .content {

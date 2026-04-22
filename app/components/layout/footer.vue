@@ -26,7 +26,7 @@
       </li>
     </ul>
     <div class="footer__phone phone">
-      <a class="phone__link" href="tel:+79999999999">+7 (968) 281-00-92</a>
+      <a class="phone__link" href="tel:+79682810092">+7 (968) 281-00-92</a>
       <p class="phone__description">Ежедневно с 8:00 до 20:00</p>
     </div>
   </footer>

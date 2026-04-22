@@ -22,11 +22,11 @@
       <form class="form__content">
         <div class="form__content-item">
           <label class="form__content-item-label" for="name"></label>
-          <input class="form__content-item-input" type="text" id="name" name="name" placeholder="Ваше имя" />
+          <input class="form__content-item-input" type="text" id="name" name="name" placeholder="Имя" />
         </div>
         <div class="form__content-item">
           <label class="form__content-item-label" for="phone"></label>
-          <input class="form__content-item-input" type="tel" id="phone" name="phone" placeholder="+7( ___ ) ___ - __ - __" />
+          <input class="form__content-item-input" type="tel" id="phone" name="phone" placeholder="+7 ( ___ ) ___ - __ - __" />
         </div>
         <button class="form__content-button" type="submit">Отправить заявку</button>
         <p class="form__content-description">

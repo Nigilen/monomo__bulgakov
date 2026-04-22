@@ -122,6 +122,7 @@ const items = [
 
     &-highlight {
       color: var(--color-accent-primary);
+      font-weight: 600;
     }
   }
 

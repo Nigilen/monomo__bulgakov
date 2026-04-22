@@ -75,6 +75,7 @@ const items = [
       color: var(--color-accent-primary);
       text-transform: uppercase;
       margin-block-end: min(10px, 0.5vi);
+      white-space: nowrap;
 
 
       &::before {
@@ -118,6 +119,7 @@ const items = [
 
       &-description {
         font-size: 16px;
+        margin-inline-start: 28px;
       }
     }
   }

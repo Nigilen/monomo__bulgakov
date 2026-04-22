@@ -37,43 +37,13 @@ const items: ReviewItem[] = [
   }
 ];
 
-type SliderSlide = ReviewItem & {
-  key: string
-};
-
-/**
- * Для бесшовного цикла в DOM три копии набора; старт с индекса n (вторая копия),
- * см. usePriceSlider: loopTripleMode.
- */
-const sliderSlides = computed((): SliderSlide[] => {
-  const n = items.length;
-  if (n < 2) {
-    return items.map((item) => ({
-      ...item,
-      key: `single-${item.id}`,
-    }));
-  }
-  const triple: SliderSlide[] = [];
-  for (let copy = 0; copy < 3; copy += 1) {
-    for (const item of items) {
-      triple.push({
-        ...item,
-        key: `c${copy}-${item.id}`,
-      });
-    }
-  }
-  return triple;
-});
-
-const isLoopSlider = items.length >= 2;
-
 const REVIEWS_SLIDER_OPTIONS = {
   itemSelector: '.review-item',
-  /** Немного больше transition трека (0.35s в composable), чтобы не накладывались клики */
   navigationCooldownMs: 360,
 } as const;
 
 const {
+  activeIndex,
   viewportRef,
   trackRef,
   trackStyle,
@@ -84,11 +54,12 @@ const {
   onPointerDown,
   onPointerUp,
 } = usePriceSlider(() => items.length, {
-  initialActiveIndex: isLoopSlider ? items.length : 0,
+  initialActiveIndex: 0,
   itemSelector: REVIEWS_SLIDER_OPTIONS.itemSelector,
-  loop: isLoopSlider,
-  loopTripleMode: isLoopSlider,
-  navigationCooldownMs: isLoopSlider ? REVIEWS_SLIDER_OPTIONS.navigationCooldownMs : undefined,
+  loop: false,
+  loopTripleMode: false,
+  navigationCooldownMs:
+    items.length >= 2 ? REVIEWS_SLIDER_OPTIONS.navigationCooldownMs : undefined,
 });
 
 /** Обёртки для клика: без аргумента события (иначе кулдаун в goNext обходился бы). */
@@ -136,10 +107,6 @@ watch(isReviewVideoOpen, (open) => {
   }
 });
 
-onUnmounted(() => {
-  document.removeEventListener('keydown', onReviewVideoEscape);
-});
-
 /**
  * Тап по превью (не по кнопке play — у неё свой обработчик со stop).
  * После горизонтального свайпа слайдера браузер обычно не шлёт click — видео не откроется.
@@ -154,6 +121,146 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
   }
   openReviewVideo();
 };
+
+const expandedReviewId = ref<number | null>(null);
+
+const expandReviewDescription = (id: number) => {
+  expandedReviewId.value = id;
+};
+
+/** Мобильный режим: текст > 7 строк — показываем «Читать ещё» на 8-й строке. */
+const overflowById = reactive<Record<number, boolean>>({});
+
+const descEls = new Map<number, HTMLElement>();
+
+let measureRaf = 0;
+
+const updateOverflowForId = (id: number) => {
+  if (!import.meta.client) return;
+  const el = descEls.get(id);
+  if (!el) return;
+  if (!window.matchMedia('(max-width: 767px)').matches) {
+    overflowById[id] = false;
+    return;
+  }
+  const width = el.getBoundingClientRect().width;
+  if (width < 8) {
+    overflowById[id] = false;
+    return;
+  }
+  const cs = getComputedStyle(el);
+  const clone = el.cloneNode(true) as HTMLElement;
+  clone.style.cssText = [
+    'position:fixed',
+    'left:-10000px',
+    'top:0',
+    `width:${width}px`,
+    'box-sizing:border-box',
+    'visibility:hidden',
+    'pointer-events:none',
+    'margin:0',
+    'padding:0',
+    'border:none',
+    'display:block',
+    'overflow:visible',
+    'max-block-size:none',
+    'max-height:none',
+    '-webkit-line-clamp:unset',
+    'line-clamp:unset',
+    '-webkit-box-orient:unset',
+    `font-size:${cs.fontSize}`,
+    `font-family:${cs.fontFamily}`,
+    `font-weight:${cs.fontWeight}`,
+    `font-style:${cs.fontStyle}`,
+    `line-height:${cs.lineHeight}`,
+    `letter-spacing:${cs.letterSpacing}`,
+  ].join(';');
+  document.body.appendChild(clone);
+  const fullHeight = clone.scrollHeight;
+  clone.remove();
+  const lh = parseFloat(cs.lineHeight);
+  const fs = parseFloat(cs.fontSize);
+  const lineHeightPx = Number.isFinite(lh) && lh > 0 ? lh : fs * 1.5;
+  const sevenLines = lineHeightPx * 7;
+  overflowById[id] = fullHeight > sevenLines + 1;
+};
+
+const scheduleOverflowMeasure = () => {
+  cancelAnimationFrame(measureRaf);
+  measureRaf = requestAnimationFrame(() => {
+    measureRaf = 0;
+    for (const item of items) {
+      updateOverflowForId(item.id);
+    }
+  });
+};
+
+const setDescriptionEl = (id: number, el: unknown) => {
+  if (!(el instanceof HTMLElement)) {
+    descEls.delete(id);
+    scheduleOverflowMeasure();
+    return;
+  }
+  descEls.set(id, el);
+  scheduleOverflowMeasure();
+};
+
+let resizeObserver: ResizeObserver | null = null;
+let stopViewportWatch: (() => void) | undefined;
+
+watch(activeIndex, () => {
+  expandedReviewId.value = null;
+  nextTick(() => {
+    scheduleOverflowMeasure();
+  });
+});
+
+watch(expandedReviewId, () => {
+  nextTick(() => {
+    window.dispatchEvent(new Event('resize'));
+  });
+});
+
+const onWindowResize = () => {
+  scheduleOverflowMeasure();
+};
+
+onMounted(() => {
+  window.addEventListener('resize', onWindowResize);
+  if (typeof ResizeObserver !== 'undefined') {
+    resizeObserver = new ResizeObserver(() => {
+      scheduleOverflowMeasure();
+    });
+    stopViewportWatch = watch(
+      viewportRef,
+      (el, prev) => {
+        if (prev && resizeObserver) {
+          resizeObserver.unobserve(prev);
+        }
+        if (el && resizeObserver) {
+          resizeObserver.observe(el);
+        }
+      },
+      { flush: 'post', immediate: true },
+    );
+  }
+  nextTick(() => {
+    scheduleOverflowMeasure();
+  });
+  document.fonts?.ready?.then(() => {
+    scheduleOverflowMeasure();
+  });
+});
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', onReviewVideoEscape);
+  window.removeEventListener('resize', onWindowResize);
+  stopViewportWatch?.();
+  stopViewportWatch = undefined;
+  resizeObserver?.disconnect();
+  resizeObserver = null;
+  cancelAnimationFrame(measureRaf);
+});
 
 </script>
 
@@ -185,8 +292,8 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
             :style="trackStyle"
           >
             <li
-              v-for="slide in sliderSlides"
-              :key="slide.key"
+              v-for="item in items"
+              :key="item.id"
               class="review-item"
             >
               <div class="review-item__card">
@@ -204,20 +311,50 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
                   </button>
                   <NuxtImg
                     class="review-item__video"
-                    :src="slide.image"
+                    :src="item.image"
                     alt=""
                     width="458"
                     height="458"
                   />
                 </div>
                 <div class="review-item__content">
-                  <span class="review-item__author">{{ slide.author }}</span>
+                  <span class="review-item__author">{{ item.author }}</span>
                   <Icon
                     class="review-item__stars"
                     name="icons:stars"
                     size="17"
                   />
-                  <p class="review-item__description">{{ slide.description }}</p>
+                  <div
+                    class="review-item__description-box"
+                    :class="{
+                      'review-item__description-box--clampable': overflowById[item.id],
+                      'review-item__description-box--expanded': expandedReviewId === item.id,
+                    }"
+                  >
+                    <p
+                      class="review-item__description"
+                      :class="{
+                        'review-item__description--clamped':
+                          overflowById[item.id] && expandedReviewId !== item.id,
+                      }"
+                      :ref="(el) => setDescriptionEl(item.id, el)"
+                    >
+                      {{ item.description }}
+                    </p>
+                    <div
+                      v-if="overflowById[item.id] && expandedReviewId !== item.id"
+                      class="review-item__read-more-wrap"
+                    >
+                      <button
+                        type="button"
+                        class="review-item__read-more"
+                        aria-expanded="false"
+                        @click.stop="expandReviewDescription(item.id)"
+                      >
+                        Читать ещё
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </li>
@@ -298,12 +435,13 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
 
   &__title {
     font-size: min(62px, 3.3vi);
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.4;
     text-transform: uppercase;
 
     &-highlight {
       color: var(--color-accent-primary);
+      font-weight: 600;
     }
   }
 
@@ -391,6 +529,12 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
       block-size: auto;
       aspect-ratio: 1 / 1;
 
+      transition: filter 0.3s ease;
+
+      &:hover {
+        filter: grayscale(1) brightness(1.2);
+      }
+
       &:disabled {
         opacity: 0.35;
         cursor: not-allowed;
@@ -431,6 +575,8 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
         transform: none;
         inset-block-start: 0;
         inset-inline-end: 0;
+
+
 
         &--next {
 
@@ -525,6 +671,14 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
     line-height: calc(30 / 20);
   }
 
+  &-item__description-box {
+    position: relative;
+  }
+
+  &-item__read-more-wrap {
+    display: none;
+  }
+
   @media (width < 768px) {
 
     &-item {
@@ -574,6 +728,58 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
     &-item__description {
       font-size: 16px;
       line-height: calc(24 / 16);
+      margin: 0;
+    }
+
+    &-item__description-box--clampable {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+      overflow: hidden;
+      max-height: calc(12em + 16px);
+      user-select: text;
+      -webkit-user-select: text;
+      transition: max-height 0.45s ease;
+
+      @media (prefers-reduced-motion: reduce) {
+        transition-duration: 0.01ms;
+      }
+
+      &.review-item__description-box--expanded {
+        max-height: min(4800px, 220vh);
+        overflow: visible;
+      }
+    }
+
+    &-item__description--clamped {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 7;
+      line-clamp: 7;
+      overflow: hidden;
+    }
+
+    &-item__read-more-wrap {
+      display: flex;
+      flex-shrink: 0;
+      justify-content: flex-start;
+      align-items: center;
+      min-block-size: calc((24 / 16) * 1em);
+    }
+
+    &-item__read-more {
+      padding: 0;
+      border: none;
+      background: none;
+      font: inherit;
+      font-size: 16px;
+      line-height: calc(24 / 16);
+      font-weight: 500;
+      color: var(--color-accent-primary);
+      text-decoration: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
     }
   }
 
@@ -613,8 +819,8 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
 
 .review-video-overlay__close {
   position: absolute;
-  inset-inline-end: 0;
-  inset-block-start: 0;
+  inset-inline-end: -13px;
+  inset-block-start: -40px;
   z-index: 2;
   display: flex;
   align-items: center;

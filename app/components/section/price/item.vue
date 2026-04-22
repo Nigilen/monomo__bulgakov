@@ -12,9 +12,11 @@ const props = withDefaults(defineProps<{
   priceLabel: string
   buttonLabel?: string
   isSliderCard?: boolean
+  isSliderActive?: boolean
 }>(), {
-  buttonLabel: 'Заказать',
+  buttonLabel: 'Обсудить',
   isSliderCard: false,
+  isSliderActive: false,
 });
 
 const FILLED_SHAPES_BY_TITLE: Record<string, 1 | 2 | 3 | 4> = {
@@ -57,7 +59,13 @@ const priceIconColors = computed(() => {
 </script>
 
 <template>
-  <li class="item" :class="{ 'item--slider': isSliderCard }">
+  <li
+    class="item"
+    :class="{
+      'item--slider': isSliderCard,
+      'item--slider-active': isSliderCard && isSliderActive,
+    }"
+  >
     <div class="item__header">
       <svg
         class="item__price-icon"
@@ -159,6 +167,19 @@ const priceIconColors = computed(() => {
     user-select: none;
     -webkit-user-select: none;
     -webkit-touch-callout: none;
+    position: relative;
+    z-index: 0;
+    box-shadow: 0 0 0 0 transparent;
+    transition: box-shadow 0.45s ease;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: 0.01ms;
+    }
+  }
+
+  &--slider-active {
+    z-index: 1;
+    box-shadow: 0 0 2.6cqi #BB9572;
   }
   
   &__price-icon {
@@ -236,15 +257,19 @@ const priceIconColors = computed(() => {
       font-size: 5.4cqi;
       font-weight: 600;
       color: var(--color-text-primary);
-      text-transform: uppercase;
     }
   }
 
   @media (width < 768px) {
     inline-size: min(380px, 90vi);
-    padding-block-start: 10px;
+    padding-block-start: 40px;
     padding-inline: 16px;
     padding-block-end: 40px;
+
+
+    &--slider-active {
+      box-shadow: 0 0 4cqi #BB9572;
+    }
 
     &__price-icon {
       inline-size: 64px;
@@ -291,12 +316,12 @@ const priceIconColors = computed(() => {
 }
 
 .button {
-  font-weight: 500;
   inline-size: 74.6cqi;
   line-height: 1;
   block-size: auto;
   aspect-ratio: 386 / 91;
   border-radius: 3cqi;
+  font-weight: 600;
   text-transform: uppercase;
   cursor: pointer;
 
@@ -310,30 +335,10 @@ const priceIconColors = computed(() => {
     position: relative;
     color: var(--color-button-text-secondary);
     background-color: var(--color-button-background-secondary);
+    border: 0.4cqi solid var(--color-border-secondary);
+    border-radius: 3cqi;
 
-    &::after {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      box-sizing: content-box;
-      inline-size: 100%;
-      block-size: 100%;
-      border: 0.4cqi solid var(--color-border-secondary);
-      border-radius: 3cqi;
-      z-index: 0;
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      inset: -0.4cqi;
-      box-sizing: content-box;
-      inline-size: 100%;
-      block-size: calc(100% + 1.5cqi);
-      border: 0.4cqi solid #7C5E49;
-      border-radius: 3cqi;
-      z-index: 0;
-    }
+    
   }
 
   @media (width < 768px) {
@@ -351,14 +356,6 @@ const priceIconColors = computed(() => {
       font-size: 16px;
     }
 
-    &::after {
-      border-radius: 16px;
-
-    }
-
-    &::before {
-      border-radius: 16px;
-    }
   }
 }
 

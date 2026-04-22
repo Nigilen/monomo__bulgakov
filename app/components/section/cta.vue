@@ -49,7 +49,7 @@
               class="form__input"
               type="text" 
               id="name" 
-              placeholder="ИВАНОВ ИВАН" 
+              placeholder="Ваше имя" 
               name="name" 
               required
             />
@@ -68,19 +68,10 @@
         <button class="form__button" type="submit">Отправить заявку</button>
         <p class="form__text">
           Нажимая кнопку “Отправить заявку”, вы соглашаетесь с 
-          <a href="#" class="form__link">условиями</a> 
-          использования персональных даных и 
           <a href="#" class="form__link">политикой конфиденциальности</a>
         </p>
       </form>
-      <div class="socials">
-        <NuxtLink class="socials__link" to="#">
-          <Icon name="icons:whatsapp" class="socials__icon" />
-        </NuxtLink>
-        <NuxtLink class="socials__link" to="#">
-          <Icon name="icons:telegram" class="socials__icon" />
-        </NuxtLink>
-      </div>
+      
     </div>
   </section>
 </template>
@@ -100,7 +91,7 @@
 
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto;
-    row-gap: 33px;
+    row-gap: 100px;
 
     .images-group {
       order: 2;
@@ -114,12 +105,13 @@
 
 .images-group {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 12fr 15fr;
   grid-template-rows: repeat(2, 1fr);
   gap: min(20px, 1.1vi);
 
   &__image {
     border-radius: 16px;
+    block-size: 100%;
     object-fit: cover;
     
     &--first {
@@ -167,7 +159,7 @@
     flex-direction: column;
     text-align: center;
     font-size: 8.5cqi;
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.34em;
     color: var(--color-text-primary);
     text-transform: uppercase;
@@ -212,6 +204,7 @@
 .form {
   display: flex;
   flex-direction: column;
+  margin-block: auto 0;
 
   &__inputs {
     display: flex;
@@ -264,6 +257,7 @@
     block-size: 16.3cqi;
     font-size: 3.2cqi;
     margin-block-end: 3.2cqi;
+    font-weight: 600;
   }
 
   &__text {
@@ -272,11 +266,15 @@
     line-height: 1.6em;
     text-align: center;
     color: var(--color-text-secondary);
-    margin-block-end: 6.2cqi;
   }
 
   &__link {
     color: var(--color-accent-primary);
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--color-text-primary);
+    }
   }
 
   @media (width < 768px) {
@@ -291,7 +289,6 @@
 
     &__text {
       font-size: 16px;
-      margin-block-end: 32px;
     }
 
     &__button {
@@ -301,36 +298,6 @@
       border-radius: 16px;
     }
 
-  }
-}
-
-.socials {
-  display: flex;
-  gap: 3.2cqi;
-  justify-content: center;
-  align-items: center;
-  margin-block: auto 0;
-
-  &__link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    inline-size: 4.8cqi;
-    block-size: 4.8cqi;
-  }
-
-  &__icon {
-    inline-size: 100%;
-    block-size: 100%;
-  }
-
-  @media (width < 768px) {
-    gap: 16px;
-
-    &__link {
-      inline-size: 28px;
-      block-size: 28px;
-    }
   }
 }
 

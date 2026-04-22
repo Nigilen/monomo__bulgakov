@@ -50,14 +50,6 @@ onUnmounted(() => {
 <template>
   <header class="container container--wide header">
     <NuxtLink class="header__logo" to="/">
-      <!-- <img 
-        class="header__logo-image" 
-        src="/logo.svg" 
-        alt="Логотип Bulgakov Prime" 
-        width="213" 
-        height="117" 
-        @click="closeMenu"
-      /> -->
       <UiLogo class="header__logo-image" />
     </NuxtLink>
     <div class="header__menu" :class="{ 'header__menu--open': isMenuOpen }" id="header-menu">
@@ -105,7 +97,11 @@ onUnmounted(() => {
     font-size: 4.27vi;
     white-space: nowrap;
     margin-inline: auto 9.85vi;
+    transition: color 0.3s ease;
 
+    &:hover {
+      color: var(--color-accent-primary);
+    }
   }
 
 
@@ -129,7 +125,7 @@ onUnmounted(() => {
     padding-block: 16px;
 
     &__logo {
-      inline-size: 94px;
+      inline-size: 114px;
       margin-inline: 0;
     }
 
@@ -154,9 +150,9 @@ onUnmounted(() => {
       pointer-events: none;
       transform: translateX(100%);
       transition:
-        opacity 0.3s ease,
-        transform 0.3s ease,
-        visibility 0s linear 0.3s;
+        opacity 0.5s ease,
+        transform 0.5s ease,
+        visibility 0s linear 0.5s;
 
       &--open {
         opacity: 1;
@@ -164,17 +160,9 @@ onUnmounted(() => {
         pointer-events: auto;
         transform: translateX(0);
         transition:
-          opacity 0.3s ease,
-          transform 0.3s ease,
+          opacity 0.5s ease,
+          transform 0.5s ease,
           visibility 0s linear 0s;
-
-        @media (prefers-reduced-motion: reduce) {
-          transition: none;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        transition: none;
       }
     }
 

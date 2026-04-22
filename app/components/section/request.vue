@@ -22,7 +22,7 @@
       <form class="form__content">
         <div class="form__content-item">
           <label class="form__content-item-label" for="name"></label>
-          <input class="form__content-item-input" type="text" id="name" name="name" placeholder="ИВАНОВ ИВАН" />
+          <input class="form__content-item-input" type="text" id="name" name="name" placeholder="Ваше имя" />
         </div>
         <div class="form__content-item">
           <label class="form__content-item-label" for="phone"></label>
@@ -31,29 +31,9 @@
         <button class="form__content-button" type="submit">Отправить заявку</button>
         <p class="form__content-description">
           Нажимая кнопку “Отправить заявку”, вы соглашаетесь с 
-          <a class="form__content-description-link" href="#">условиями</a> 
-          использования персональных даныхи и 
           <a class="form__content-description-link" href="#">политикой конфиденциальности</a>
         </p>
       </form>
-      <div class="socials">
-        <h3 class="socials__title">
-          <span class="socials__title-first">Быстро ответим в мессенджерах</span>
-          <span class="socials__title-second">Ежедневно с 9:00 до 22:00</span>
-        </h3>
-        <ul class="socials__list">
-          <li class="socials__item">
-            <a class="socials__item-link" href="#">
-              <Icon name="icons:whatsapp" class="socials__item-link-icon" />
-            </a>
-          </li>
-          <li class="socials__item">
-            <a class="socials__item-link" href="#">
-              <Icon name="icons:telegram" class="socials__item-link-icon" />
-            </a>
-          </li>
-        </ul>
-      </div>
     </div>
     <div class="image">
       <NuxtImg 
@@ -72,7 +52,7 @@
 
 .request {
   display: grid;
-  grid-template-columns: 1fr min(688px, 35.85vi);
+  grid-template-columns: 13fr 15fr;
   grid-template-rows: auto auto;
   column-gap: 34px;
   margin-block-end: 6.7vi;
@@ -170,7 +150,7 @@
     border-radius: 16px;
     block-size: 100%;
     inline-size: 100%;
-    aspect-ratio: 688 / 992;
+    aspect-ratio: 87 / 101;
     object-fit: cover;
   }
 
@@ -197,17 +177,16 @@
   &__title {
     text-align: center;
     text-transform: uppercase;
-    font-size: 4cqi;
+    font-size: 4.8cqi;
     font-weight: 600;
-    margin-block-end: 4.35cqi;
+    margin-block-end: 4.85cqi;
     color: var(--color-accent-primary);
   }
 
   &__content {
     display: flex;
     flex-direction: column;
-    gap: 5.3cqi;
-    margin-block-end: 3.5cqi;
+    gap: 6cqi;
 
     
     &-item {
@@ -215,12 +194,12 @@
       flex-direction: column;
 
       &-label {
-        font-size: 2.12cqi;
+        font-size: 3.5cqi;
       }
     
       &-input {
-        font-size: 2.93cqi;
-        padding: 1.33cqi;
+        font-size: 3.5cqi;
+        padding: 1.6cqi;
         border: none;
         border-bottom: 0.26cqi solid var(--color-border-secondary);
         background-color: transparent;
@@ -247,10 +226,10 @@
   
     &-button {
       inline-size: 100%;
-      padding-block: 5.3cqi;
+      padding-block: 6.4cqi;
       background-image: var(--color-button-background-primary);
-      font-size: 2.7cqi;
-      border-radius: 2.12cqi;
+      font-size: 3.2cqi;
+      border-radius: 2.62cqi;
       color: var(--color-button-text-primary);
       font-weight: 600;
       text-transform: uppercase;
@@ -259,13 +238,18 @@
     }
     
     &-description {
-      font-size: 2.12cqi;
+      font-size: 2.58cqi;
       line-height: calc(20 / 16);
       text-align: center;
       color: var(--color-text-secondary);
 
       &-link {
         color: var(--color-accent-primary);
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: var(--color-text-primary);
+        }
       }
     }
   }
@@ -307,70 +291,4 @@
   }
 }
 
-.socials {
-
-  &__title {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    font-weight: 600;
-    margin-block-end: 1.33cqi;
-    row-gap: 0.26cqi;
-    
-    &-first {
-      color: var(--color-text-primary);
-      font-size: 2.4cqi;
-    }
-    &-second {
-      font-size: 2.12cqi;
-      color: var(--color-text-secondary);
-    }
-  }
-
-  &__list {
-    display: flex;
-    justify-content: center;
-    gap: 2.7cqi;
-  }
-
-  &__item {
-    display: flex;
-  }
-
-  &__item-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  &__item-link-icon {
-    inline-size: 4cqi;
-    block-size: auto;
-    aspect-ratio: 1 / 1;
-  }
-
-  @media (width < 768px) {
-    &__title {
-      margin-block-end: 32px;
-
-      &-first {
-        font-size: 16px;
-      }
-      &-second {
-        font-size: 14px;
-      }
-    }
-    &__list {
-      gap: 16px;
-    }
-
-    &__item {
-      &-link {
-        &-icon {
-          inline-size: 30px;
-        }
-      }
-    }
-  }
-}
 </style>

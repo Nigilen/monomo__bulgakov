@@ -47,7 +47,7 @@ const items = [
 
   &__list {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, auto);
     justify-content: space-between;
     gap: min(37px, 1.9vi);
   }
@@ -55,11 +55,14 @@ const items = [
   &__item {
     display: flex;
     align-items: center;
-    gap: min(48px, 2.5vi);
+    // gap: min(48px, 2.5vi);
+    gap: min(18px, 0.95vi);
+
 
     &-value {
+      font-family: var(--font-primary);
       font-size: min(80px, 4.18vi);
-      font-weight: 600;
+      font-weight: 700;
       color: var(--color-accent-primary);
     }
     

@@ -53,6 +53,7 @@ const onNavigate = () => {
     font-size: 1.15vi;
     font-weight: 500;
     white-space: nowrap;
+    transition: color 0.3s ease;
 
     &:hover {
       color: var(--color-accent-primary);

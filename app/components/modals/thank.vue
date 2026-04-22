@@ -56,6 +56,8 @@
     font-size: 20px;
     text-transform: uppercase;
     text-align: center;
+    font-weight: 600;
+
   }
 }
 </style>

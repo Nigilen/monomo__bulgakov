@@ -5,6 +5,7 @@ import {
 } from './price-content';
 
 const {
+  activeIndex,
   viewportRef,
   trackRef,
   trackStyle,
@@ -14,7 +15,11 @@ const {
   goNext,
   onPointerDown,
   onPointerUp,
-} = usePriceSlider(() => priceSectionItems.length);
+} = usePriceSlider(() => priceSectionItems.length, {
+  initialActiveIndex: 0,
+  loop: false,
+  loopTripleMode: false,
+});
 </script>
 
 <template>
@@ -61,9 +66,10 @@ const {
             :style="trackStyle"
           >
             <SectionPriceItem
-              v-for="item in priceSectionItems"
+              v-for="(item, index) in priceSectionItems"
               :key="item.title"
               is-slider-card
+              :is-slider-active="activeIndex === index"
               :title="item.title"
               :subtitle="item.subtitle"
               :rows="item.rows"
@@ -77,7 +83,7 @@ const {
           type="button"
           aria-label="Следующий тариф"
           :disabled="!canGoNext"
-          @click="goNext"
+          @click="() => goNext()"
         >
           <Icon
             class="price__arrow-graphic price__arrow-graphic_desktop-next"
@@ -124,6 +130,7 @@ const {
 
   &__viewport {
     overflow: hidden;
+    padding-block: min(50px, 5vi);
     inline-size: 100%;
     touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
@@ -226,6 +233,11 @@ const {
 
   &__arrow-graphic {
     display: block;
+    transition: filter 0.3s ease;
+
+    &:hover {
+      filter: grayscale(1) brightness(1.2);
+    }
   }
 
   &__arrow-graphic_desktop-prev {
@@ -297,11 +309,12 @@ const {
 
   &__title {
     font-size: min(62px, 3.3vi);
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.4;
     text-transform: uppercase;
 
     &-highlight {
+      font-weight: 600;
       color: var(--color-accent-primary);
     }
   }

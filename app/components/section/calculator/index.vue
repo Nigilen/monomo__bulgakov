@@ -46,7 +46,7 @@
     block-size: auto;
     aspect-ratio: 350 / 100;
     font-size: min(20px, 1.05vi);
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1;
     text-transform: uppercase;
     color: var(--color-button-text-primary);
@@ -83,6 +83,7 @@
       aspect-ratio: 343 / 76;
       margin-inline: auto;
       font-size: 16px;
+
       border-radius: 16px;
       inline-size: 343px;
 
@@ -103,11 +104,12 @@
 
   &__title {
     font-size: min(62px, 3.3vi);
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.4;
     text-transform: uppercase;
-
+    
     &-highlight {
+      font-weight: 600;
       color: var(--color-accent-primary);
     }
   }

@@ -49,7 +49,7 @@ export const priceSectionItems: PriceSectionItem[] = [
   },
   {
     title: 'Прайм',
-    subtitle: 'Премиальный уровень пакет ',
+    subtitle: 'Премиальный уровень ',
     rows: [
       { term: 'Полы:', definition: 'кварцвинил + теплый пол везде' },
       { term: 'Стены:', definition: 'Q3 под покраску + акцентные стены' },

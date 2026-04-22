@@ -101,12 +101,13 @@ const getQuestionIconName = (id: number) =>
 
   &__title {
     font-size: min(62px, 3.3vi);
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.4;
     text-transform: uppercase;
 
     &-highlight {
       color: var(--color-accent-primary);
+      font-weight: 600;
     }
   }
 
@@ -173,7 +174,7 @@ const getQuestionIconName = (id: number) =>
 
     &__answer-text {
       padding-block-end: 2.55cqi;
-      font-size: 1.9cqi;
+      font-size: 1.3cqi;
       font-weight: 400;
       line-height: calc(35 / 20);
       color: var(--color-text-secondary);

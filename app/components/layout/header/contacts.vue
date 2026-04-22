@@ -6,7 +6,7 @@ const socials = [
     to: '#',
   },
   {
-    name: 'whatsapp',
+    name: 'max',
     to: '#',
   },
 ];
@@ -81,6 +81,11 @@ const socials = [
   &__phone {
     font-size: 1.25vi;
     white-space: nowrap;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--color-accent-primary);
+    }
   }
   
   &__label {
@@ -103,6 +108,7 @@ const socials = [
     color: var(--color-button-text-secondary);
     text-transform: uppercase;
     white-space: nowrap;
+    font-weight: 600;
   }
 
   @media (width < 768px) {

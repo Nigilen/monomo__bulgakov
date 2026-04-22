@@ -5,13 +5,6 @@
 <template>
   <footer class="footer container container--wide">
     <div class="footer__logo logo">
-      <!-- <img
-        class="logo__image" 
-        src="/logo.svg" 
-        alt="Logo" 
-        width="213" 
-        height="117" 
-      /> -->
       <UiLogo class="logo__image" />
       <p class="logo__caption">
         Ремонт квартир и домов в Калининграде и области
@@ -23,7 +16,7 @@
     <ul class="footer__socials socials">
       <li class="socials__item">
         <a class="socials__link" href="#">
-          <Icon class="socials__icon" name="icons:whatsapp" />
+          <Icon class="socials__icon" name="icons:max" />
         </a>
       </li>
       <li class="socials__item">
@@ -33,7 +26,7 @@
       </li>
     </ul>
     <div class="footer__phone phone">
-      <a class="phone__link" href="tel:+79999999999">+7 (999) 999-99-99</a>
+      <a class="phone__link" href="tel:+79999999999">+7 (968) 281-00-92</a>
       <p class="phone__description">Ежедневно с 8:00 до 20:00</p>
     </div>
   </footer>
@@ -63,7 +56,7 @@
   align-items: center;
 
   &__image {
-    inline-size: 12cqi;
+    inline-size: 10cqi;
     block-size: auto;
     aspect-ratio: 213 / 117;
   }
@@ -140,6 +133,11 @@
     font-style: normal;
     font-weight: 600;
     color: var(--color-text-primary);
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--color-accent-primary);
+    }
   }
   &__description {
     font-size: 0.89cqi;

@@ -80,7 +80,7 @@ defineProps<{
   @media (width < 768px) {
     flex-direction: column;
     row-gap: 22px;
-    inline-size: min(100%, 343px);
+    inline-size: 100%;
     margin-inline: auto;
     
 

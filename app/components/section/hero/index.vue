@@ -86,7 +86,7 @@ const badges: Array<{
 
     &-highlight {
       color: var(--color-accent-primary);
-      font-weight: 500;
+      font-weight: 600;
     }
   }
 
@@ -160,6 +160,7 @@ const badges: Array<{
       flex-direction: column;
       margin-block-end: 80px;
       gap: 20px;
+      align-items: flex-start;
     }
   }
 }
@@ -168,7 +169,7 @@ const badges: Array<{
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 500;
+  font-weight: 600;
   inline-size: min(350px, 18.23vi);
   block-size: auto;
   aspect-ratio: 350 / 100;
@@ -185,37 +186,14 @@ const badges: Array<{
   &--primary {
     color: var(--color-button-text-primary);
     background-image: var(--color-button-background-primary);
-    box-shadow: 0 0.4cqi 0px #7C5E49;
   }
 
   &--secondary {
     position: relative;
     color: var(--color-button-text-secondary);
     background-color: var(--color-button-background-secondary);
-
-    &::after {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      box-sizing: content-box;
-      inline-size: 100%;
-      block-size: 100%;
-      border: 2px solid var(--color-border-secondary);
-      border-radius: 0.83vi;
-      z-index: 0;
-    }
-
-    &::before {
-      content: '';
-      position: absolute;
-      inset: -0.4cqi;
-      box-sizing: content-box;
-      inline-size: 100%;
-      block-size: calc(100% + 2cqi);
-      border: 0.4cqi solid #7C5E49;
-      border-radius: 0.83vi;
-      z-index: 0;
-    }
+    border: 2px solid var(--color-border-secondary);
+    border-radius: 0.83vi;
   }
 
   @media (width < 768px) {
@@ -227,20 +205,6 @@ const badges: Array<{
       font-size: 16px;
     }
 
-    &--primary {
-      box-shadow: 0 8px 0px #7C5E49;
-    }
-
-    &--secondary {
-      &::after {
-        border-radius: 16px;
-        inset: -3px;
-      }
-      &::before {
-        border-radius: 16px;
-        inset: -2px;
-      }
-    }
   }
 }
 </style>

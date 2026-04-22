@@ -104,9 +104,9 @@ onUnmounted(() => {
         <div class="portfolio-item__content">
           <h3 class="portfolio-item__title">{{ item.title }}</h3>
           <p class="portfolio-item__description">{{ item.description }}</p>
-          <button class="portfolio-item__button" type="button">
+          <NuxtLink class="portfolio-item__link" to="#">
             Узнать подробнее
-          </button>
+          </NuxtLink>
         </div>
       </li>
     </ul>
@@ -121,9 +121,9 @@ onUnmounted(() => {
               <div class="portfolio-item__content">
                 <h3 class="portfolio-item__title">{{ item.title }}</h3>
                 <p class="portfolio-item__description">{{ item.description }}</p>
-                <button class="portfolio-item__button" type="button">
+                <NuxtLink class="portfolio-item__link" to="#">
                   Узнать подробнее
-                </button>
+                </NuxtLink>
               </div>
             </li>
           </ul>
@@ -153,12 +153,13 @@ onUnmounted(() => {
 
   &__title {
     font-size: min(62px, 3.3vi);
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.4;
     text-transform: uppercase;
 
     &-highlight {
       color: var(--color-accent-primary);
+      font-weight: 600;
     }
   }
 
@@ -308,13 +309,18 @@ onUnmounted(() => {
       margin-block-end: 8.5cqi;
     }
 
-    &__button {
+    &__link {
       display: flex;
       font-size: 2.85cqi;
       font-weight: 400;
       color: var(--color-accent-primary);
       inline-size: max-content;
       white-space: nowrap;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: var(--color-text-primary);
+      }
 
       &::before {
         position: absolute;
@@ -356,7 +362,7 @@ onUnmounted(() => {
         text-align: right;
       }
 
-      & .portfolio-item__button {
+      & .portfolio-item__link {
         align-self: flex-end;
 
         &::before {
@@ -405,7 +411,7 @@ onUnmounted(() => {
           text-align: left;
         }
 
-        & .portfolio-item__button {
+        & .portfolio-item__link {
           align-self: flex-start;
 
           &::before {
@@ -440,7 +446,7 @@ onUnmounted(() => {
         margin-block-end: 16px;
       }
 
-      &__button {
+      &__link {
         font-size: 16px;
         display: flex;
         align-items: center;
@@ -471,6 +477,11 @@ onUnmounted(() => {
     inline-size: 13.5cqi;
     block-size: auto;
     aspect-ratio: 1 / 1;
+    transition: filter 0.3s ease;
+
+    &:hover {
+      filter: grayscale(1) brightness(1.2);
+    }
 
     &:disabled {
       opacity: 0.35;

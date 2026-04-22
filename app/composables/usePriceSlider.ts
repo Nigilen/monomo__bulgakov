@@ -46,10 +46,8 @@ export type UsePriceSliderOptions = {
   initialActiveIndex?: number
   itemSelector?: string
   loop?: boolean
-  /** Три полных набора слайдов подряд; activeIndex 0…3n−1, старт с n; снап после края */
   loopTripleMode?: boolean
   autoPlayIntervalMs?: number
-  /** Минимальный интервал между шагами по кнопкам/свайпу (мс); автоплей не ограничивается */
   navigationCooldownMs?: number
 };
 

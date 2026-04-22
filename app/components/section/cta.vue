@@ -130,6 +130,15 @@
       block-size: 100%;
     }
   }
+
+  @media (width < 768px) {
+    &__image {
+      &--first,
+      &--second {
+        block-size: auto;
+      }
+    }
+  }
 }
 
 

@@ -1,83 +1,114 @@
 <script setup lang="ts">
+
+const { open: openPolicyModal } = usePolicyModal()
+const { open: openThankModal } = useThankModal()
+const { display: phoneDisplay, onPhoneInput, digits: phoneDigits, reset: resetPhone } = useRuPhoneField()
+
+const name = ref('')
+const errors = reactive({ name: false, phone: false })
+const submitAttempt = ref(false)
+
+function syncErrors() {
+  errors.name = !isValidName(name.value)
+  errors.phone = !isCompleteRuPhone(phoneDigits())
+}
+
+function onNameInput() {
+  if (submitAttempt.value) {
+    errors.name = !isValidName(name.value)
+  }
+}
+
+function onPhoneInputWrapped(e: Event) {
+  onPhoneInput(e)
+  if (submitAttempt.value) {
+    errors.phone = !isCompleteRuPhone(phoneDigits())
+  }
+}
+
+function onSubmit(e: Event) {
+  e.preventDefault()
+  submitAttempt.value = true
+  syncErrors()
+  if (errors.name || errors.phone) {
+    return
+  }
+  openThankModal()
+  name.value = ''
+  resetPhone()
+  submitAttempt.value = false
+}
+
 </script>
 
 <template>
   <section class="cta container">
     <div class="cta__images-group images-group">
-      <NuxtImg 
-        class="images-group__image images-group__image--first" 
-        src="/cta-img-01.png" 
-        alt="CTA Image" 
-        width="355" 
-        height="380" 
-      />
-      <NuxtImg 
-        class="images-group__image images-group__image--second" 
-        src="/cta-img-02.png" 
-        alt="CTA Image" 
-        width="355" 
-        height="380" 
-      />
-      <NuxtImg 
-        class="images-group__image images-group__image--third" 
-        src="/cta-img-03.png" 
-        alt="CTA Image" 
-        width="455" 
-        height="777" 
-      />
+      <NuxtImg class="images-group__image images-group__image--first" src="/cta-img-01.png" alt="CTA Image" width="355"
+        height="380" />
+      <NuxtImg class="images-group__image images-group__image--second" src="/cta-img-02.png" alt="CTA Image" width="355"
+        height="380" />
+      <NuxtImg class="images-group__image images-group__image--third" src="/cta-img-03.png" alt="CTA Image" width="455"
+        height="777" />
     </div>
     <div class="cta__content content">
       <div class="header">
         <h2 class="header__title">
-          Не знаете, 
+          Не знаете,
           <span class="header__title-highlight">с чего начать</span>
           ремонт?
         </h2>
         <p class="header__text">
           <span>
-            Предлагаем начать с 
+            Предлагаем начать с
             <span class="header__text-highlight">бесплатной консультации. </span>
           </span>
           <span>Оставьте заявку, мы ответим на все вопросы</span>
         </p>
       </div>
-      <form action="" class="form">
+      <form class="form" @submit="onSubmit">
         <div class="form__inputs">
-
-          <label class="form__label" for="name">
-            <input 
+          <div class="form__field" :class="{ 'form__field--error': errors.name }">
+            <input
+              v-model="name"
               class="form__input"
-              type="text" 
-              id="name" 
-              placeholder="Имя" 
-              name="name" 
-              required
+              name="name"
+              placeholder="Имя"
+              type="text"
+              autocomplete="name"
+              maxlength="50"
+              @input="onNameInput"
             />
-          </label>
-          <label class="form__label" for="phone">
-            <input 
+            <p v-if="errors.name" class="field-error">Заполните данные</p>
+          </div>
+          <div class="form__field" :class="{ 'form__field--error': errors.phone }">
+            <input
+              :value="phoneDisplay"
               class="form__input"
-              type="tel" 
-              id="phone" 
-              placeholder="+7 ( ___ ) ___ - __ - __" 
-              name="phone" 
-              required
+              name="phone"
+              placeholder="+7 ( ___ ) ___ - __ - __"
+              type="tel"
+              inputmode="tel"
+              autocomplete="tel"
+              @input="onPhoneInputWrapped"
             />
-          </label>
+            <p v-if="errors.phone" class="field-error">Заполните данные</p>
+          </div>
         </div>
         <button class="form__button" type="submit">Отправить заявку</button>
         <p class="form__text">
-          Нажимая кнопку “Отправить заявку”, вы соглашаетесь с 
-          <a href="#" class="form__link">политикой конфиденциальности</a>
+          Нажимая кнопку “Отправить заявку”, вы соглашаетесь с
+          <button class="form__link" type="button" @click="openPolicyModal">
+            политикой конфиденциальности
+          </button>
         </p>
       </form>
-      
+
     </div>
   </section>
 </template>
 
 <style scoped lang="scss">
-
 .cta {
   margin-block-end: 12vi;
 
@@ -113,17 +144,17 @@
     border-radius: 16px;
     block-size: 100%;
     object-fit: cover;
-    
+
     &--first {
       grid-column: 1 / 2;
       grid-row: 1 / 2;
     }
-    
+
     &--second {
       grid-column: 1 / 2;
       grid-row: 2 / 3;
     }
-    
+
     &--third {
       grid-column: 2 / 3;
       grid-row: span 2;
@@ -133,6 +164,7 @@
 
   @media (width < 768px) {
     &__image {
+
       &--first,
       &--second {
         block-size: auto;
@@ -184,7 +216,7 @@
   &__text {
     display: flex;
     flex-direction: column;
-    font-size: 3.2cqi;  
+    font-size: 3.2cqi;
     font-weight: 400;
     line-height: 1.6em;
     color: var(--color-text-primary);
@@ -223,19 +255,31 @@
     margin-block-end: 9.8cqi;
   }
 
-  &__label {
+  &__field {
     display: flex;
     flex-direction: column;
+
+    &--error .form__input {
+      border-bottom-color: #FF3434;
+    }
+  }
+
+  .field-error {
+    margin: 0;
+    margin-block-start: 6px;
+    font-size: 14px;
+    color: #FF3434;
+    text-align: center;
   }
 
   &__input {
+    font-family: var(--font-primary);
     padding: 1.6cqi;
     background-color: transparent;
     box-shadow: none;
     border: none;
     border-bottom: 0.33cqi solid var(--color-accent-primary);
     color: var(--color-text-primary);
-    text-transform: uppercase;
     font-size: 3.2cqi;
     font-weight: 400;
     line-height: 1.6em;
@@ -246,7 +290,6 @@
       font-size: 3.2cqi;
       font-weight: 400;
       line-height: 1.6em;
-      text-transform: uppercase;
     }
 
     &:focus {
@@ -279,6 +322,13 @@
   }
 
   &__link {
+    display: inline;
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
     color: var(--color-accent-primary);
     transition: color 0.3s ease;
 
@@ -310,7 +360,4 @@
 
   }
 }
-
-
-
 </style>

@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+const { open: openCallbackModal } = useCallbackModal()
+
 const socials = [
   {
     name: 'telegram',
@@ -26,7 +28,7 @@ const socials = [
       <NuxtLink class="contacts__phone" to="tel:+79682810092">+7 (968) 281-00-92</NuxtLink>
       <p class="contacts__label">Ежедневно с 8:00 до 20:00</p>
     </div>
-    <button class="contacts__button" to="#" type="button">
+    <button class="contacts__button" type="button" @click="openCallbackModal">
       Заказать звонок
     </button>
   </div>

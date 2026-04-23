@@ -19,6 +19,8 @@ const props = withDefaults(defineProps<{
   isSliderActive: false,
 });
 
+const { open: openPriceModal } = usePriceModal()
+
 const FILLED_SHAPES_BY_TITLE: Record<string, 1 | 2 | 3 | 4> = {
   'Инвест': 1,
   'Мой дом': 2,
@@ -137,7 +139,7 @@ const priceIconColors = computed(() => {
       <p class="item__footer-price">
         {{ priceLabel }}
       </p>
-      <button class="button button--secondary" type="button">
+      <button class="button button--secondary" type="button" @click="openPriceModal(title)">
         <span class="button__label">
           {{ buttonLabel }}
         </span>

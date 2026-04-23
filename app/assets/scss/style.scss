@@ -2,6 +2,44 @@
 @use '_base.scss';
 
 
+.modal-shell-enter-active {
+  transition-property: opacity;
+  transition-duration: 320ms;
+  transition-timing-function: ease;
+}
+
+.modal-shell-leave-active {
+  transition-property: opacity;
+  transition-duration: 280ms;
+  transition-timing-function: ease;
+}
+
+.modal-shell-enter-from {
+  opacity: 0;
+}
+
+.modal-shell-enter-to {
+  opacity: 1;
+}
+
+.modal-shell-leave-from {
+  opacity: 1;
+}
+
+.modal-shell-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-shell-enter-active {
+    transition-duration: 0.01ms;
+  }
+
+  .modal-shell-leave-active {
+    transition-duration: 0.01ms;
+  }
+}
+
 
 .container {
   box-sizing: content-box;

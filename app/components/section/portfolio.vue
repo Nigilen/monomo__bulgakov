@@ -1,38 +1,69 @@
 <script setup lang="ts">
 
+/** Публичные URL (public/images/) — так Nuxt Image / IPX стабильно находит файлы; импорт из assets давал URL `/_nuxt/...`, который оптимизатор ломал. */
+const PORTFOLIO_IMAGES = {
+  img01: '/images/portfolio-img-01.png',
+  img02: '/images/portfolio-img-02.png',
+  img03: '/images/portfolio-img-03.png',
+  img04: '/images/portfolio-img-04.png',
+} as const
+
+/** Галерея проекта; позже заменить данными с сервера (по id проекта). */
+const PROJECT_GALLERY_PLACEHOLDER = [
+  PORTFOLIO_IMAGES.img01,
+  PORTFOLIO_IMAGES.img02,
+  PORTFOLIO_IMAGES.img03,
+  PORTFOLIO_IMAGES.img04,
+] as const
+
 type PortfolioItem = {
   id: number
   image: string
   title: string
   description: string
+  gallery: readonly string[]
 };
 
 const items: PortfolioItem[] = [
   {
     id: 1,
-    image: '/portfolio-img-01.png',
+    image: PORTFOLIO_IMAGES.img01,
+    gallery: PROJECT_GALLERY_PLACEHOLDER,
     title: 'г. Пионерск',
     description: 'Ремонт квартиры в городе Пионерск. Дизайн-проект от Анны Шатик. Ремонт по просьбе заказчиков сделать за 45 дней был готов на 101%.',
   },
   {
     id: 2,
-    image: '/portfolio-img-02.png',
+    image: PORTFOLIO_IMAGES.img02,
+    gallery: PROJECT_GALLERY_PLACEHOLDER,
     title: 'г. Калининград',
     description: 'Удаленный ремонт двухкомнатной квартиры в  Калининграде. Заказчики из Якутии. Все работы провели онлайн. Дизайн-проект от Александра и Оксаны. Срок исполнения – 120 дней.',
   },
   {
     id: 3,
-    image: '/portfolio-img-03.png',
+    image: PORTFOLIO_IMAGES.img03,
+    gallery: PROJECT_GALLERY_PLACEHOLDER,
     title: 'г. Пионерск',
     description: 'Однокомнатная квартира в городе Пионерск. Квартира по дизайн-проекту от Анны Шатик. Срок исполнения – 75 дней.',
   },
   {
     id: 4,
-    image: '/portfolio-img-04.png',
+    image: PORTFOLIO_IMAGES.img04,
+    gallery: PROJECT_GALLERY_PLACEHOLDER,
     title: 'г. Калининград',
     description: 'Косметический ремонт двухкомнатной квартиры в Калининграде. Срок исполнения – 35 дней.',
   },
 ];
+
+const galleryProject = ref<PortfolioItem | null>(null)
+
+const openProjectGallery = (item: PortfolioItem) => {
+  galleryProject.value = item
+}
+
+const closeProjectGallery = () => {
+  galleryProject.value = null
+}
 
 /** Как в стилях: (width < 768px). До mounted — десктоп (SSR). */
 const isMobileLayout = ref(false);
@@ -104,9 +135,9 @@ onUnmounted(() => {
         <div class="portfolio-item__content">
           <h3 class="portfolio-item__title">{{ item.title }}</h3>
           <p class="portfolio-item__description">{{ item.description }}</p>
-          <NuxtLink class="portfolio-item__link" to="#">
+          <button class="portfolio-item__link" type="button" @click="openProjectGallery(item)">
             Узнать подробнее
-          </NuxtLink>
+          </button>
         </div>
       </li>
     </ul>
@@ -121,9 +152,9 @@ onUnmounted(() => {
               <div class="portfolio-item__content">
                 <h3 class="portfolio-item__title">{{ item.title }}</h3>
                 <p class="portfolio-item__description">{{ item.description }}</p>
-                <NuxtLink class="portfolio-item__link" to="#">
+                <button class="portfolio-item__link" type="button" @click="openProjectGallery(item)">
                   Узнать подробнее
-                </NuxtLink>
+                </button>
               </div>
             </li>
           </ul>
@@ -140,6 +171,18 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
+
+    <Teleport to="body">
+      <Transition name="modal-shell">
+        <ModalsPortfolioGallery
+          v-if="galleryProject"
+          :key="galleryProject.id"
+          :slides="[...galleryProject.gallery]"
+          :title="galleryProject.title"
+          @close="closeProjectGallery"
+        />
+      </Transition>
+    </Teleport>
   </section>
 </template>
 
@@ -317,6 +360,12 @@ onUnmounted(() => {
       inline-size: max-content;
       white-space: nowrap;
       transition: color 0.3s ease;
+      padding: 0;
+      border: none;
+      background: none;
+      font: inherit;
+      cursor: pointer;
+      text-align: inherit;
 
       &:hover {
         color: var(--color-text-primary);

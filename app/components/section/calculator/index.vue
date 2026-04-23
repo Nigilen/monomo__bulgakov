@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+const { open: openCalculatorModal } = useCalculatorModal()
+
 </script>
 
 <template>
@@ -13,7 +15,7 @@
         Рассчитайте примерную стоимость ремонта с учетом материалов в калькуляторе или отправьте заявку на точный расчет с учетом всех ваших пожеланий.
       </p>
     </div>
-    <button class="calculator__button" type="button">
+    <button class="calculator__button" type="button" @click="openCalculatorModal">
       Рассчитать стоимость
     </button>
     <SectionCalculatorForm class="calculator__form" />

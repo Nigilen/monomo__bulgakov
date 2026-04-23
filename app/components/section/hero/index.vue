@@ -1,5 +1,7 @@
 <script setup lang="ts">
 
+const { open: openSimpleModal } = useSimpleModal()
+
 const badges: Array<{
   id: number;
   title: string;
@@ -39,7 +41,7 @@ const badges: Array<{
         </p>
       </div>
       <div class="hero__buttons">
-        <button class="button button--primary" type="button">
+        <button class="button button--primary" type="button" @click="openSimpleModal">
           <span class="button__label">
             Обсудить проект
           </span>

@@ -1,5 +1,45 @@
 <script setup lang="ts">
 
+const { open: openPolicyModal } = usePolicyModal()
+const { open: openThankModal } = useThankModal()
+const { display: phoneDisplay, onPhoneInput, digits: phoneDigits, reset: resetPhone } = useRuPhoneField()
+
+const name = ref('')
+const errors = reactive({ name: false, phone: false })
+const submitAttempt = ref(false)
+
+function syncErrors() {
+  const phoneNorm = phoneDigits()
+  errors.name = !isValidName(name.value)
+  errors.phone = !isCompleteRuPhone(phoneNorm)
+}
+
+function onNameInput() {
+  if (submitAttempt.value) {
+    errors.name = !isValidName(name.value)
+  }
+}
+
+function onPhoneInputWrapped(e: Event) {
+  onPhoneInput(e)
+  if (submitAttempt.value) {
+    errors.phone = !isCompleteRuPhone(phoneDigits())
+  }
+}
+
+function onSubmit(e: Event) {
+  e.preventDefault()
+  submitAttempt.value = true
+  syncErrors()
+  if (errors.name || errors.phone) {
+    return
+  }
+  openThankModal()
+  name.value = ''
+  resetPhone()
+  submitAttempt.value = false
+}
+
 </script>
 
 <template>
@@ -12,44 +52,57 @@
       <div class="header__description-container">
         <Icon name="icons:diamonds3" class="header__description-icon" />
         <p class="header__description">
-          Свяжитесь с нами любым удобным для вас способом или оставьте заявку на сайте для 
+          Свяжитесь с нами любым удобным для вас способом или оставьте заявку на сайте для
           <span class="header__title-highlight">БЕСПЛАТНОЙ КОНСУЛЬТАЦИИ</span>
         </p>
       </div>
     </div>
     <div class="form">
       <h3 class="form__title">Заполните форму</h3>
-      <form class="form__content">
-        <div class="form__content-item">
-          <label class="form__content-item-label" for="name"></label>
-          <input class="form__content-item-input" type="text" id="name" name="name" placeholder="Имя" />
+      <form class="form__content" @submit="onSubmit">
+        <div class="form__content-item" :class="{ 'form__content-item--error': errors.name }">
+          <input
+            v-model="name"
+            class="form__content-item-input"
+            name="name"
+            placeholder="Имя"
+            type="text"
+            autocomplete="name"
+            maxlength="50"
+            @input="onNameInput"
+          />
+          <p v-if="errors.name" class="field-error">Заполните данные</p>
         </div>
-        <div class="form__content-item">
-          <label class="form__content-item-label" for="phone"></label>
-          <input class="form__content-item-input" type="tel" id="phone" name="phone" placeholder="+7 ( ___ ) ___ - __ - __" />
+        <div class="form__content-item" :class="{ 'form__content-item--error': errors.phone }">
+          <input
+            :value="phoneDisplay"
+            class="form__content-item-input"
+            name="phone"
+            placeholder="+7 ( ___ ) ___ - __ - __"
+            type="tel"
+            inputmode="tel"
+            autocomplete="tel"
+            @input="onPhoneInputWrapped"
+          />
+          <p v-if="errors.phone" class="field-error">Заполните данные</p>
         </div>
         <button class="form__content-button" type="submit">Отправить заявку</button>
         <p class="form__content-description">
-          Нажимая кнопку “Отправить заявку”, вы соглашаетесь с 
-          <a class="form__content-description-link" href="#">политикой конфиденциальности</a>
+          Нажимая кнопку “Отправить заявку”, вы соглашаетесь с
+          <button class="form__content-description-link" type="button" @click="openPolicyModal">
+            политикой конфиденциальности
+          </button>
         </p>
       </form>
     </div>
     <div class="image">
-      <NuxtImg 
-        src="/request.png" 
-        alt="Request" 
-        width="688"
-        height="992"
-        class="image__img"
-      />
+      <NuxtImg src="/request.png" alt="Request" width="688" height="992" class="image__img" />
     </div>
-    
+
   </section>
 </template>
 
 <style scoped lang="scss">
-
 .request {
   display: grid;
   grid-template-columns: 13fr 15fr;
@@ -79,7 +132,7 @@
     inline-size: 90%;
     text-wrap-style: pretty;
 
-    
+
     &-highlight {
       font-weight: 600;
       color: var(--color-accent-primary);
@@ -120,8 +173,8 @@
       margin-block-end: 16px;
       inline-size: 100%;
     }
-    
-    
+
+
     &__description {
       font-size: 16px;
       gap: 16px;
@@ -188,16 +241,17 @@
     flex-direction: column;
     gap: 6cqi;
 
-    
+
     &-item {
       display: flex;
       flex-direction: column;
 
-      &-label {
-        font-size: 3.5cqi;
+      &--error &-input {
+        border-bottom-color: #FF3434;
       }
-    
+
       &-input {
+        font-family: var(--font-primary);
         font-size: 3.5cqi;
         padding: 1.6cqi;
         border: none;
@@ -206,8 +260,7 @@
         text-align: center;
         color: var(--color-text-primary);
         font-family: var(--font-primary);
-        text-transform: uppercase;
-        
+
         &::placeholder {
           color: var(--color-text-secondary);
           font-family: var(--font-primary);
@@ -222,8 +275,8 @@
         }
       }
     }
-  
-  
+
+
     &-button {
       inline-size: 100%;
       padding-block: 6.4cqi;
@@ -236,7 +289,7 @@
       margin-block-end: -2.7cqi;
       line-height: 1;
     }
-    
+
     &-description {
       font-size: 2.58cqi;
       line-height: calc(20 / 16);
@@ -244,6 +297,13 @@
       color: var(--color-text-secondary);
 
       &-link {
+        display: inline;
+        padding: 0;
+        border: none;
+        background: none;
+        font: inherit;
+        cursor: pointer;
+        text-decoration: underline;
         color: var(--color-accent-primary);
         transition: color 0.3s ease;
 
@@ -251,6 +311,14 @@
           color: var(--color-text-primary);
         }
       }
+    }
+
+    .field-error {
+      margin: 0;
+      margin-block-start: 6px;
+      font-size: 14px;
+      color: #FF3434;
+      text-align: center;
     }
   }
 
@@ -273,22 +341,24 @@
         &-label {
           font-size: 16px;
         }
+
         &-input {
           font-size: 16px;
           padding: 0 0 8px 0;
           border-bottom: 1px solid var(--color-border-secondary);
         }
       }
+
       &-button {
         padding-block: 32px;
         font-size: 16px;
         border-radius: 16px;
       }
+
       &-description {
         font-size: 14px;
       }
     }
   }
 }
-
 </style>

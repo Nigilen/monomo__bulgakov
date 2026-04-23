@@ -1,3 +1,8 @@
+import { dirname, resolve } from 'pathe'
+import { fileURLToPath } from 'node:url'
+
+const projectDir = dirname(fileURLToPath(import.meta.url))
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -105,6 +110,8 @@ export default defineNuxtConfig({
     quality: 100,
     format: ['webp', 'avif', 'png'],
     dir: 'assets/images',
+    /** Иначе IPX ищет только в `assets/images`; пути вида `/images/foo.png` из `public/images/` не находятся. */
+    dirs: [resolve(projectDir, 'public')],
   },
 
 })

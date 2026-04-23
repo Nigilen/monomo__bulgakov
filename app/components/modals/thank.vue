@@ -1,63 +1,54 @@
 <script setup lang="ts">
 
+const emit = defineEmits<{
+  (e: 'close'): void
+}>()
+
 </script>
 
 <template>
-  <UiModal>
-    <div class="modal">
-      <button class="modal__close">
-        <Icon name="icons:cross" class="modal__close-icon" width="24" height="24" />
-      </button>
-      <h2 class="modal__title">Спасибо за ваше сообщение!</h2>
-      <p class="modal__description">Мы свяжемся с вами в ближайшее время.</p>
-      <button class="modal__button">Закрыть</button>
+  <UiModal @close="emit('close')">
+    <div class="content">
+      <header class="header">
+        <h2 class="header__title">
+          СПАСИБО!
+        </h2>
+        <p class="header__description">Ваша заявка принята. Мы свяжемся с вами в ближайшее время.</p>
+      </header>
     </div>
   </UiModal>
 </template>
 
 <style scoped lang="scss">
-.modal {
+.content {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 40px;
-  container-type: inline-size;
+  container-type: inline-size;  
+  min-block-size: 300px;
+}
 
-  &__close {
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-end: 0;
-    padding: 10px;
-    
-    &-icon {
-      inline-size: 24px;
-      block-size: 24px;
-      color: var(--color-text-primary);
-    }
-  }
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5.1cqi;
+  margin-block-end: 6.8cqi;
+  
   &__title {
-    font-size: 32px;
-    font-weight: 700;
-    text-align: center;
-  }
-  &__description {
-    font-size: 20px;
+    font-size: clamp(24px, 7cqi, 32px);
     font-weight: 400;
     text-align: center;
-  }
-  &__button {
-    padding: 10px 20px;
-    inline-size: 100%;
-    padding-block: 30px;
-    border-radius: 16px;
-    background-image: var(--color-button-background-primary);
-    color: var(--color-button-text-primary);
-    font-size: 20px;
     text-transform: uppercase;
+    color: #4F934E;
+  }
+  &__description {
+    font-size: clamp(16px, 4cqi, 18px);
     text-align: center;
-    font-weight: 600;
-
   }
 }
+
+  
 </style>

@@ -142,7 +142,7 @@ function onSubmit(e: Event) {
 
   &__image {
     border-radius: 16px;
-    block-size: 100%;
+    block-size: auto;
     object-fit: cover;
 
     &--first {

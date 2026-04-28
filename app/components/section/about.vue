@@ -16,7 +16,7 @@
     <div class="content">
       <NuxtImg 
         class="content__image" 
-        src="/about-img.png" 
+        src="/images/about-img.png" 
         alt="About Image" 
         width="568"
         height="865"

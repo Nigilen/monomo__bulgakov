@@ -44,7 +44,7 @@ const items = [
     <div class="roadmap__content">
       <NuxtImg 
         class="roadmap__image" 
-        src="/roadmap.png" 
+        src="/images/roadmap.png" 
         alt="Roadmap Image" 
         width="620"
         height="1090"
@@ -53,7 +53,7 @@ const items = [
         <li class="roadmap__item" v-for="item in items" :key="item.number">
           <NuxtImg 
             class="roadmap__item-number" 
-            :src="`/step-${item.number}.png`" 
+            :src="`/images/step-${item.number}.png`" 
             alt="Roadmap Number" 
             width="275"
             height="210"

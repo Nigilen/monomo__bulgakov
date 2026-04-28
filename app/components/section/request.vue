@@ -96,7 +96,7 @@ function onSubmit(e: Event) {
       </form>
     </div>
     <div class="image">
-      <NuxtImg src="/request.png" alt="Request" width="688" height="992" class="image__img" />
+      <NuxtImg src="/images/request.png" alt="Request" width="688" height="992" class="image__img" />
     </div>
 
   </section>

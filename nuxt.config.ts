@@ -5,8 +5,18 @@ const projectDir = dirname(fileURLToPath(import.meta.url))
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: true,
+  devtools: { enabled: false },
+  // routeRules: {
+  //   '/': { swr: 300 },          // Главная: кэш 5 мин, фоновое обновление
+  //   '/**': { swr: 3600 }        // Остальные страницы: кэш 1 час
+  // },
+  nitro: {
+    compressPublicAssets: true, // Gzip/Brotli сжатие статики
+    publicAssets: [{ maxAge: 31536000 }] // Кэш картинок/CSS/JS на 1 год
+  },
+
   compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
   modules: ['@nuxt/icon', '@nuxt/image', '@nuxt/fonts'],
   css: ['@/assets/scss/style.scss'],
   // app: {
@@ -109,7 +119,7 @@ export default defineNuxtConfig({
   image: {
     quality: 100,
     format: ['webp', 'avif', 'png'],
-    dir: 'assets/images',
+    dir: 'public/images',
     /** Иначе IPX ищет только в `assets/images`; пути вида `/images/foo.png` из `public/images/` не находятся. */
     dirs: [resolve(projectDir, 'public')],
   },

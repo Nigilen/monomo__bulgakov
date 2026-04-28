@@ -44,10 +44,11 @@ const items = [
     <div class="roadmap__content">
       <NuxtImg 
         class="roadmap__image" 
-        src="/images/roadmap.png" 
+        src="/images/roadmap.avif" 
         alt="Roadmap Image" 
         width="620"
         height="1090"
+        loading="lazy"
       />
       <ol class="roadmap__list">
         <li class="roadmap__item" v-for="item in items" :key="item.number">
@@ -56,7 +57,9 @@ const items = [
             :src="`/images/step-${item.number}.png`" 
             alt="Roadmap Number" 
             width="275"
+            format="avif"
             height="210"
+            loading="lazy"
           />
           <h3 class="roadmap__item-title">{{ item.title }}</h3>
           <p class="roadmap__item-description">{{ item.description }}</p>

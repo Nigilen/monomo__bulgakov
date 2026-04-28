@@ -1,0 +1,138 @@
+> nuxt dev
+
+│                                                                                                     11:30:48 PM
+●  Nuxt 4.4.2 (with Nitro 2.13.3, Vite 7.3.2 and Vue 3.5.33)
+                                                                                                      11:30:48 PM
+  ➜ Local:    http://localhost:3000/
+  ➜ Network:  use --host to expose
+
+ℹ Nuxt Icon server bundle mode is set to local                                                       11:30:49 PM
+✔ Nuxt Icon loaded local collection icons with 14 icons                                              11:30:49 PM
+
+[11:30:49 PM]  ERROR  EACCES: permission denied, open '/Users/nigilen/development/monomo-studio/bulgakov/.nuxt/tsco
+[11:30:49 PM]  ERROR  EACCES: permission denied, open '/Users/nigilen/development/monomo-studio/bulgakov/.nuxt/tsconfig.json'
+
+    at async open (node:internal/fs/promises:639:25)
+    at async Object.writinternal/fs/promises:1213:14)
+    at async Promise.all (index 1)
+    at async Module.writeTypes (node_modules/@nuxt/kit/dist/index.mjs:1853:2)
+    at async Promise.all (index 0)
+    at async #initializeNuxt (node_modules/@nuxt/cli/dist/dev-CttXIKD2.mjs:523:3)
+    at async NuxtDevServer.init (node_modules/@nuxt/cli/dist/dev-CttXIKD2.mjs:386:3)
+    at async initialize (node_modules/@nuxt/cli/dist/dev-CttXIKD2.mjs:721:2)
+    at async Object.run (node_modules/@nuxt/cli/dist/dev-BpSDPS5S.mjs:198:51)
+    at async runCommand (node_modules/@nuxt/cli/node_modules/citty/dist/index.mjs:228:47)
+    at async runCommand (node_modules/@nuxt/cli/node_modules/citty/dist/index.mjs:217:5)
+    at async runMain (node_modules/@nuxt/cli/node_modules/citty/dist/index.mjs:394:10)
+
+ℹ Nuxt Icon client bundle consist of 14 icons with 6.74KB(uncompressed) in size                      11:30:49 PM
+
+[11:30:50 PM]  ERROR  Could not initialize provider fontsource. unifont will not be able to process fonts provided 
+[11:30:50 PM]  ERROR  Could not initialize provider fontsource. unifont will not be able to process fonts provided by this provider. ENOENT: no such file or directory, open '/Users/nigilen/development/monomo-studio/bulgakov/node_m
+[11:30:50 PM]  ERROR  Could not initialize provider fontsource. unifont will not be able to process fonts provided by this provider. ENOENT: no such file or directory, open '/Users/nigilen/development/monomo-studioulgakov/node_modules/.cache/nuxt/fonts/meta/fontsource/RBNvo1WzZ4oRRq0W9-hknpT7T8If536DEMBg9hyq_4o/fontsource/meta.json'
+
+    at async open (node:internal/fs/promises:639:25)
+    at async Object.writeFile (node:internal/fs/promises:1213:14)
+    at async Object.setItem (node_modules/unstorage/dist/index.mjs:205:7)
+    at async Object.getItem (node_modules/unifont/dist/index.mjs:814:4)
+    at async node_modules/unifont/dist/index.mjs:420:16
+    at async node_modules/unifont/dist/index.mjs:863:32
+    at async Promise.all (index 5)
+    at async createUnifont (node_modules/unifont/dist/index.mjs:860:2)
+    at async createResolver (node_modules/fontless/dist/index.mjs:295:18)
+    at async Object.getContents (node_modules/@nuxt/fonts/dist/module.mjs:460:43)
+    at async processTemplate (node_modules/nuxt/dist/index.mjs:8075:22)
+    at async Promise.allSettled (index 24)
+    at async generateApp (node_modules/nuxt/dist/index.mjs:8100:3)
+    at async _applyPromised (node_modules/perfect-debounce/dist/index.mjs:85:9)
+
+
+[11:30:50 PM]  ERROR  Could not initialize provider bunny. unifont will not be able to process fonts provided by th
+[11:30:50 PM]  ERROR  Could not initialize provider bunny. unifont will not be able to process fonts provided by this provider. ENOENT: no such file or directory, open '/Users/nigilen/development/monomo-studio/bulgakov/node_module
+[11:30:50 PM]  ERROR  Could not initialize provider bunny. unifont will not be able to process fonts provided by this provider. ENOENT: no such file or directory, open '/Users/nigilen/development/monomo-studio/bulgakov/node_modules/.cache/nuxt/fonts/meta/bunny/RBNvo1WzZ4oRRq0W9-hknpT7T8If536DEMBg9hyq_4o/bunny/meta.json'
+
+    at async open (node:internal/fs/promises:639:25)
+    at async Object.writeFile (node:internal/fs/promises:1213:14)
+    at async Object.setItem (node_modules/unstorage/dist/index.mjs:205:7)
+    at async Object.getItem (node_modules/unifont/dist/index.mjs:814:4)
+    at async node_modules/unifont/dist/index.mjs:323:16
+    at async node_modules/unifont/dist/index.mjs:863:32
+    at async Promise.all (index 3)
+    at async createUnifont (node_modules/unifont/dist/index.mjs:860:2)
+    at async createResolver (node_modules/fontless/dist/index.mjs:295:18)
+    at async Object.getContents (node_modules/@nuxt/fonts/dist/module.mjs:460:43)
+    at async processTemplate (node_modules/nuxt/dist/index.mjs:8075:22)
+    at async Promise.allSettled (index 24)
+    at async generateApp (node_modules/nuxt/dist/index.mjs:8100:3)
+    at async _applyPromised (node_modules/perfect-debounce/dist/index.mjs:85:9)
+
+
+[11:30:50 PM]  ERROR  Could not initialize provider google. unifont will not be able to process fonts provided by t
+[11:30:50 PM]  ERROR  Could not initialize provider google. unifont will not be able to process fonts provided by this provider. ENOENT: no such file or directory, open '/Users/nigilen/development/monomo-studio/bulgakov/node_modul
+[11:30:50 PM]  ERROR  Could not initialize provider google. unifont will not be able to process fonts provided by this provider. ENOENT: no such file or directory, open '/Users/nigilen/development/monomo-studio/bulgakov/node_modules/.cache/nuxt/fonts/meta/google/RBNvo1WzZ4oRRq0W9-hknpT7T8If536DEMBg9hyq_4o/google/meta.json'
+
+    at async open (node:internal/fs/promises:639:25)
+    at async Object.writeFile (node:internal/fs/promises:1213:14)
+    at async Object.setItem (node_modules/unstorage/dist/index.mjs:205:7)
+    at async Object.getItem (node_modules/unifont/dist/index.mjs:814:4)
+    at async node_modules/unifont/dist/index.mjs:488:22
+    at async node_modules/unifont/dist/index.mjs:863:32
+    at async Promise.all (index 1)
+    at async createUnifont (node_modules/unifont/dist/index.mjs:860:2)
+    at async createResolver (node_modules/fontless/dist/index.mjs:295:18)
+    at async Object.getContents (node_modules/@nuxt/fonts/dist/module.mjs:460:43)
+    at async processTemplate (node_modules/nuxt/dist/index.mjs:8075:22)
+    at async Promise.allSettled (index 24)
+    at async generateApp (node_modules/nuxt/dist/index.mjs:8100:3)
+    at async _applyPromised (node_modules/perfect-debounce/dist/index.mjs:85:9)
+
+
+[11:30:50 PM]  ERROR  Could not initialize provider googleicons. unifont will not be able to process fonts provided
+[11:30:50 PM]  ERROR  Could not initialize provider googleicons. unifont will not be able to process fonts provided by this provider. ENOENT: no such file or directory, open '/Users/nigilen/development/monomo-studio/bulgakov/node_
+[11:30:50 PM]  ERROR  Could not initialize provider googleicons. unifont will not be able to process fonts provided by this provider. ENOENT: no such file or directory, open '/Users/nigilen/development/monomo-studio/bulgakov/node_modules/.cache/nuxt/fonts/meta/googleicons/RBNvo1WzZ4oRRq0W9-hknpT7T8If536DEMBg9hyq_4o/googleicons/meta.json'
+
+    at async open (node:internal/fs/promises:639:25)
+    at async Object.writeFile (node:internal/fs/promises:1213:14)
+    at async Object.setItem (node_modules/unstorage/dist/index.mjs:205:7)
+    at async Object.getItem (node_modules/unifont/dist/index.mjs:814:4)
+    at async node_modules/unifont/dist/index.mjs:571:22
+    at async node_modules/unifont/dist/index.mjs:863:32
+    at async Promise.all (index 2)
+    at async createUnifont (node_modules/unifont/dist/index.mjs:860:2)
+    at async createResolver (node_modules/fontless/dist/index.mjs:295:18)
+    at async Object.getContents (node_modules/@nuxt/fonts/dist/module.mjs:460:43)
+    at async processTemplate (node_modules/nuxt/dist/index.mjs:8075:22)
+    at async Promise.allSettled (index 24)
+    at async generateApp (node_modules/nuxt/dist/index.mjs:8100:3)
+    at async _applyPromised (node_modules/perfect-debounce/dist/index.mjs:85:9)
+
+
+[11:30:51 PM]  ERROR  Could not initialize provider fontshare. unifont will not be able to process fonts provided b
+[11:30:51 PM]  ERROR  Could not initialize provider fontshare. unifont will not be able to process fonts provided by this provider. ENOENT: no such file or directory, open '/Users/nigilen/development/monomo-studio/bulgakov/node_mo
+[11:30:51 PM]  ERROR  Could not initialize provider fontshare. unifont will not be able to process fonts provided by this provider. ENOENT: no such file or directory, open '/Users/nigilen/development/monomo-studio/bulgakov/node_modules/.cache/nuxt/fonts/meta/fontshare/RBNvo1WzZ4oRRq0W9-hknpT7T8If536DEMBg9hyq_4o/fontshare/meta.json'
+
+    at async open (node:internal/fs/promises:639:25)
+    at async Object.writeFile (node:internal/fs/promises:1213:14)
+    at async Object.setItem (node_modules/unstorage/dist/index.mjs:205:7)
+    at async Object.getItem (node_modules/unifont/dist/index.mjs:814:4)
+    at async node_modules/unifont/dist/index.mjs:370:16
+    at async node_modules/unifont/dist/index.mjs:863:32
+    at async Promise.all (index 4)
+    at async createUnifont (node_modules/unifont/dist/index.mjs:860:2)
+    at async createResolver (node_modules/fontless/dist/index.mjs:295:18)
+    at async Object.getContents (node_modules/@nuxt/fonts/dist/module.mjs:460:43)
+    at async processTemplate (node_modules/nuxt/dist/index.mjs:8075:22)
+    at async Promise.allSettled (index 24)
+    at async generateApp (node_modules/nuxt/dist/index.mjs:8100:3)
+    at async _applyPromised (node_modules/perfect-debounce/dist/index.mjs:85:9)
+
+ℹ Compiled nuxt-fonts-global.css in 1133.41ms                                                   nuxt 11:30:51 PM
+
+[11:30:51 PM]  ERROR  EACCES: permission denied, open '/Users/nigilen/development/monomo-studio/bulgakov/.nuxt/type
+[11:30:51 PM]  ERROR  EACCES: permission denied, open '/Users/nigilen/development/monomo-studio/bulgakov/.nuxt/types/app.config.d.ts'
+
+    at writeFileSync (node:fs:2425:20)
+    at node_modules/nuxt/dist/index.mjs:8097:25
+    at generateApp (node_modules/nuxt/dist/index.mjs:8106:5)
+    at async _applyPromised (node_modules/perfect-debounce/dist/index.mjs:85:9) 
+

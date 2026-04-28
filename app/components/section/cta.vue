@@ -62,7 +62,7 @@ async function submitForm() {
 
   try {
     // Отправляем данные на НАШ серверный маршрут (который мы создали в Шаге 3)
-    await $fetch('/api/submit.post.ts', {
+    await $fetch('/api/submit', {
       method: 'POST',
       body: {
         name: form.name,

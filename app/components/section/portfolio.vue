@@ -131,13 +131,12 @@ onUnmounted(() => {
 
     <ul v-if="!isMobileLayout" class="portfolio__list">
       <li v-for="item in items" :key="item.id" class="portfolio-item">
-        <NuxtImg 
+        <img 
           class="portfolio-item__image" 
           :src="item.image" 
           :alt="item.title" 
           width="760" 
           height="760" 
-          loading="lazy" 
         />
         <div class="portfolio-item__content">
           <h3 class="portfolio-item__title">{{ item.title }}</h3>
@@ -155,13 +154,12 @@ onUnmounted(() => {
           @pointercancel="onPointerUp" @selectstart.prevent>
           <ul ref="trackRef" class="portfolio__list portfolio__list--slider" :style="trackStyle">
             <li v-for="item in items" :key="item.id" class="portfolio-item">
-              <NuxtImg 
+              <img 
                 class="portfolio-item__image" 
                 :src="item.image" 
                 :alt="item.title" 
                 width="760" 
                 height="760" 
-                loading="lazy" 
               />
               <div class="portfolio-item__content">
                 <h3 class="portfolio-item__title">{{ item.title }}</h3>

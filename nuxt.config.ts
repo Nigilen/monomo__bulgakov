@@ -12,7 +12,8 @@ export default defineNuxtConfig({
   },
   nitro: {
     compressPublicAssets: true, // Gzip/Brotli сжатие статики
-    publicAssets: [{ maxAge: 0 }]
+    publicAssets: [{ maxAge: 0 }],
+    minify: true
   },
 
   compatibilityDate: '2025-07-15',

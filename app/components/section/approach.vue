@@ -44,7 +44,7 @@ const items = [
         </ul>
         <NuxtImg
           class="approach__image"
-          src="/approach-img.png"
+          src="/images/approach-img.png"
           alt=""
           aria-labelledby="approach"
           width="770"

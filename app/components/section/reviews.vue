@@ -311,7 +311,7 @@ onUnmounted(() => {
                   </button>
                   <NuxtImg
                     class="review-item__video"
-                    :src="item.image"
+                    :src="`/images/${item.image}`"
                     alt=""
                     width="458"
                     height="458"

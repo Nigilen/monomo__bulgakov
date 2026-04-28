@@ -1,54 +1,111 @@
 <script setup lang="ts">
 
+declare global {
+  interface Window {
+    turnstile: any
+  }
+}
+
 const { open: openPolicyModal } = usePolicyModal()
 const { open: openThankModal } = useThankModal()
-const { display: phoneDisplay, onPhoneInput, digits: phoneDigits, reset: resetPhone } = useRuPhoneField()
 
-const name = ref('')
-const errors = reactive({ name: false, phone: false })
-const submitAttempt = ref(false)
+const form = reactive({
+  name: '',
+  phone: '',
+});
 
-function syncErrors() {
-  errors.name = !isValidName(name.value)
-  errors.phone = !isCompleteRuPhone(phoneDigits())
+const errors = reactive({
+  name: '',
+  phone: '',
+  turnstile: '',
+});
+
+
+const loading = ref(false);
+const success = ref(false);
+const serverError = ref('');
+
+
+function validateLocal(): boolean {
+  let isValid = true
+  errors.name = ''
+  errors.phone = ''
+
+  if (form.name.trim().length < 2) {
+    errors.name = 'Введите корректное имя'
+    isValid = false
+  }
+  
+  // Простейшая проверка телефона (минимум 10 цифр)
+  const cleanPhone = form.phone.replace(/\D/g, '')
+  if (cleanPhone.length < 10) {
+    errors.phone = 'Введите корректный телефон'
+    isValid = false
+  }
+
+  return isValid
 }
 
-function onNameInput() {
-  if (submitAttempt.value) {
-    errors.name = !isValidName(name.value)
+// 🕳️ Honeypot и ⏱️ Таймер
+const honeypot = ref('')
+const formLoadTime = ref(Date.now())
+
+async function submitForm() {
+  // Сначала проверяем локально
+  if (!validateLocal()) return
+  
+  loading.value = true
+  serverError.value = ''
+
+  // ⏱️ Считаем, сколько времени прошло с загрузки формы
+  const timeElapsed = Date.now() - formLoadTime.value
+
+  try {
+    // Отправляем данные на НАШ серверный маршрут (который мы создали в Шаге 3)
+    await $fetch('/api/submit', {
+      method: 'POST',
+      body: {
+        name: form.name,
+        phone: form.phone,
+        honeypot: honeypot.value,
+        timeElapsed: timeElapsed
+      }
+    })
+
+    // Если сервер ответил "ОК"
+    success.value = true
+    form.name = ''
+    form.phone = ''
+    honeypot.value = ''
+    formLoadTime.value = Date.now()
+    openThankModal();
+    
+
+  } catch (e: any) {
+    // Если сервер вернул ошибку
+    serverError.value = e.data?.message || 'Произошла ошибка при отправке'
+  } finally {
+    loading.value = false
   }
 }
 
-function onPhoneInputWrapped(e: Event) {
-  onPhoneInput(e)
-  if (submitAttempt.value) {
-    errors.phone = !isCompleteRuPhone(phoneDigits())
-  }
-}
+onMounted(() => {
 
-function onSubmit(e: Event) {
-  e.preventDefault()
-  submitAttempt.value = true
-  syncErrors()
-  if (errors.name || errors.phone) {
-    return
-  }
-  openThankModal()
-  name.value = ''
-  resetPhone()
-  submitAttempt.value = false
-}
+  formLoadTime.value = Date.now() // Фиксируем момент появления формы
+
+})
+
 
 </script>
 
 <template>
   <section class="cta container">
     <div class="cta__images-group images-group">
-      <NuxtImg class="images-group__image images-group__image--first" src="/cta-img-01.png" alt="CTA Image" width="355"
+      <NuxtImg class="images-group__image images-group__image--first" src="/images/cta-img-01.png" alt="CTA Image" width="355"
         height="380" />
-      <NuxtImg class="images-group__image images-group__image--second" src="/cta-img-02.png" alt="CTA Image" width="355"
+      <NuxtImg class="images-group__image images-group__image--second" src="/images/cta-img-02.png" alt="CTA Image" width="355"
         height="380" />
-      <NuxtImg class="images-group__image images-group__image--third" src="/cta-img-03.png" alt="CTA Image" width="455"
+      <NuxtImg class="images-group__image images-group__image--third" src="/images/cta-img-03.png" alt="CTA Image" width="455"
         height="777" />
     </div>
     <div class="cta__content content">
@@ -66,42 +123,59 @@ function onSubmit(e: Event) {
           <span>Оставьте заявку, мы ответим на все вопросы</span>
         </p>
       </div>
-      <form class="form" @submit="onSubmit">
+
+      <form class="form" @submit.prevent="submitForm">
         <div class="form__inputs">
+
           <div class="form__field" :class="{ 'form__field--error': errors.name }">
             <input
-              v-model="name"
+              v-model="form.name"
               class="form__input"
               name="name"
               placeholder="Имя"
               type="text"
-              autocomplete="name"
               maxlength="50"
-              @input="onNameInput"
+              @input="errors.name = ''"
             />
-            <p v-if="errors.name" class="field-error">Заполните данные</p>
+            <p v-if="errors.name" class="field-error">{{ errors.name }}</p>
           </div>
           <div class="form__field" :class="{ 'form__field--error': errors.phone }">
             <input
-              :value="phoneDisplay"
+              v-model="form.phone"
               class="form__input"
               name="phone"
               placeholder="+7 ( ___ ) ___ - __ - __"
               type="tel"
-              inputmode="tel"
-              autocomplete="tel"
-              @input="onPhoneInputWrapped"
+              @input="errors.phone = ''"
             />
-            <p v-if="errors.phone" class="field-error">Заполните данные</p>
+            <p v-if="errors.phone" class="field-error">{{ errors.phone }}</p>
           </div>
         </div>
-        <button class="form__button" type="submit">Отправить заявку</button>
+
+            <!-- Место для виджета Cloudflare -->
+        
+        <button class="form__button" type="submit" :disabled="loading || success">
+          <span v-if="loading">Отправка...</span>
+          <span v-else-if="success">✅ Заявка отправлена!</span>
+          <span v-else>Отправить заявку</span>
+        </button>
+        
         <p class="form__text">
           Нажимая кнопку “Отправить заявку”, вы соглашаетесь с
           <button class="form__link" type="button" @click="openPolicyModal">
             политикой конфиденциальности
           </button>
         </p>
+        <!-- Общая ошибка от сервера -->
+        <input 
+          type="text" 
+          name="website" 
+          v-model="honeypot" 
+          class="hidden-field" 
+          tabindex="-1" 
+          autocomplete="off" 
+        />
+        <p v-if="serverError" class="field-error server-error">{{ serverError }}</p>
       </form>
 
     </div>
@@ -109,6 +183,13 @@ function onSubmit(e: Event) {
 </template>
 
 <style scoped lang="scss">
+.hidden-field {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
 .cta {
   margin-block-end: 12vi;
 

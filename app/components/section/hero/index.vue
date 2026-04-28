@@ -60,7 +60,7 @@ const badges: Array<{
 <style scoped lang="scss">
 .hero {
   inline-size: 100%;
-  background-image: url('/images/hero-background.png');
+  background-image: url('/images/hero-background.avif');
   background-size: 100% 100%;
   background-position: top;
   background-repeat: no-repeat;
@@ -126,7 +126,7 @@ const badges: Array<{
   @media (width < 768px) {
     background-image: 
       linear-gradient(to bottom, transparent 0%, #252525 100%), 
-      url('/images/hero-background-m.png');
+      url('/images/hero-background-m.avif');
     background-size: cover, cover;
 
     margin-block-end: 100px;

@@ -2,10 +2,10 @@
 
 /** Публичные URL (public/images/) — так Nuxt Image / IPX стабильно находит файлы; импорт из assets давал URL `/_nuxt/...`, который оптимизатор ломал. */
 const PORTFOLIO_IMAGES = {
-  img01: '/images/portfolio-img-01.png',
-  img02: '/images/portfolio-img-02.png',
-  img03: '/images/portfolio-img-03.png',
-  img04: '/images/portfolio-img-04.png',
+  img01: '/images/portfolio-img-01.avif',
+  img02: '/images/portfolio-img-02.avif',
+  img03: '/images/portfolio-img-03.avif',
+  img04: '/images/portfolio-img-04.avif',
 } as const
 
 /** Галерея проекта; позже заменить данными с сервера (по id проекта). */
@@ -131,7 +131,14 @@ onUnmounted(() => {
 
     <ul v-if="!isMobileLayout" class="portfolio__list">
       <li v-for="item in items" :key="item.id" class="portfolio-item">
-        <NuxtImg class="portfolio-item__image" :src="item.image" :alt="item.title" width="760" height="760" />
+        <NuxtImg 
+          class="portfolio-item__image" 
+          :src="item.image" 
+          :alt="item.title" 
+          width="760" 
+          height="760" 
+          loading="lazy" 
+        />
         <div class="portfolio-item__content">
           <h3 class="portfolio-item__title">{{ item.title }}</h3>
           <p class="portfolio-item__description">{{ item.description }}</p>
@@ -148,7 +155,14 @@ onUnmounted(() => {
           @pointercancel="onPointerUp" @selectstart.prevent>
           <ul ref="trackRef" class="portfolio__list portfolio__list--slider" :style="trackStyle">
             <li v-for="item in items" :key="item.id" class="portfolio-item">
-              <NuxtImg class="portfolio-item__image" :src="item.image" :alt="item.title" width="760" height="760" />
+              <NuxtImg 
+                class="portfolio-item__image" 
+                :src="item.image" 
+                :alt="item.title" 
+                width="760" 
+                height="760" 
+                loading="lazy" 
+              />
               <div class="portfolio-item__content">
                 <h3 class="portfolio-item__title">{{ item.title }}</h3>
                 <p class="portfolio-item__description">{{ item.description }}</p>

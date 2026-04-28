@@ -62,7 +62,7 @@ async function submitForm() {
 
   try {
     // Отправляем данные на НАШ серверный маршрут (который мы создали в Шаге 3)
-    await $fetch('/api/submit', {
+    await $fetch('/api/submit.post.ts', {
       method: 'POST',
       body: {
         name: form.name,
@@ -101,12 +101,30 @@ onMounted(() => {
 <template>
   <section class="cta container">
     <div class="cta__images-group images-group">
-      <NuxtImg class="images-group__image images-group__image--first" src="/images/cta-img-01.png" alt="CTA Image" width="355"
-        height="380" />
-      <NuxtImg class="images-group__image images-group__image--second" src="/images/cta-img-02.png" alt="CTA Image" width="355"
-        height="380" />
-      <NuxtImg class="images-group__image images-group__image--third" src="/images/cta-img-03.png" alt="CTA Image" width="455"
-        height="777" />
+      <NuxtImg 
+        class="images-group__image images-group__image--first" 
+        src="/images/cta-img-01.avif" 
+        alt="CTA Image" 
+        width="355"
+        height="380"
+        loading="lazy"
+      />
+      <NuxtImg 
+        class="images-group__image images-group__image--second" 
+        src="/images/cta-img-02.avif" 
+        alt="CTA Image" 
+        width="355"
+        height="380"
+        loading="lazy"
+      />
+      <NuxtImg 
+        class="images-group__image images-group__image--third" 
+        src="/images/cta-img-03.avif" 
+        alt="CTA Image" 
+        width="455"
+        height="777"
+        loading="lazy"
+      />
     </div>
     <div class="cta__content content">
       <div class="header">

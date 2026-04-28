@@ -44,11 +44,12 @@ const items = [
         </ul>
         <NuxtImg
           class="approach__image"
-          src="/images/approach-img.png"
+          src="/images/approach-img.avif"
           alt=""
           aria-labelledby="approach"
           width="770"
           height="715"
+          loading="lazy"
         />
       </div>
     </div>

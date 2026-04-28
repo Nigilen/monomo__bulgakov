@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import reviewVideoUrl from '~/assets/video/video.mp4';
+import reviewVideoUrlWebM from '~/assets/video/video.webm';
 
 type ReviewItem = {
   id: number
@@ -407,12 +407,13 @@ onUnmounted(() => {
               ×
             </button>
             <video
+              type="video/webm"
               ref="reviewVideoRef"
               class="review-video"
               controls
               playsinline
               preload="metadata"
-              :src="reviewVideoUrl"
+              :src="reviewVideoUrlWebM"
             />
           </div>
         </div>

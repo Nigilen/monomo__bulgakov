@@ -7,13 +7,12 @@ const projectDir = dirname(fileURLToPath(import.meta.url))
 export default defineNuxtConfig({
   ssr: true,
   devtools: { enabled: false },
-  // routeRules: {
-  //   '/': { swr: 300 },          // Главная: кэш 5 мин, фоновое обновление
-  //   '/**': { swr: 3600 }        // Остальные страницы: кэш 1 час
-  // },
+  routeRules: {
+    '/': { swr: 300 },          // Главная: кэш 5 мин, фоновое обновление
+  },
   nitro: {
     compressPublicAssets: true, // Gzip/Brotli сжатие статики
-    publicAssets: [{ maxAge: 31536000 }] // Кэш картинок/CSS/JS на 1 год
+    publicAssets: [{ maxAge: 0 }]
   },
 
   compatibilityDate: '2025-07-15',

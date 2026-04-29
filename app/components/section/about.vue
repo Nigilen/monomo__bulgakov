@@ -21,7 +21,6 @@
         width="568"
         height="865"
         decoding="async"
-        loading='lazy'
       />
       <div class="content__text">
         <h3 class="content__title">

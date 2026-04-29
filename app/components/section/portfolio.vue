@@ -169,7 +169,6 @@ onUnmounted(() => {
           width="760" 
           height="760" 
           decoding="async"
-          loading='lazy'
         />
         <div class="portfolio-item__content">
           <h3 class="portfolio-item__title">{{ item.title }}</h3>
@@ -194,7 +193,6 @@ onUnmounted(() => {
                 width="760" 
                 height="760" 
                 decoding="async"
-                loading='lazy'
               />
               <div class="portfolio-item__content">
                 <h3 class="portfolio-item__title">{{ item.title }}</h3>

@@ -146,7 +146,6 @@ async function onSubmit(e: Event) {
         height="992" 
         class="image__img" 
         decoding="async"
-        loading='lazy'
       />
     </div>
 

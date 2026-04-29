@@ -50,7 +50,6 @@ const items = [
           width="770"
           height="715"
           decoding="async"
-          loading='lazy'
         />
       </div>
     </div>

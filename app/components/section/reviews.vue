@@ -343,7 +343,6 @@ onUnmounted(() => {
                     width="458"
                     height="458"
                     decoding="async"
-                    loading='lazy'
                   />
                 </div>
                 <div class="review-item__content">
@@ -415,7 +414,6 @@ onUnmounted(() => {
     <Teleport to="body">
       <Transition
         name="review-video"
-        @after-enter="playReviewVideo"
       >
         <div
           v-if="isReviewVideoOpen"

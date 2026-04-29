@@ -49,7 +49,6 @@ const items = [
         width="620"
         height="1090"
         decoding="async"
-        loading='lazy'
       />
       <ol class="roadmap__list">
         <li class="roadmap__item" v-for="item in items" :key="item.number">
@@ -60,7 +59,6 @@ const items = [
             width="275"
             height="210"
             decoding="async"
-            loading='lazy'
           />
           <h3 class="roadmap__item-title">{{ item.title }}</h3>
           <p class="roadmap__item-description">{{ item.description }}</p>

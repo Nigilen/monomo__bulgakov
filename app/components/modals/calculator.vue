@@ -310,6 +310,9 @@ async function onSubmit(e: Event) {
       border: none;
       inline-size: 100%;
     }
+    
+
+
   }
 
   &__legend {
@@ -483,6 +486,8 @@ async function onSubmit(e: Event) {
   }
 
   @media (width < 768px) {
+
+
 
     &__input {
       font-size: 16px;

@@ -119,7 +119,6 @@ onMounted(() => {
         width="355"
         height="380"
         decoding="async"
-        loading='lazy'
       />
       <img 
         class="images-group__image images-group__image--second" 
@@ -128,7 +127,6 @@ onMounted(() => {
         width="355"
         height="380"
         decoding="async"
-        loading='lazy'
       />
       <img 
         class="images-group__image images-group__image--third" 
@@ -137,7 +135,6 @@ onMounted(() => {
         width="455"
         height="777"
         decoding="async"
-        loading='lazy'
       />
     </div>
     <div class="cta__content content">

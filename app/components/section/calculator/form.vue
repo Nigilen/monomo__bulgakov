@@ -276,6 +276,8 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
         grid-row: 4 / 5;
         align-items: center;
         justify-content: center;
+        flex-direction: column;
+        gap: 16px;
       }
 
     }

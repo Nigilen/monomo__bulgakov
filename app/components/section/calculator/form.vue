@@ -122,11 +122,6 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
       grid-row: 2 / 3;
     }
 
-    &--type {
-      grid-column: 1 / 2;
-      grid-row: 3 / 4;
-    }
-
     &--price {
       grid-column: 1 / -1;
       grid-row: 3 / 4;
@@ -143,31 +138,6 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
   &__input {
     position: relative;
 
-    &-icon--type {
-
-      position: relative;
-      display: flex;
-      inline-size: 3.24cqi;
-      block-size: auto;
-      aspect-ratio: 1 / 1;
-      background-color: transparent;
-      border: 1px solid var(--color-text-secondary);
-      border-radius: var(--border-radius-primary);
-
-      &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        margin: auto;
-        inline-size: 70%;
-        block-size: auto;
-        aspect-ratio: 1 / 1;
-        background-color: transparent;
-        border-radius: var(--border-radius-primary);
-      }
-
-      
-    }
 
     &--tariff {
       display: none;
@@ -178,11 +148,6 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
       }
     }
 
-    &--type {
-      display: none;
-
-      
-    }
 
     &--area {
       appearance: none;
@@ -243,23 +208,6 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
       color: var(--color-accent-primary);
     }
 
-    &--type {
-      display: flex;
-      align-items: center;
-      gap: 1.21cqi;
-      font-size: 2.65cqi;
-      font-weight: 500;
-      line-height: 1;
-      color: var(--color-text-primary);
-      cursor: pointer;
-
-      &:has(.form__input--type:checked) {
-        .form__input-icon--type::before {
-          background-color: var(--color-accent-primary);
-        }
-      }
-      
-    }
   }
 
 
@@ -347,10 +295,6 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
 
       &--tariff {
         margin-block-end: 20px;
-      }
-
-      &--type {
-        margin-block-end: 16px;
       }
 
       &--area {

@@ -186,9 +186,15 @@ onMounted(() => {
 
             <!-- Место для виджета Cloudflare -->
         
-        <button class="form__button" type="submit" :disabled="loading || success">
-          <span v-if="loading">Отправка...</span>
-          <span v-else-if="success">✅ Заявка отправлена!</span>
+        <button
+          class="form__button"
+          type="submit"
+          :class="{ 'form-submit-state-pending': loading || success }"
+          :disabled="loading || success"
+          :aria-busy="loading"
+        >
+          <UiEllipsisLoader v-if="loading" />
+          <span v-else-if="success">Готово</span>
           <span v-else>Отправить заявку</span>
         </button>
         
@@ -434,7 +440,7 @@ onMounted(() => {
   }
 
   @media (hover: hover) and (width >= 768px) {
-    &__button:hover {
+    &__button:not(:disabled):hover {
       transform: translateY(-4px);
       box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
       filter: brightness(1.08);

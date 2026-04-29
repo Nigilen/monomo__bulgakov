@@ -442,8 +442,8 @@ onUnmounted(() => {
               preload="metadata"
               v-if="activeReview?.video"
             >
-              <source :src="activeReview.video.webm" type="video/webm">
               <source :src="activeReview.video.mp4" type="video/mp4">
+              <source :src="activeReview.video.webm" type="video/webm">
               Ваш браузер не поддерживает видео.
             </video>
           </div>

@@ -19,27 +19,17 @@ export function normalizePhoneDigits(input: string): string {
   return d.slice(0, 11)
 }
 
-/** Формат как в плейсхолдере: +7 ( XXX ) XXX - XX - XX */
-export function formatPhoneDisplay(normalized: string): string {
-  const d = normalized.slice(0, 11)
-  const body = d.slice(1)
-  if (body.length === 0) {
-    return '+7 '
-  }
-  let out = '+7 ('
-  out += body.slice(0, Math.min(3, body.length))
-  if (body.length <= 3) {
-    return out + (body.length === 3 ? ') ' : '')
-  }
-  out += ') ' + body.slice(3, Math.min(6, body.length))
-  if (body.length <= 6) {
-    return out
-  }
-  out += ' - ' + body.slice(6, Math.min(8, body.length))
-  if (body.length <= 8) {
-    return out
-  }
-  return `${out} - ${body.slice(8, 10)}`
+const PHONE_MASK_TEMPLATE = '+7 ( ___ ) ___ - __ - __'
+
+export function formatPhoneMasked(normalized: string): string {
+  const body = normalized.slice(1, 11)
+  let index = 0
+
+  return PHONE_MASK_TEMPLATE.replace(/_/g, () => {
+    const nextChar = body[index]
+    index += 1
+    return nextChar ?? '_'
+  })
 }
 
 export function isCompleteRuPhone(normalizedDigits: string): boolean {

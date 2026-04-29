@@ -203,6 +203,9 @@ const badges: Array<{
   text-transform: uppercase;
   cursor: pointer;
   container-type: inline-size;
+  transition-property: transform, box-shadow, filter;
+  transition-duration: 460ms;
+  transition-timing-function: ease;
 
   &__label {
     font-size: 5.8cqi;
@@ -220,6 +223,20 @@ const badges: Array<{
     background-color: var(--color-button-background-secondary);
     border: 2px solid var(--color-border-secondary);
     border-radius: 0.83vi;
+  }
+
+  @media (hover: hover) and (width >= 768px) {
+    &--primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+      filter: brightness(1.08);
+    }
+
+    &--secondary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+      border-color: var(--color-accent-primary);
+    }
   }
 
   @media (width < 768px) {

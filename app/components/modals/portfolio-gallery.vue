@@ -100,7 +100,6 @@ onUnmounted(() => {
 <template>
   <UiModal wide @close="emit('close')">
     <div class="portfolio-gallery">
-        <h3 class="portfolio-gallery__title">{{ props.title }}</h3>
         <div
           class="portfolio-gallery__viewport"
           @pointerdown="onSwipePointerDown"
@@ -154,26 +153,15 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  inline-size: min(100%, 980px);
   container-type: inline-size;
-}
-
-.portfolio-gallery__title {
-  margin-block-start: 0;
-  margin-block-end: clamp(16px, 4cqi, 24px);
-  margin-inline-start: 0;
-  margin-inline-end: 0;
-  font-size: clamp(18px, 5cqi, 24px);
-  font-weight: 600;
-  line-height: 1.3;
-  text-transform: uppercase;
-  color: var(--color-accent-primary);
-  text-align: center;
 }
 
 .portfolio-gallery__viewport {
   position: relative;
   overflow: hidden;
-  inline-size: 100%;
+  inline-size: min(100%, 980px);
+  block-size: 600px;
   border-radius: var(--border-radius-primary);
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
@@ -190,14 +178,14 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-block-size: min(56vi, 520px);
+  inline-size: 100%;
+  block-size: 100%;
 }
 
 .portfolio-gallery__image {
   display: block;
   inline-size: 100%;
-  block-size: auto;
-  max-block-size: min(72vh, 760px);
+  block-size: 100%;
   object-fit: contain;
   border-radius: var(--border-radius-primary);
   pointer-events: none;
@@ -268,8 +256,17 @@ onUnmounted(() => {
 }
 
 @media (width < 768px) {
+  .portfolio-gallery {
+    inline-size: 100%;
+  }
+
+  .portfolio-gallery__viewport {
+    inline-size: 100%;
+    block-size: 360px;
+  }
+
   .portfolio-gallery__slide {
-    min-block-size: 280px;
+    block-size: 100%;
   }
 
   .portfolio-gallery__controls {

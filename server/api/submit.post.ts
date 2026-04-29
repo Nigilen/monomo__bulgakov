@@ -27,6 +27,11 @@ const transporter = nodemailer.createTransport({
 const FormSchema = z.object({
   name: z.string().min(2, 'Имя слишком короткое').max(50),
   phone: z.string().regex(/^\+?[0-9\s\-()]{10,18}$/, 'Неверный формат телефона'),
+  formSource: z.string().min(2).max(120),
+  message: z.string().max(1000).optional(),
+  tariff: z.string().max(120).optional(),
+  housingType: z.string().max(120).optional(),
+  area: z.number().min(0).max(10000).optional(),
   honeypot: z.string().optional(),
   timeElapsed: z.number().min(3000, 'Слишком быстрая отправка'),
 })
@@ -71,7 +76,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, message: 'Ошибка валидации данных' })
   }
 
-  const { name, phone, honeypot, timeElapsed } = validationResult.data
+  const { name, phone, formSource, message, tariff, housingType, area, honeypot, timeElapsed } = validationResult.data
 
   // 🕳️ 3. Проверка Honeypot (если поле заполнено → это бот)
   if (honeypot && honeypot.trim().length > 0) {
@@ -85,11 +90,18 @@ export default defineEventHandler(async (event) => {
 
   // 📧 5. Отправка письма
   try {
+    const optionalDetails = [
+      message ? `<p><b>Сообщение:</b> ${message}</p>` : '',
+      tariff ? `<p><b>Тариф/слайд:</b> ${tariff}</p>` : '',
+      housingType ? `<p><b>Тип жилья:</b> ${housingType}</p>` : '',
+      typeof area === 'number' ? `<p><b>Площадь:</b> ${area} м²</p>` : '',
+    ].join('')
+
     await transporter.sendMail({
       from: `"Заявка с сайта" <${process.env.SMTP_USER}>`,
       to: 'nigilen@yandex.ru', // 👈 Почта клиента/менеджера
       subject: `Новая заявка от ${name}`,
-      html: `<h3>Новая заявка!</h3><p><b>Имя:</b> ${name}</p><p><b>Телефон:</b> ${phone}</p>`
+      html: `<h3>Новая заявка!</h3><p><b>Форма:</b> ${formSource}</p><p><b>Имя:</b> ${name}</p><p><b>Телефон:</b> ${phone}</p>${optionalDetails}`
     })
     return { status: 'success' }
   } catch (error) {

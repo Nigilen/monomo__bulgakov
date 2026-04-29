@@ -77,6 +77,7 @@ async function submitForm() {
       body: {
         name: form.name,
         phone: phoneDigits(),
+        formSource: 'section_cta',
         honeypot: honeypot.value,
         timeElapsed: timeElapsed
       }

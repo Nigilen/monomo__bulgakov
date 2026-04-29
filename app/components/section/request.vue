@@ -7,6 +7,11 @@ const { display: phoneDisplay, onPhoneInput, onPhoneKeydown, digits: phoneDigits
 const name = ref('')
 const errors = reactive({ name: false, phone: false })
 const submitAttempt = ref(false)
+const loading = ref(false)
+const success = ref(false)
+const serverError = ref('')
+const honeypot = ref('')
+const formLoadTime = ref(Date.now())
 
 function syncErrors() {
   const phoneNorm = phoneDigits()
@@ -27,17 +32,41 @@ function onPhoneInputWrapped(e: Event) {
   }
 }
 
-function onSubmit(e: Event) {
+async function onSubmit(e: Event) {
   e.preventDefault()
   submitAttempt.value = true
   syncErrors()
   if (errors.name || errors.phone) {
     return
   }
-  openThankModal()
-  name.value = ''
-  resetPhone()
-  submitAttempt.value = false
+  loading.value = true
+  serverError.value = ''
+  const timeElapsed = Date.now() - formLoadTime.value
+
+  try {
+    await $fetch('/api/submit', {
+      method: 'POST',
+      body: {
+        name: name.value,
+        phone: phoneDigits(),
+        formSource: 'section_request',
+        honeypot: honeypot.value,
+        timeElapsed,
+      },
+    })
+
+    success.value = true
+    openThankModal()
+    name.value = ''
+    resetPhone()
+    honeypot.value = ''
+    submitAttempt.value = false
+    formLoadTime.value = Date.now()
+  } catch (e: any) {
+    serverError.value = e.data?.message || 'Произошла ошибка при отправке'
+  } finally {
+    loading.value = false
+  }
 }
 
 </script>
@@ -87,7 +116,20 @@ function onSubmit(e: Event) {
           />
           <p v-if="errors.phone" class="field-error">Заполните данные</p>
         </div>
-        <button class="form__content-button" type="submit">Отправить заявку</button>
+        <button class="form__content-button" type="submit" :disabled="loading || success">
+          <span v-if="loading">Отправка...</span>
+          <span v-else-if="success">✅ Заявка отправлена!</span>
+          <span v-else>Отправить заявку</span>
+        </button>
+        <input
+          v-model="honeypot"
+          type="text"
+          name="website"
+          class="hidden-field"
+          tabindex="-1"
+          autocomplete="off"
+        >
+        <p v-if="serverError" class="field-error field-error--server">{{ serverError }}</p>
         <p class="form__content-description">
           Нажимая кнопку “Отправить заявку”, вы соглашаетесь с
           <button class="form__content-description-link" type="button" @click="openPolicyModal">
@@ -112,6 +154,14 @@ function onSubmit(e: Event) {
 </template>
 
 <style scoped lang="scss">
+.hidden-field {
+  position: absolute;
+  inset-inline-start: -9999px;
+  opacity: 0;
+  block-size: 0;
+  inline-size: 0;
+}
+
 .request {
   display: grid;
   grid-template-columns: 13fr 15fr;
@@ -343,6 +393,11 @@ function onSubmit(e: Event) {
       font-size: 14px;
       color: #FF3434;
       text-align: center;
+
+      &--server {
+        position: static;
+        margin-block-start: 4px;
+      }
     }
   }
 

@@ -15,6 +15,11 @@ const name = ref('')
 const message = ref('')
 const errors = reactive({ housing: false, name: false, phone: false, message: false })
 const submitAttempt = ref(false)
+const loading = ref(false)
+const success = ref(false)
+const serverError = ref('')
+const honeypot = ref('')
+const formLoadTime = ref(Date.now())
 
 function syncErrors() {
   errors.housing = housingType.value === null
@@ -42,21 +47,48 @@ function onHousingInput() {
   }
 }
 
-function onSubmit(e: Event) {
+async function onSubmit(e: Event) {
   e.preventDefault()
   submitAttempt.value = true
   syncErrors()
   if (errors.housing || errors.name || errors.phone || errors.message) {
     return
   }
-  openThankModal()
-  emit('close')
-  housingType.value = null
-  area.value = 0
-  name.value = ''
-  resetPhone()
-  message.value = ''
-  submitAttempt.value = false
+  loading.value = true
+  serverError.value = ''
+  const timeElapsed = Date.now() - formLoadTime.value
+
+  try {
+    await $fetch('/api/submit', {
+      method: 'POST',
+      body: {
+        name: name.value,
+        phone: phoneDigits(),
+        message: message.value,
+        formSource: 'modal_calculator',
+        housingType: housingType.value ?? undefined,
+        area: area.value,
+        honeypot: honeypot.value,
+        timeElapsed,
+      },
+    })
+
+    success.value = true
+    openThankModal()
+    emit('close')
+    housingType.value = null
+    area.value = 0
+    name.value = ''
+    resetPhone()
+    message.value = ''
+    honeypot.value = ''
+    submitAttempt.value = false
+    formLoadTime.value = Date.now()
+  } catch (e: any) {
+    serverError.value = e.data?.message || 'Произошла ошибка при отправке'
+  } finally {
+    loading.value = false
+  }
 }
 
 </script>
@@ -153,7 +185,20 @@ function onSubmit(e: Event) {
           />
           <p v-if="errors.message" class="field-error">Заполните данные</p>
         </div>
-        <button class="form__button" type="submit">Отправить заявку</button>
+        <button class="form__button" type="submit" :disabled="loading || success">
+          <span v-if="loading">Отправка...</span>
+          <span v-else-if="success">✅ Заявка отправлена!</span>
+          <span v-else>Отправить заявку</span>
+        </button>
+        <input
+          v-model="honeypot"
+          type="text"
+          name="website"
+          class="hidden-field"
+          tabindex="-1"
+          autocomplete="off"
+        >
+        <p v-if="serverError" class="field-error field-error--server">{{ serverError }}</p>
       </form>
 
       <footer class="footer">
@@ -166,6 +211,14 @@ function onSubmit(e: Event) {
 </template>
 
 <style scoped lang="scss">
+.hidden-field {
+  position: absolute;
+  inset-inline-start: -9999px;
+  opacity: 0;
+  block-size: 0;
+  inline-size: 0;
+}
+
 .content {
   display: flex;
   flex-direction: column;
@@ -233,6 +286,11 @@ function onSubmit(e: Event) {
     inline-size: auto;
     margin-block-start: -4px;
     margin-block-end: 4px;
+  }
+
+  &--server {
+    position: static;
+    margin-block-start: 4px;
   }
 }
 

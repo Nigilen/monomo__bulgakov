@@ -120,6 +120,7 @@ onUnmounted(() => {
                 width="900"
                 height="900"
                 decoding="async"
+                loading='lazy'
               />
             </div>
           </Transition>

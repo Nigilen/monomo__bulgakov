@@ -116,12 +116,4 @@ export default defineNuxtConfig({
       includeCustomCollections: true,
     },
   },
-  image: {
-    quality: 100,
-    format: ['webp', 'avif', 'png'],
-    dir: 'public/images',
-    /** Иначе IPX ищет только в `assets/images`; пути вида `/images/foo.png` из `public/images/` не находятся. */
-    dirs: [resolve(projectDir, 'public')],
-  },
-
 })

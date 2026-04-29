@@ -1,6 +1,25 @@
 <script setup lang="ts">
 
-const area = ref(0);
+type TariffOption = {
+  id: string
+  label: string
+  value: number
+}
+
+const areaMin = 20;
+const areaMax = 250;
+const area = ref(areaMin);
+const areaProgress = computed(() => (area.value - areaMin) / (areaMax - areaMin));
+const tariffs: TariffOption[] = [
+  { id: 'tariff-1', label: 'Инвест', value: 27500 },
+  { id: 'tariff-2', label: 'Мой дом', value: 33000 },
+  { id: 'tariff-3', label: 'Комфорт', value: 52000 },
+  { id: 'tariff-4', label: 'Прайм', value: 60000 }
+];
+const defaultTariffValue = tariffs.find((tariff) => tariff.id === 'tariff-2')?.value ?? 33000;
+const selectedTariff = ref(defaultTariffValue);
+const totalPrice = computed(() => selectedTariff.value * area.value);
+const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').format(totalPrice.value)} руб`);
 
 
 </script>
@@ -9,28 +28,40 @@ const area = ref(0);
   <form class="form">
     <fieldset class="form__item form__item--tariff">
       <legend class="form__legend form__legend--tariff">Выберите тариф</legend>
-      <div class="form__options form__options--tariff">
-        <input class="form__input form__input--tariff" type="radio" name="tariff" id="tariff-1">
-        <label class="form__label form__label--tariff" for="tariff-1">Инвест</label>
-      </div>
-      <div class="form__options form__options--tariff">
-        <input class="form__input form__input--tariff" type="radio" name="tariff" id="tariff-2" checked>
-        <label class="form__label form__label--tariff" for="tariff-2">Мой дом</label>
-      </div>
-      <div class="form__options form__options--tariff">
-        <input class="form__input form__input--tariff" type="radio" name="tariff" id="tariff-3">
-        <label class="form__label form__label--tariff" for="tariff-3">Комфорт</label>
-      </div>
-      <div class="form__options form__options--tariff">
-        <input class="form__input form__input--tariff" type="radio" name="tariff" id="tariff-4">
-        <label class="form__label form__label--tariff" for="tariff-4">Прайм</label>
+      <div
+        v-for="tariff in tariffs"
+        :key="tariff.id"
+        class="form__options form__options--tariff"
+      >
+        <input
+          :id="tariff.id"
+          v-model.number="selectedTariff"
+          class="form__input form__input--tariff"
+          type="radio"
+          name="tariff"
+          :value="tariff.value"
+        >
+        <label class="form__label form__label--tariff" :for="tariff.id">{{ tariff.label }}</label>
       </div>
     </fieldset>
     <div class="form__item form__item--area">
       <label class="form__legend form__legend--area" for="area">Площадь помещения</label>
       <div class="form__input-wrapper">
-        <div class="form__value form__value--area" :style="{ '--area-value': area }">{{ area }} м²</div>
-        <input class="form__input form__input--area" type="range" name="area" id="area" v-model="area">
+        <div
+          class="form__value form__value--area"
+          :style="{ '--area-progress': areaProgress }"
+        >
+          {{ area }} м²
+        </div>
+        <input
+          class="form__input form__input--area"
+          type="range"
+          name="area"
+          id="area"
+          v-model.number="area"
+          :min="areaMin"
+          :max="areaMax"
+        >
       </div>
     </div>
     <fieldset class="form__item form__item--type">
@@ -52,7 +83,7 @@ const area = ref(0);
     </fieldset>
     <p class="form__item form__item--price">
       <span class="form__legend form__legend--price">Примерная стоимость</span>
-      <span class="form__value form__value--price">250 000 руб</span>
+      <span class="form__value form__value--price">{{ formattedTotalPrice }}</span>
     </p>
   </form>
 </template>
@@ -172,6 +203,7 @@ const area = ref(0);
       background-color: var(--color-text-secondary);
       inline-size: 100%;
       block-size: 4px;
+      cursor: pointer;
     }
 
     &--area::-webkit-slider-thumb {
@@ -258,11 +290,12 @@ const area = ref(0);
 
 
     &--area {
+      white-space: nowrap;
       position: absolute;
       inset-block-start: -4cqi;
-      inset-inline-start: 0;
+      inset-inline-start: calc((var(--area-progress) * (100% - 3.5cqi)) + 1.75cqi);
       text-align: center;
-      transform: translateX(calc(var(--area-value) * 0.94cqi));
+      transform: translateX(-50%);
       font-size: 2.65cqi;
       font-weight: 400;
       line-height: 1;
@@ -359,7 +392,8 @@ const area = ref(0);
       &--area {
         font-size: 16px;
         inset-block-start: -20px;
-        transform: translateX(calc(var(--area-value) * 0.925cqi));
+        inset-inline-start: calc((var(--area-progress) * (100% - 20px)) + 10px);
+        transform: translateX(-50%);
       }
     }
   }

@@ -14,13 +14,14 @@
       </p>
     </div>
     <div class="content">
-      <NuxtImg 
+      <img 
         class="content__image" 
         src="/images/about-img.avif" 
         alt="About Image" 
         width="568"
         height="865"
-        loading="lazy"
+        decoding="async"
+        loading='lazy'
       />
       <div class="content__text">
         <h3 class="content__title">

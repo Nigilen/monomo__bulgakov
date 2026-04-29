@@ -1,20 +1,51 @@
 <script setup lang="ts">
 
-/** Публичные URL (public/images/) — так Nuxt Image / IPX стабильно находит файлы; импорт из assets давал URL `/_nuxt/...`, который оптимизатор ломал. */
 const PORTFOLIO_IMAGES = {
-  img01: '/images/portfolio-img-01.avif',
-  img02: '/images/portfolio-img-02.avif',
-  img03: '/images/portfolio-img-03.avif',
-  img04: '/images/portfolio-img-04.avif',
+  kaliningrad35: {  
+    img01: '/images/portfolio/project-kaliningrad-35-01.avif',
+    img02: '/images/portfolio/project-kaliningrad-35-02.avif',
+    img03: '/images/portfolio/project-kaliningrad-35-03.avif',
+    img04: '/images/portfolio/project-kaliningrad-35-04.avif',
+    img05: '/images/portfolio/project-kaliningrad-35-05.avif',
+    img06: '/images/portfolio/project-kaliningrad-35-06.avif',
+    img07: '/images/portfolio/project-kaliningrad-35-07.avif',
+  },
+  kaliningrad120: {
+    img01: '/images/portfolio/project-kaliningrad-120-01.avif',
+    img02: '/images/portfolio/project-kaliningrad-120-02.avif',
+    img03: '/images/portfolio/project-kaliningrad-120-03.avif',
+    img04: '/images/portfolio/project-kaliningrad-120-04.avif',
+    img05: '/images/portfolio/project-kaliningrad-120-05.avif',
+    img06: '/images/portfolio/project-kaliningrad-120-06.avif',
+    img07: '/images/portfolio/project-kaliningrad-120-07.avif',
+    img08: '/images/portfolio/project-kaliningrad-120-08.avif',
+    img09: '/images/portfolio/project-kaliningrad-120-09.avif',
+    img10: '/images/portfolio/project-kaliningrad-120-10.avif',
+  },
+  pionersk45: {
+    img01: '/images/portfolio/project-pionersk-45-01.avif',
+    img02: '/images/portfolio/project-pionersk-45-02.avif',
+    img03: '/images/portfolio/project-pionersk-45-03.avif',
+    img04: '/images/portfolio/project-pionersk-45-04.avif',
+    img05: '/images/portfolio/project-pionersk-45-05.avif',
+    img06: '/images/portfolio/project-pionersk-45-06.avif',
+    img07: '/images/portfolio/project-pionersk-45-07.avif',
+  },
+  pionersk75: {
+    img01: '/images/portfolio/project-pionersk-75-01.avif',
+    img02: '/images/portfolio/project-pionersk-75-02.avif',
+    img03: '/images/portfolio/project-pionersk-75-03.avif',
+    img04: '/images/portfolio/project-pionersk-75-04.avif',
+    img05: '/images/portfolio/project-pionersk-75-05.avif',
+  },
 } as const
 
-/** Галерея проекта; позже заменить данными с сервера (по id проекта). */
-const PROJECT_GALLERY_PLACEHOLDER = [
-  PORTFOLIO_IMAGES.img01,
-  PORTFOLIO_IMAGES.img02,
-  PORTFOLIO_IMAGES.img03,
-  PORTFOLIO_IMAGES.img04,
-] as const
+const PROJECT_GALLERY_BY_ID = {
+  1: Object.values(PORTFOLIO_IMAGES.kaliningrad35),
+  2: Object.values(PORTFOLIO_IMAGES.kaliningrad120),
+  3: Object.values(PORTFOLIO_IMAGES.pionersk45),
+  4: Object.values(PORTFOLIO_IMAGES.pionersk75),
+} as const
 
 type PortfolioItem = {
   id: number
@@ -27,29 +58,29 @@ type PortfolioItem = {
 const items: PortfolioItem[] = [
   {
     id: 1,
-    image: PORTFOLIO_IMAGES.img01,
-    gallery: PROJECT_GALLERY_PLACEHOLDER,
+    image: PORTFOLIO_IMAGES.pionersk45.img01,
+    gallery: PROJECT_GALLERY_BY_ID[1],
     title: 'г. Пионерск',
     description: 'Ремонт квартиры в городе Пионерск. Дизайн-проект от Анны Шатик. Ремонт по просьбе заказчиков сделать за 45 дней был готов на 101%.',
   },
   {
     id: 2,
-    image: PORTFOLIO_IMAGES.img02,
-    gallery: PROJECT_GALLERY_PLACEHOLDER,
+    image: PORTFOLIO_IMAGES.kaliningrad120.img01,
+    gallery: PROJECT_GALLERY_BY_ID[2],
     title: 'г. Калининград',
     description: 'Удаленный ремонт двухкомнатной квартиры в  Калининграде. Заказчики из Якутии. Все работы провели онлайн. Дизайн-проект от Александра и Оксаны. Срок исполнения – 120 дней.',
   },
   {
     id: 3,
-    image: PORTFOLIO_IMAGES.img03,
-    gallery: PROJECT_GALLERY_PLACEHOLDER,
+    image: PORTFOLIO_IMAGES.pionersk75.img01,
+    gallery: PROJECT_GALLERY_BY_ID[3],
     title: 'г. Пионерск',
     description: 'Однокомнатная квартира в городе Пионерск. Квартира по дизайн-проекту от Анны Шатик. Срок исполнения – 75 дней.',
   },
   {
     id: 4,
-    image: PORTFOLIO_IMAGES.img04,
-    gallery: PROJECT_GALLERY_PLACEHOLDER,
+    image: PORTFOLIO_IMAGES.kaliningrad35.img01,
+    gallery: PROJECT_GALLERY_BY_ID[4],
     title: 'г. Калининград',
     description: 'Косметический ремонт двухкомнатной квартиры в Калининграде. Срок исполнения – 35 дней.',
   },
@@ -131,12 +162,14 @@ onUnmounted(() => {
 
     <ul v-if="!isMobileLayout" class="portfolio__list">
       <li v-for="item in items" :key="item.id" class="portfolio-item">
-        <img 
+        <img
           class="portfolio-item__image" 
           :src="item.image" 
           :alt="item.title" 
           width="760" 
           height="760" 
+          decoding="async"
+          loading='lazy'
         />
         <div class="portfolio-item__content">
           <h3 class="portfolio-item__title">{{ item.title }}</h3>
@@ -160,6 +193,8 @@ onUnmounted(() => {
                 :alt="item.title" 
                 width="760" 
                 height="760" 
+                decoding="async"
+                loading='lazy'
               />
               <div class="portfolio-item__content">
                 <h3 class="portfolio-item__title">{{ item.title }}</h3>

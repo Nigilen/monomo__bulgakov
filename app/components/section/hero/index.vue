@@ -28,6 +28,23 @@ const badges: Array<{
 
 <template>
   <section class="hero">
+    <picture class="hero__bg">
+      <source 
+        media="(max-width: 768px)" 
+        srcset="/images/hero-background-m.avif" 
+        type="image/avif"
+      >
+      <img 
+        src="/images/hero-background.avif" 
+        alt="" 
+        width="1920" 
+        height="1080" 
+        fetchpriority="high" 
+        loading="eager" 
+        decoding="async"
+        class="hero__bg-img"
+      >
+    </picture>
     <div class="hero__container container">
       <h1 class="hero__title">
         <span class="hero__title-part hero__title-highlight">Ремонт под ключ </span> 
@@ -60,13 +77,22 @@ const badges: Array<{
 <style scoped lang="scss">
 .hero {
   inline-size: 100%;
-  background-image: url('/images/hero-background.avif');
-  background-size: 100% 100%;
-  background-position: top;
-  background-repeat: no-repeat;
+  // background-image: url('/images/hero-background.avif');
+  // background-size: 100% 100%;
+  // background-position: top;
+  // background-repeat: no-repeat;
 
   margin-block-end: 12vi;
+  position: relative;
 
+  &__bg {
+    position: absolute;
+    overflow: hidden;
+    display: block;
+    inset: 0;
+    line-height: 0;
+    z-index: -1;
+  }
 
   &__container {
     display: flex;
@@ -124,10 +150,8 @@ const badges: Array<{
   }
 
   @media (width < 768px) {
-    background-image: 
-      linear-gradient(to bottom, transparent 0%, #252525 100%), 
-      url('/images/hero-background-m.avif');
-    background-size: cover, cover;
+    background-image: linear-gradient(to bottom, transparent 0%, #252525 100%);
+    background-size: cover;
 
     margin-block-end: 100px;
 

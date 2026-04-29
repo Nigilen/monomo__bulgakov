@@ -309,13 +309,14 @@ onUnmounted(() => {
                   >
                     <Icon class="review-item__video-button-icon" name="icons:play-btn" size="90" />
                   </button>
-                  <NuxtImg
+                  <img
                     class="review-item__video"
                     :src="item.image"
                     alt="Review"
                     width="458"
                     height="458"
-                    loading="lazy"
+                    decoding="async"
+                    loading='lazy'
                   />
                 </div>
                 <div class="review-item__content">

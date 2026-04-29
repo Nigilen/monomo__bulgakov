@@ -2,7 +2,7 @@
 
 const { open: openPolicyModal } = usePolicyModal()
 const { open: openThankModal } = useThankModal()
-const { display: phoneDisplay, onPhoneInput, digits: phoneDigits, reset: resetPhone } = useRuPhoneField()
+const { display: phoneDisplay, onPhoneInput, onPhoneKeydown, digits: phoneDigits, reset: resetPhone } = useRuPhoneField()
 
 const name = ref('')
 const errors = reactive({ name: false, phone: false })
@@ -82,6 +82,7 @@ function onSubmit(e: Event) {
             type="tel"
             inputmode="tel"
             autocomplete="tel"
+            @keydown="onPhoneKeydown"
             @input="onPhoneInputWrapped"
           />
           <p v-if="errors.phone" class="field-error">Заполните данные</p>
@@ -253,6 +254,7 @@ function onSubmit(e: Event) {
     &-item {
       display: flex;
       flex-direction: column;
+      position: relative;
 
       &--error &-input {
         border-bottom-color: #FF3434;
@@ -296,6 +298,17 @@ function onSubmit(e: Event) {
       text-transform: uppercase;
       margin-block-end: -2.7cqi;
       line-height: 1;
+      transition-property: transform, box-shadow, filter;
+      transition-duration: 460ms;
+      transition-timing-function: ease;
+    }
+
+    @media (hover: hover) and (width >= 768px) {
+      &-button:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+        filter: brightness(1.08);
+      }
     }
 
     &-description {
@@ -322,8 +335,11 @@ function onSubmit(e: Event) {
     }
 
     .field-error {
+      position: absolute;
+      inset-block-start: calc(100% + 5px);
+      inset-inline-start: 0;
+      inline-size: 100%;
       margin: 0;
-      margin-block-start: 6px;
       font-size: 14px;
       color: #FF3434;
       text-align: center;

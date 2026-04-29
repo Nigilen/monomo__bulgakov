@@ -326,6 +326,9 @@ const priceIconColors = computed(() => {
   font-weight: 600;
   text-transform: uppercase;
   cursor: pointer;
+  transition-property: transform, box-shadow, border-color;
+  transition-duration: 460ms;
+  transition-timing-function: ease;
 
   &__label {
     font-size: 4cqi;
@@ -341,6 +344,14 @@ const priceIconColors = computed(() => {
     border-radius: 3cqi;
 
     
+  }
+
+  @media (hover: hover) and (width >= 768px) {
+    &--secondary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+      border-color: var(--color-accent-primary);
+    }
   }
 
   @media (width < 768px) {

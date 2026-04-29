@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isCompleteRuPhone } from '~/utils/phoneRu'
 
 declare global {
   interface Window {
@@ -8,10 +9,16 @@ declare global {
 
 const { open: openPolicyModal } = usePolicyModal()
 const { open: openThankModal } = useThankModal()
+const {
+  display: phoneDisplay,
+  onPhoneInput,
+  onPhoneKeydown,
+  digits: phoneDigits,
+  reset: resetPhone
+} = useRuPhoneField()
 
 const form = reactive({
   name: '',
-  phone: '',
 });
 
 const errors = reactive({
@@ -36,14 +43,17 @@ function validateLocal(): boolean {
     isValid = false
   }
   
-  // Простейшая проверка телефона (минимум 10 цифр)
-  const cleanPhone = form.phone.replace(/\D/g, '')
-  if (cleanPhone.length < 10) {
+  if (!isCompleteRuPhone(phoneDigits())) {
     errors.phone = 'Введите корректный телефон'
     isValid = false
   }
 
   return isValid
+}
+
+const onPhoneInputWrapped = (event: Event) => {
+  errors.phone = ''
+  onPhoneInput(event)
 }
 
 // 🕳️ Honeypot и ⏱️ Таймер
@@ -66,7 +76,7 @@ async function submitForm() {
       method: 'POST',
       body: {
         name: form.name,
-        phone: form.phone,
+        phone: phoneDigits(),
         honeypot: honeypot.value,
         timeElapsed: timeElapsed
       }
@@ -75,7 +85,7 @@ async function submitForm() {
     // Если сервер ответил "ОК"
     success.value = true
     form.name = ''
-    form.phone = ''
+    resetPhone()
     honeypot.value = ''
     formLoadTime.value = Date.now()
     openThankModal();
@@ -162,12 +172,15 @@ onMounted(() => {
           </div>
           <div class="form__field" :class="{ 'form__field--error': errors.phone }">
             <input
-              v-model="form.phone"
+              :value="phoneDisplay"
               class="form__input"
               name="phone"
               placeholder="+7 ( ___ ) ___ - __ - __"
               type="tel"
-              @input="errors.phone = ''"
+              inputmode="tel"
+              autocomplete="tel"
+              @keydown="onPhoneKeydown"
+              @input="onPhoneInputWrapped"
             />
             <p v-if="errors.phone" class="field-error">{{ errors.phone }}</p>
           </div>
@@ -360,6 +373,7 @@ onMounted(() => {
   &__field {
     display: flex;
     flex-direction: column;
+    position: relative;
 
     &--error .form__input {
       border-bottom-color: #FF3434;
@@ -367,8 +381,11 @@ onMounted(() => {
   }
 
   .field-error {
+    position: absolute;
+    inset-block-start: calc(100% + 5px);
+    inset-inline-start: 0;
+    inline-size: 100%;
     margin: 0;
-    margin-block-start: 6px;
     font-size: 14px;
     color: #FF3434;
     text-align: center;
@@ -413,6 +430,17 @@ onMounted(() => {
     font-size: 3.2cqi;
     margin-block-end: 3.2cqi;
     font-weight: 600;
+    transition-property: transform, box-shadow, filter;
+    transition-duration: 460ms;
+    transition-timing-function: ease;
+  }
+
+  @media (hover: hover) and (width >= 768px) {
+    &__button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+      filter: brightness(1.08);
+    }
   }
 
   &__text {

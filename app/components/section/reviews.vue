@@ -1,10 +1,17 @@
 <script setup lang="ts">
 
-import reviewVideoUrlWebM from '~/assets/video/video.webm';
+import reviewGalinaWebM from '~/assets/video/otzyv-galina-02.webm';
+import reviewGalinaMP4 from '~/assets/video/otzyv-galina-02.mp4';
+import reviewLidiaWebM from '~/assets/video/otzyv-lidia-01.webm';
+import reviewLidiaMP4 from '~/assets/video/otzyv-lidia-01.mp4';
 
 type ReviewItem = {
   id: number
   image: string
+  video?: {
+    webm: string
+    mp4: string
+  } | null
   author: string
   description: string
 };
@@ -14,24 +21,34 @@ const items: ReviewItem[] = [
   {
     id: 1,
     image: '/images/review-01.avif',
-    author: 'Александр',
-    description: 'Хотим сказать огромное спасибо. Без вас мы бы не справились. Спасибо, что всегда были на связи, помогали советом, делом, временем - всем, чем можно. Огромное спасибо! В следующий раз только к вам',
+    video: {
+      webm: reviewLidiaWebM,
+      mp4: reviewLidiaMP4,
+    },
+    author: 'Лидия',
+    description: 'Хотим сказать огромное спасибо! Без вас мы бы не справились, это точно. Спасибо, что всегда были на связи, помогали советом, делом, временем – всем чем можно. Вы сохранили мою нервную систему. В следующий раз только к вам. Вы лучшие!',
   },
   {
     id: 2,
     image: '/images/review-02.avif',
+    video: null,
     author: 'Мария',
     description: 'Я обратилась к ребятам в феврале 2024 года с запросом на ремонт загородного дома в Зеленоградске. Никакого дизайн-проекта у меня не было и вообще я не знала что хочу, просто чтоб было красиво)). Их подход меня поразил! Продумали все до мелочей – каждую розетку, цветовую гамму, как расположить мебель, какие материалы использовать. Получается, обратилась за ремонтом, а получила еще и дизайнерское решение! В мае я уже праздновала новоселье! Благодарна Владимиру и Марие за такое душевное отношение!',
   },
   {
     id: 3,
     image: '/images/review-03.avif',
+    video: null,
     author: 'Валентина',
     description: 'У нас с ребятами долгая история)) Сначала мы с ними построили дом, а потом они же нам его отремонтировали "под ключ". Стройка и ремонт заняли в общем 10 месяцев. Их команда работала так слаженно и быстро, и при этом очень качественно! Мария и Владимир очень помогли нам с дизайном дома, понравился их подход к делу- делали как для себя, с душой! Сами решали все вопросы с закупом и доставкой материалов. Вообщем, мы не испытали никакого дискомфорта, только удовольствие от ремонта! Спасибо огромное ребятам за наш прекрасный дом!',
   },
   {
     id: 4,
     image: '/images/review-04.avif',
+    video: {
+      webm: reviewGalinaWebM,
+      mp4: reviewGalinaMP4,
+    },
     author: 'Галина и Виталий',
     description: 'Мы были очень довольны работой компании. Все работы были выполнены в срок и качеством. Мы рекомендуем эту компанию всем друзьям и знакомым.',
   }
@@ -73,13 +90,19 @@ const onReviewsNextClick = () => {
 
 const isReviewVideoOpen = ref(false);
 const reviewVideoRef = ref<HTMLVideoElement | null>(null);
+const activeReview = ref<ReviewItem | null>(null);
 
-const openReviewVideo = () => {
+const openReviewVideo = (item: ReviewItem) => {
+  if (!item.video) {
+    return;
+  }
+  activeReview.value = item;
   isReviewVideoOpen.value = true;
 };
 
 const closeReviewVideo = () => {
   isReviewVideoOpen.value = false;
+  activeReview.value = null;
 };
 
 const onReviewVideoEscape = (event: KeyboardEvent) => {
@@ -111,7 +134,10 @@ watch(isReviewVideoOpen, (open) => {
  * Тап по превью (не по кнопке play — у неё свой обработчик со stop).
  * После горизонтального свайпа слайдера браузер обычно не шлёт click — видео не откроется.
  */
-const onReviewVideoWrapperClick = (event: MouseEvent) => {
+const onReviewVideoWrapperClick = (event: MouseEvent, item: ReviewItem) => {
+  if (!item.video) {
+    return;
+  }
   const el = event.target;
   if (!(el instanceof Element)) {
     return;
@@ -119,7 +145,7 @@ const onReviewVideoWrapperClick = (event: MouseEvent) => {
   if (el.closest('.review-item__video-button')) {
     return;
   }
-  openReviewVideo();
+  openReviewVideo(item);
 };
 
 const expandedReviewId = ref<number | null>(null);
@@ -299,13 +325,14 @@ onUnmounted(() => {
               <div class="review-item__card">
                 <div
                   class="review-item__video-wrapper"
-                  @click="onReviewVideoWrapperClick"
+                  @click="onReviewVideoWrapperClick($event, item)"
                 >
                   <button
+                    v-if="item.video"
                     class="review-item__video-button"
                     type="button"
                     aria-label="Открыть видео отзыва"
-                    @click.stop="openReviewVideo"
+                    @click.stop="openReviewVideo(item)"
                   >
                     <Icon class="review-item__video-button-icon" name="icons:play-btn" size="90" />
                   </button>
@@ -411,11 +438,16 @@ onUnmounted(() => {
               type="video/webm"
               ref="reviewVideoRef"
               class="review-video"
+              :poster="activeReview?.image"
               controls
               playsinline
               preload="metadata"
-              :src="reviewVideoUrlWebM"
-            />
+              v-if="activeReview?.video"
+            >
+              <source :src="activeReview.video.webm" type="video/webm">
+              <source :src="activeReview.video.mp4" type="video/mp4">
+              Ваш браузер не поддерживает видео.
+            </video>
           </div>
         </div>
       </Transition>

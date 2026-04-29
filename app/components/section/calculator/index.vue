@@ -37,6 +37,7 @@ const { open: openCalculatorModal } = useCalculatorModal()
     display: flex;
     flex-direction: column;
     gap: 40px;
+    margin-block-end: 20px;
   }
 
   &__button {
@@ -55,6 +56,17 @@ const { open: openCalculatorModal } = useCalculatorModal()
     background-image: var(--color-button-background-primary);
     border-radius: var(--border-radius-primary);
     cursor: pointer;
+    transition-property: transform, box-shadow, filter;
+    transition-duration: 460ms;
+    transition-timing-function: ease;
+  }
+
+  @media (hover: hover) and (width >= 768px) {
+    &__button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+      filter: brightness(1.08);
+    }
   }
 
   &__form {
@@ -74,7 +86,7 @@ const { open: openCalculatorModal } = useCalculatorModal()
       grid-column: 1 / -1;
       grid-row: 1 / 2;
       gap: 32px;
-      
+      margin-block-end: 0;
     }
 
     &__button {

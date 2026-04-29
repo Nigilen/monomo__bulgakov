@@ -10,7 +10,7 @@ const emit = defineEmits<{
 
 const { open: openPolicyModal } = usePolicyModal()
 const { open: openThankModal } = useThankModal()
-const { display: phoneDisplay, onPhoneInput, digits: phoneDigits, reset: resetPhone } = useRuPhoneField()
+const { display: phoneDisplay, onPhoneInput, onPhoneKeydown, digits: phoneDigits, reset: resetPhone } = useRuPhoneField()
 
 const name = ref('')
 const message = ref('')
@@ -88,6 +88,7 @@ function onSubmit(e: Event) {
             type="tel"
             inputmode="tel"
             autocomplete="tel"
+            @keydown="onPhoneKeydown"
             @input="onPhoneInputWrapped"
           />
           <p v-if="errors.phone" class="field-error">Заполните данные</p>
@@ -156,6 +157,7 @@ function onSubmit(e: Event) {
   flex-direction: column;
   align-items: stretch;
   inline-size: 100%;
+  position: relative;
 
   &--error {
     .form__input {
@@ -169,8 +171,11 @@ function onSubmit(e: Event) {
 }
 
 .field-error {
+  position: absolute;
+  inset-block-start: calc(100% + 5px);
+  inset-inline-start: 0;
+  inline-size: 100%;
   margin: 0;
-  margin-block-start: 6px;
   font-size: 14px;
   color: #FF3434;
   text-align: center;
@@ -254,6 +259,17 @@ function onSubmit(e: Event) {
     font-size: clamp(16px, 4.2cqi, 20px);
     margin-block-end: clamp(16px, 4.2cqi, 20px);
     font-weight: 600;
+    transition-property: transform, box-shadow, filter;
+    transition-duration: 460ms;
+    transition-timing-function: ease;
+  }
+
+  @media (hover: hover) and (width >= 768px) {
+    &__button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+      filter: brightness(1.08);
+    }
   }
 
   &__text {

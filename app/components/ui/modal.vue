@@ -62,9 +62,10 @@ const emit = defineEmits<{
 
   &__close {
     position: absolute;
-    inset-block-start: 4.3cqi;
-    inset-inline-end: 4.3cqi;
-    inline-size: 4.3cqi;
+    z-index: 2;
+    inset-block-start: 12px;
+    inset-inline-end: 12px;
+    inline-size: 32px;
     block-size: auto;
     aspect-ratio: 1 / 1;
   }

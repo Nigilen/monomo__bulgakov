@@ -42,14 +42,15 @@ const items = [
             </p>
           </li>
         </ul>
-        <NuxtImg
+        <img
           class="approach__image"
           src="/images/approach-img.avif"
           alt=""
           aria-labelledby="approach"
           width="770"
           height="715"
-          loading="lazy"
+          decoding="async"
+          loading='lazy'
         />
       </div>
     </div>

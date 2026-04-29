@@ -96,13 +96,14 @@ function onSubmit(e: Event) {
       </form>
     </div>
     <div class="image">
-      <NuxtImg 
+      <img 
         src="/images/request.avif" 
         alt="Request" 
         width="688" 
         height="992" 
         class="image__img" 
-        loading="lazy" 
+        decoding="async"
+        loading='lazy'
       />
     </div>
 

@@ -101,29 +101,32 @@ onMounted(() => {
 <template>
   <section class="cta container">
     <div class="cta__images-group images-group">
-      <NuxtImg 
+      <img 
         class="images-group__image images-group__image--first" 
         src="/images/cta-img-01.avif" 
         alt="CTA Image" 
         width="355"
         height="380"
-        loading="lazy"
+        decoding="async"
+        loading='lazy'
       />
-      <NuxtImg 
+      <img 
         class="images-group__image images-group__image--second" 
         src="/images/cta-img-02.avif" 
         alt="CTA Image" 
         width="355"
         height="380"
-        loading="lazy"
+        decoding="async"
+        loading='lazy'
       />
-      <NuxtImg 
+      <img 
         class="images-group__image images-group__image--third" 
         src="/images/cta-img-03.avif" 
         alt="CTA Image" 
         width="455"
         height="777"
-        loading="lazy"
+        decoding="async"
+        loading='lazy'
       />
     </div>
     <div class="cta__content content">

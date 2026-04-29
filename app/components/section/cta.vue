@@ -425,7 +425,7 @@ onMounted(() => {
   }
 
   &__button {
-    border-radius: 16px;
+    border-radius: 0.8vi;
     background-image: var(--color-button-background-primary);
     color: var(--color-button-text-primary);
     text-transform: uppercase;

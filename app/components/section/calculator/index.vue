@@ -54,7 +54,7 @@ const { open: openCalculatorModal } = useCalculatorModal()
     text-transform: uppercase;
     color: var(--color-button-text-primary);
     background-image: var(--color-button-background-primary);
-    border-radius: var(--border-radius-primary);
+    border-radius: 0.8vi;
     cursor: pointer;
     transition-property: transform, box-shadow, filter;
     transition-duration: 460ms;

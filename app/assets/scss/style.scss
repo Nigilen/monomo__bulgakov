@@ -41,6 +41,16 @@
 }
 
 
+.form-submit-state-pending {
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: grayscale(1);
+  transform: none;
+  box-shadow: none;
+}
+
 .container {
   box-sizing: content-box;
   max-width: 1564px;

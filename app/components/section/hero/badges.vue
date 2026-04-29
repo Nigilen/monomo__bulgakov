@@ -43,7 +43,7 @@ defineProps<{
     padding-inline-end: 1.05vi;
     column-gap: 1.55vi;
     container-type: inline-size;
-    border-radius: var(--border-radius-primary);
+    border-radius: 0.8vi;
     background-color: #303030d0;
   }
 

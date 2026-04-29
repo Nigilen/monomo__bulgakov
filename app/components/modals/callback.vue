@@ -114,9 +114,15 @@ async function onSubmit(e: Event) {
           />
           <p v-if="errors.phone" class="field-error">Заполните данные</p>
         </div>
-        <button class="form__button" type="submit" :disabled="loading || success">
-          <span v-if="loading">Отправка...</span>
-          <span v-else-if="success">✅ Заявка отправлена!</span>
+        <button
+          class="form__button"
+          type="submit"
+          :class="{ 'form-submit-state-pending': loading || success }"
+          :disabled="loading || success"
+          :aria-busy="loading"
+        >
+          <UiEllipsisLoader v-if="loading" />
+          <span v-else-if="success">Готово</span>
           <span v-else>Позвоните мне</span>
         </button>
         <input

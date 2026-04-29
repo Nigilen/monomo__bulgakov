@@ -41,10 +41,10 @@ const PORTFOLIO_IMAGES = {
 } as const
 
 const PROJECT_GALLERY_BY_ID = {
-  1: Object.values(PORTFOLIO_IMAGES.kaliningrad35),
+  1: Object.values(PORTFOLIO_IMAGES.pionersk45),
   2: Object.values(PORTFOLIO_IMAGES.kaliningrad120),
-  3: Object.values(PORTFOLIO_IMAGES.pionersk45),
-  4: Object.values(PORTFOLIO_IMAGES.pionersk75),
+  3: Object.values(PORTFOLIO_IMAGES.pionersk75),
+  4: Object.values(PORTFOLIO_IMAGES.kaliningrad35),
 } as const
 
 type PortfolioItem = {

@@ -38,7 +38,7 @@ const FormSchema = z.object({
 
 // 🛡️ Rate Limiter (хранится в памяти сервера)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
-const MAX_REQUESTS = 5          // Макс. запросов
+const MAX_REQUESTS = 3          // Макс. запросов
 const WINDOW_MS = 10 * 60 * 1000 // За 10 минут
 
 function checkRateLimit(ip: string): boolean {
@@ -61,15 +61,20 @@ function checkRateLimit(ip: string): boolean {
 
 // 3. Создаем обработчик запроса (то, что сработает при отправке формы)
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
+  const ua = getHeader(event, 'user-agent')
+  if (!ua || ua.includes('bot') || ua.includes('curl')) {
+    throw createError({ statusCode: 403, message: 'Blocked' })
+  }
+
   const ip = getRequestIP(event) || 'unknown'
 
-  // 🛡️ 1. Проверяем Rate Limit ДО валидации
   if (!checkRateLimit(ip)) {
     throw createError({ statusCode: 429, message: 'Слишком много попыток. Подождите 10 минут.' })
   }
 
-  // 🔍 2. Валидация данных
+  const body = await readBody(event)
+
+  // 🔍 Валидация данных
   const validationResult = FormSchema.safeParse(body)
   if (!validationResult.success) {
     // Если ошибка в honeypot или времени → говорим боту "ошибка валидации"
@@ -78,17 +83,17 @@ export default defineEventHandler(async (event) => {
 
   const { name, phone, formSource, message, tariff, housingType, area, honeypot, timeElapsed } = validationResult.data
 
-  // 🕳️ 3. Проверка Honeypot (если поле заполнено → это бот)
+  // 🕳️ Проверка Honeypot (если поле заполнено → это бот)
   if (honeypot && honeypot.trim().length > 0) {
     throw createError({ statusCode: 403, message: 'Подозрительная активность' })
   }
 
-  // ⏱️ 4. Проверка времени (дублируем на случай, если Zod пропустил)
+  // ⏱️ Проверка времени (дублируем на случай, если Zod пропустил)
   if (timeElapsed < 3000) {
     throw createError({ statusCode: 403, message: 'Подтвердите, что вы человек' })
   }
 
-  // 📧 5. Отправка письма
+  // 📧 Отправка письма
   try {
     const optionalDetails = [
       message ? `<p><b>Сообщение:</b> ${message}</p>` : '',

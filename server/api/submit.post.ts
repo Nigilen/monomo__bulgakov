@@ -38,7 +38,7 @@ const FormSchema = z.object({
 
 // 🛡️ Rate Limiter (хранится в памяти сервера)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
-const MAX_REQUESTS = 30          // Макс. запросов
+const MAX_REQUESTS = 3          // Макс. запросов
 const WINDOW_MS = 10 * 60 * 1000 // За 10 минут
 const MESSAGE_ENABLED_SOURCES = new Set(['modal_simple', 'modal_calculator', 'modal_price'])
 

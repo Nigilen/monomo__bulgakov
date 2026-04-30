@@ -4,7 +4,10 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-const area = ref(0)
+const areaMin = 20
+const areaMax = 250
+const area = ref(areaMin)
+const areaProgress = computed(() => (area.value - areaMin) / (areaMax - areaMin))
 const housingType = ref<string | null>(null)
 
 const { open: openPolicyModal } = usePolicyModal()
@@ -77,7 +80,7 @@ async function onSubmit(e: Event) {
     openThankModal()
     emit('close')
     housingType.value = null
-    area.value = 0
+    area.value = areaMin
     name.value = ''
     resetPhone()
     message.value = ''
@@ -140,9 +143,16 @@ async function onSubmit(e: Event) {
         <div class="form__item form__item--area">
           <label class="form__legend form__legend--area" for="modal-calculator-area">Площадь помещения</label>
           <div class="form__input-wrapper">
-            <div class="form__value form__value--area" :style="{ '--area-value': area }">{{ area }} м²</div>
-            <input id="modal-calculator-area" class="form__input form__input--area" type="range"
-              name="modal-calculator-area" v-model.number="area" />
+            <div class="form__value form__value--area" :style="{ '--area-progress': areaProgress }">{{ area }} м²</div>
+            <input
+              id="modal-calculator-area"
+              class="form__input form__input--area"
+              type="range"
+              name="modal-calculator-area"
+              v-model.number="area"
+              :min="areaMin"
+              :max="areaMax"
+            />
           </div>
         </div>
 
@@ -179,7 +189,7 @@ async function onSubmit(e: Event) {
             class="form__textarea"
             name="message"
             placeholder="Сообщение"
-            rows="5"
+            rows="3"
             maxlength="1000"
             @input="onDirtySync"
           />
@@ -305,7 +315,7 @@ async function onSubmit(e: Event) {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(20px, 8.5cqi, 40px);
+  gap: clamp(20px, 7.5cqi, 30px);
   inline-size: 100%;
 
   &__item {
@@ -337,12 +347,14 @@ async function onSubmit(e: Event) {
 
   &__value {
     &--area {
+      white-space: nowrap;
       position: absolute;
       inset-block-start: -4cqi;
       inset-inline-start: 0;
       text-align: center;
-      transform: translateX(calc(var(--area-value) * 0.94cqi));
-      font-size: 2.65cqi;
+      inset-inline-start: calc((var(--area-progress) * (100% - 3.5cqi)) + 1.75cqi);
+      transform: translateX(-50%);
+      font-size: 3.65cqi;
       font-weight: 400;
       line-height: 1;
       color: var(--color-text-primary);
@@ -395,9 +407,10 @@ async function onSubmit(e: Event) {
       background-color: var(--color-background-secondary);
       border: 0.6cqi solid var(--color-border-secondary);
       border-radius: 50%;
-      inline-size: 3.5cqi;
+      inline-size: 5.5cqi;
       block-size: auto;
       aspect-ratio: 1 / 1;
+      cursor: pointer;
     }
 
     &--area::-moz-range-thumb {
@@ -405,9 +418,10 @@ async function onSubmit(e: Event) {
       background-color: var(--color-background-secondary);
       border: 0.6cqi solid var(--color-border-secondary);
       border-radius: 50%;
-      inline-size: 3.5cqi;
+      inline-size: 5.5cqi;
       block-size: auto;
       aspect-ratio: 1 / 1;
+      cursor: pointer;
     }
 
     &--area::-ms-thumb {
@@ -415,9 +429,10 @@ async function onSubmit(e: Event) {
       background-color: var(--color-background-secondary);
       border: 0.6cqi solid var(--color-border-secondary);
       border-radius: 50%;
-      inline-size: 3.5cqi;
+      inline-size: 5.5cqi;
       block-size: auto;
       aspect-ratio: 1 / 1;
+      cursor: pointer;
     }
   }
 
@@ -434,6 +449,7 @@ async function onSubmit(e: Event) {
     line-height: 1.6em;
     resize: vertical;
     min-block-size: 120px;
+    resize: none;
 
     &::placeholder {
       color: var(--color-text-secondary);
@@ -533,7 +549,8 @@ async function onSubmit(e: Event) {
       &--area {
         font-size: 16px;
         inset-block-start: -20px;
-        transform: translateX(calc(var(--area-value) * 0.925cqi));
+        inset-inline-start: calc((var(--area-progress) * (100% - 20px)) + 10px);
+        transform: translateX(-50%);
       }
     }
 

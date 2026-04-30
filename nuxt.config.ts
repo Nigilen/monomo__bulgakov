@@ -27,6 +27,16 @@ export default defineNuxtConfig({
   fonts: {
     families: [
       {
+        name: 'Savoye',
+        global: true,
+        src: [
+          { url: '/fonts/Savoye.woff2', format: 'woff2' }
+        ],
+        weight: 400,
+        style: 'normal',
+        display: 'swap',
+      },
+      {
         name: 'Montserrat',
         global: true,
         src: [

@@ -31,6 +31,13 @@ const goNext = () => {
   currentIndex.value += 1
 }
 
+const goToSlide = (index: number) => {
+  if (index < 0 || index > props.slides.length - 1) {
+    return
+  }
+  currentIndex.value = index
+}
+
 let swipeStartX = 0
 let swipeTracking = false
 
@@ -107,21 +114,28 @@ onUnmounted(() => {
           @pointercancel="onSwipePointerCancel"
           @selectstart.prevent
         >
-          <Transition mode="out-in" name="portfolio-gallery-fade">
-            <div
-              :key="currentIndex"
-              class="portfolio-gallery__slide"
-            >
-              <img
-                class="portfolio-gallery__image"
-                :src="currentSlideSrc"
-                :alt="props.title"
-                width="900"
-                height="900"
-                decoding="async"
-              />
-            </div>
-          </Transition>
+          <div class="portfolio-gallery__slide">
+            <img
+              class="portfolio-gallery__image"
+              :src="currentSlideSrc"
+              :alt="props.title"
+              width="900"
+              height="900"
+              decoding="async"
+            />
+          </div>
+        </div>
+        <div class="portfolio-gallery__pagination" aria-label="Пагинация галереи">
+          <button
+            v-for="(_, index) in props.slides"
+            :key="index"
+            class="portfolio-gallery__pagination-dot"
+            :class="{ 'portfolio-gallery__pagination-dot--active': index === currentIndex }"
+            type="button"
+            :aria-label="`Перейти к слайду ${index + 1}`"
+            :aria-current="index === currentIndex ? 'true' : undefined"
+            @click="goToSlide(index)"
+          />
         </div>
         <div class="portfolio-gallery__controls">
           <button
@@ -190,37 +204,37 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-.portfolio-gallery-fade-enter-active {
-  transition: opacity 0.4s ease;
+.portfolio-gallery__pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-block-start: clamp(12px, 3.2cqi, 18px);
 }
 
-.portfolio-gallery-fade-leave-active {
-  transition: opacity 0.32s ease;
+.portfolio-gallery__pagination-dot {
+  inline-size: 10px;
+  block-size: 10px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background-color: #6a6a6a;
+  cursor: pointer;
+  transition-property: background-color, transform;
+  transition-duration: 260ms;
+  transition-timing-function: ease;
 }
 
-.portfolio-gallery-fade-enter-from {
-  opacity: 0;
-}
-
-.portfolio-gallery-fade-leave-to {
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .portfolio-gallery-fade-enter-active {
-    transition-duration: 0.01ms;
-  }
-
-  .portfolio-gallery-fade-leave-active {
-    transition-duration: 0.01ms;
-  }
+.portfolio-gallery__pagination-dot--active {
+  background-color: var(--color-accent-primary);
+  transform: scale(1.15);
 }
 
 .portfolio-gallery__controls {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-block-start: clamp(16px, 4cqi, 24px);
+  margin-block-start: clamp(12px, 3.2cqi, 18px);
 }
 
 .portfolio-gallery__button {

@@ -167,7 +167,7 @@ const badges: Array<{
 
     &__description {
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       gap: 10px;
       margin-block-end: 50px;
       inline-size: 100%;

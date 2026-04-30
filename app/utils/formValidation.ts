@@ -7,5 +7,5 @@ export function isValidName(value: string): boolean {
 
 export function isValidLeadMessage(value: string): boolean {
   const s = value.trim()
-  return s.length >= 50 && s.length <= 1000
+  return s.length === 0 || (s.length >= 5 && s.length <= 1000)
 }

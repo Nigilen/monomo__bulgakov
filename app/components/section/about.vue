@@ -185,10 +185,10 @@
     }
 
     &-author {
-      font-family: serif;
-      font-size: min(56px, 3vi);
+      font-family: 'Savoye', serif;
+      font-size: min(76px, 4vi);
       font-weight: 400;
-      line-height: calc(35/20);
+      line-height: 1;
       color: var(--color-accent-primary);
       font-style: italic;
       
@@ -242,7 +242,7 @@
       }
   
       &-author {
-        font-size: 24px;    
+        font-size: 40px;    
         inset-block-end: -26px;
         inset-inline-end: 16px;
       }

@@ -145,7 +145,6 @@ onUnmounted(() => {
       align-items: flex-start;
       padding-block: 40px;
       padding-inline: 9.85vi;
-      opacity: 0;
       visibility: hidden;
       pointer-events: none;
       transform: translateX(100%);
@@ -155,12 +154,10 @@ onUnmounted(() => {
         visibility 0s linear 0.5s;
 
       &--open {
-        opacity: 1;
         visibility: visible;
         pointer-events: auto;
         transform: translateX(0);
         transition:
-          opacity 0.5s ease,
           transform 0.5s ease,
           visibility 0s linear 0s;
       }

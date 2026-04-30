@@ -11,16 +11,16 @@
       </p>
     </div>
     <address class="footer__address address">
-      г. Москва, ул. Строителей 3, д. 25, офис 12
+      г. Калининград
     </address>
     <ul class="footer__socials socials">
       <li class="socials__item">
-        <a class="socials__link" href="#">
+        <a class="socials__link" href="https://max.ru/join/KDLgScGvGTx4rJ9Qx-2feKifi2AckxTOVQgMhK5ThRE" target="_blank">
           <Icon class="socials__icon" name="icons:max" />
         </a>
       </li>
       <li class="socials__item">
-        <a class="socials__link" href="#">
+        <a class="socials__link" href="https://t.me/ckgart" target="_blank">
           <Icon class="socials__icon" name="icons:telegram" />
         </a>
       </li>

@@ -33,7 +33,7 @@ const TRACK_TRANSFORM_EASING = 'ease';
  * Если transitionend не пришёл (редко), всё равно применить снап тройного цикла.
  * Берём запас относительно длительности transition + небольшой буфер.
  */
-const TRIPLE_SNAP_FALLBACK_MS = Math.round(TRACK_TRANSFORM_DURATION_S * 1000) + 70;
+const getTripleSnapFallbackMs = (durationS: number) => Math.round(durationS * 1000) + 70;
 
 /** Два кадра подряд — снять instant transition после применения transform без анимации. */
 const runAfterNextPaint = (fn: () => void) => {
@@ -49,6 +49,8 @@ export type UsePriceSliderOptions = {
   loopTripleMode?: boolean
   autoPlayIntervalMs?: number
   navigationCooldownMs?: number
+  trackTransformDurationS?: number
+  trackTransformEasing?: string
 };
 
 export const usePriceSlider = (
@@ -60,6 +62,8 @@ export const usePriceSlider = (
   const loopTripleMode = options?.loopTripleMode ?? false;
   const autoPlayIntervalMs = options?.autoPlayIntervalMs;
   const navigationCooldownMs = options?.navigationCooldownMs;
+  const trackTransformDurationS = options?.trackTransformDurationS ?? TRACK_TRANSFORM_DURATION_S;
+  const trackTransformEasing = options?.trackTransformEasing ?? TRACK_TRANSFORM_EASING;
 
   // --- Состояние навигации (ручной кулдаун) ---
   const lastManualNavigationAtMs = ref(0);
@@ -140,7 +144,7 @@ export const usePriceSlider = (
     ) {
       style.transition = 'none';
     } else {
-      style.transition = `transform ${TRACK_TRANSFORM_DURATION_S}s ${TRACK_TRANSFORM_EASING}`;
+      style.transition = `transform ${trackTransformDurationS}s ${trackTransformEasing}`;
     }
     return style;
   });
@@ -211,7 +215,7 @@ export const usePriceSlider = (
       if (pendingTripleSnap.value === 'none') {
         return;
       }
-      if (now - startMs >= TRIPLE_SNAP_FALLBACK_MS) {
+      if (now - startMs >= getTripleSnapFallbackMs(trackTransformDurationS)) {
         applyPendingTripleSnap();
         return;
       }

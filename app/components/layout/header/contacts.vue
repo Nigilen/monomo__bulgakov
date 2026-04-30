@@ -5,11 +5,11 @@ const { open: openCallbackModal } = useCallbackModal()
 const socials = [
   {
     name: 'telegram',
-    to: '#',
+    to: 'https://t.me/ckgart',
   },
   {
     name: 'max',
-    to: '#',
+    to: 'https://max.ru/join/KDLgScGvGTx4rJ9Qx-2feKifi2AckxTOVQgMhK5ThRE',
   },
 ];
 
@@ -19,7 +19,7 @@ const socials = [
   <div class="contacts">
     <ul class="contacts__socials">
       <li class="contacts__socials-item" v-for="social in socials" :key="social.name">
-        <NuxtLink class="contacts__socials-link" :to="social.to">
+        <NuxtLink class="contacts__socials-link" :to="social.to" target="_blank">
           <Icon class="contacts__socials-icon" :name="`icons:${social.name}`" />
         </NuxtLink>
       </li>

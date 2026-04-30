@@ -8,6 +8,7 @@ import reviewLidiaMP4 from '~/assets/video/otzyv-lidia-01.mp4';
 type ReviewItem = {
   id: number
   image: string
+  preview?: string
   video?: {
     webm: string
     mp4: string
@@ -21,6 +22,7 @@ const items: ReviewItem[] = [
   {
     id: 1,
     image: '/images/review-01.avif',
+    preview: '/images/video-preview-lidia.avif',
     video: {
       webm: reviewLidiaWebM,
       mp4: reviewLidiaMP4,
@@ -30,33 +32,36 @@ const items: ReviewItem[] = [
   },
   {
     id: 2,
-    image: '/images/review-02.avif',
-    video: null,
-    author: 'Мария',
-    description: 'Я обратилась к ребятам в феврале 2024 года с запросом на ремонт загородного дома в Зеленоградске. Никакого дизайн-проекта у меня не было и вообще я не знала что хочу, просто чтоб было красиво)). Их подход меня поразил! Продумали все до мелочей – каждую розетку, цветовую гамму, как расположить мебель, какие материалы использовать. Получается, обратилась за ремонтом, а получила еще и дизайнерское решение! В мае я уже праздновала новоселье! Благодарна Владимиру и Марие за такое душевное отношение!',
+    image: '/images/review-04.avif',
+    preview: '/images/video-preview-konstantin.avif',
+    video: {
+      webm: reviewGalinaWebM,
+      mp4: reviewGalinaMP4,
+    },
+    author: 'Константин',
+    description: 'Мне нужен был частичный ремонт, но никто не хотел браться, а Владимир и Мария взялись и сделали все качественно! Выложили кафель в двух санузлах, на кухне и на балконе. Подготовили стены под обои. К качеству претензий не имею!',
   },
   {
     id: 3,
     image: '/images/review-03.avif',
     video: null,
-    author: 'Валентина',
+    author: 'Галина и Виталий',
     description: 'У нас с ребятами долгая история)) Сначала мы с ними построили дом, а потом они же нам его отремонтировали "под ключ". Стройка и ремонт заняли в общем 10 месяцев. Их команда работала так слаженно и быстро, и при этом очень качественно! Мария и Владимир очень помогли нам с дизайном дома, понравился их подход к делу- делали как для себя, с душой! Сами решали все вопросы с закупом и доставкой материалов. Вообщем, мы не испытали никакого дискомфорта, только удовольствие от ремонта! Спасибо огромное ребятам за наш прекрасный дом!',
   },
   {
     id: 4,
-    image: '/images/review-04.avif',
-    video: {
-      webm: reviewGalinaWebM,
-      mp4: reviewGalinaMP4,
-    },
-    author: 'Галина и Виталий',
-    description: 'Мы были очень довольны работой компании. Все работы были выполнены в срок и качеством. Мы рекомендуем эту компанию всем друзьям и знакомым.',
-  }
+    image: '/images/review-02.avif',
+    video: null,
+    author: 'Валентина',
+    description: 'Я обратилась к ребятам в феврале 2024 года с запросом на ремонт загородного дома в Зеленоградске. Никакого дизайн-проекта у меня не было и вообще я не знала что хочу, просто чтоб было красиво)). Их подход меня поразил! Продумали все до мелочей – каждую розетку, цветовую гамму, как расположить мебель, какие материалы использовать. Получается, обратилась за ремонтом, а получила еще и дизайнерское решение! В мае я уже праздновала новоселье! Благодарна Владимиру и Марие за такое душевное отношение!',
+  },
 ];
 
 const REVIEWS_SLIDER_OPTIONS = {
   itemSelector: '.review-item',
   navigationCooldownMs: 360,
+  trackTransformDurationS: 1.5,
+  trackTransformEasing: 'cubic-bezier(0.22, 1, 0.36, 1)',
 } as const;
 
 const {
@@ -77,6 +82,8 @@ const {
   loopTripleMode: false,
   navigationCooldownMs:
     items.length >= 2 ? REVIEWS_SLIDER_OPTIONS.navigationCooldownMs : undefined,
+  trackTransformDurationS: REVIEWS_SLIDER_OPTIONS.trackTransformDurationS,
+  trackTransformEasing: REVIEWS_SLIDER_OPTIONS.trackTransformEasing,
 });
 
 /** Обёртки для клика: без аргумента события (иначе кулдаун в goNext обходился бы). */
@@ -436,7 +443,7 @@ onUnmounted(() => {
               type="video/webm"
               ref="reviewVideoRef"
               class="review-video"
-              :poster="activeReview?.image"
+              :poster="activeReview?.preview"
               controls
               playsinline
               preload="metadata"

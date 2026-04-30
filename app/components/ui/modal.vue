@@ -10,15 +10,23 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>();
 
+onMounted(() => {
+  acquireBodyScrollLock()
+})
+
+onUnmounted(() => {
+  releaseBodyScrollLock()
+})
+
 </script>
 
 <template>
-  <div
-    class="modal"
-    role="dialog"
-    aria-modal="true"
-    @click.self="emit('close')"
-  >
+  <div class="modal" role="dialog" aria-modal="true">
+    <div
+      class="modal__backdrop"
+      aria-hidden="true"
+      @click="emit('close')"
+    />
     <div
       class="modal__content"
       :class="{ 'modal__content--wide': wide }"
@@ -35,15 +43,31 @@ const emit = defineEmits<{
 <style scoped lang="scss">
 .modal {
   position: fixed;
-  inset: 0;
+  inset-block-start: 0;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.8);
   z-index: 1000;
+
+  &__backdrop {
+    position: absolute;
+    inset-block-start: 0;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    z-index: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    cursor: default;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
 
   &__content {
     position: relative;
+    z-index: 1;
     box-sizing: border-box;
     padding: clamp(16px, 5vi, 40px);
     background-color: var(--color-background-primary);

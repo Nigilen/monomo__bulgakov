@@ -30,17 +30,20 @@ onMounted(() => {
 
 watch(isMenuOpen, (open) => {
   if (!import.meta.client) return;
-  const overflow = open ? 'hidden' : '';
-  document.documentElement.style.overflow = overflow;
-  document.body.style.overflow = overflow;
+  if (open) {
+    acquireBodyScrollLock();
+  } else {
+    releaseBodyScrollLock();
+  }
 });
 
 onUnmounted(() => {
   window.removeEventListener('resize', handleResize);
   window.removeEventListener('keydown', handleKeyDown);
   if (!import.meta.client) return;
-  document.documentElement.style.overflow = '';
-  document.body.style.overflow = '';
+  if (isMenuOpen.value) {
+    releaseBodyScrollLock();
+  }
 });
 
 

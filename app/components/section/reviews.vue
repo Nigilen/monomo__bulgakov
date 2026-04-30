@@ -127,11 +127,13 @@ const playReviewVideo = () => {
 
 watch(isReviewVideoOpen, (open) => {
   if (open) {
+    acquireBodyScrollLock()
     document.addEventListener('keydown', onReviewVideoEscape);
     nextTick(() => {
       playReviewVideo();
     });
   } else {
+    releaseBodyScrollLock()
     document.removeEventListener('keydown', onReviewVideoEscape);
     if (reviewVideoRef.value) {
       reviewVideoRef.value.pause();
@@ -289,6 +291,9 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
+  if (isReviewVideoOpen.value) {
+    releaseBodyScrollLock()
+  }
   document.removeEventListener('keydown', onReviewVideoEscape);
   window.removeEventListener('resize', onWindowResize);
   stopViewportWatch?.();
@@ -428,8 +433,12 @@ onUnmounted(() => {
         <div
           v-if="isReviewVideoOpen"
           class="review-video-overlay"
-          @click.self="closeReviewVideo"
         >
+          <div
+            class="review-video-overlay__backdrop"
+            aria-hidden="true"
+            @click="closeReviewVideo"
+          />
           <div
             class="review-video-frame"
             @click.stop
@@ -830,14 +839,28 @@ onUnmounted(() => {
 
 .review-video-overlay {
   position: fixed;
-  inset: 0;
+  inset-block-start: 0;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  padding: clamp(16px, 4vi, 24px);
+}
+
+.review-video-overlay__backdrop {
+  position: absolute;
+  inset-block-start: 0;
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
+  z-index: 0;
   background-color: rgba(0, 0, 0, 0.8);
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .review-video-enter-active {
@@ -854,10 +877,13 @@ onUnmounted(() => {
 }
 
 .review-video-frame {
+  box-sizing: border-box;
   position: relative;
+  z-index: 1;
   display: inline-block;
   max-inline-size: 100%;
   vertical-align: top;
+  padding: clamp(16px, 4vi, 24px);
 }
 
 .review-video-overlay__close {

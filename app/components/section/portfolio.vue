@@ -347,7 +347,7 @@ onUnmounted(() => {
       block-size: auto;
       aspect-ratio: 1 / 1;
       object-fit: cover;
-      border-radius: 0.8vi;
+      border-radius: 16px;
     }
 
     &__content {

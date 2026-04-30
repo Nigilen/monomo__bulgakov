@@ -174,7 +174,7 @@ onUnmounted(() => {
   justify-content: center;
   inline-size: 56px;
   block-size: 56px;
-  border-radius: 50%;
+  border-radius: 16px;
   border: 1px solid var(--color-border-secondary);
   background-color: var(--color-background-secondary);
   color: var(--color-accent-primary);

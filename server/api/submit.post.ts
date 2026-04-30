@@ -15,7 +15,7 @@ import nodemailer from 'nodemailer'
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
-  secure: false, // true для 465 порта (безопасное соединение)
+  secure: true, // true для 465 порта (безопасное соединение)
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS
@@ -117,17 +117,17 @@ const sendTelegramFormMessage = async ({
     lines.push(`Площадь: ${typeof area === 'number' ? `${area} м²` : '—'}`)
   }
 
-  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text: lines.join('\n'),
-      disable_web_page_preview: true,
-    }),
-  })
+  // await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     chat_id: chatId,
+  //     text: lines.join('\n'),
+  //     disable_web_page_preview: true,
+  //   }),
+  // })
 }
 
 function checkRateLimit(ip: string): { allowed: boolean; retryAfterMs: number } {

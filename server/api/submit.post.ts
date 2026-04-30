@@ -40,23 +40,114 @@ const FormSchema = z.object({
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>()
 const MAX_REQUESTS = 3          // Макс. запросов
 const WINDOW_MS = 10 * 60 * 1000 // За 10 минут
+const MESSAGE_ENABLED_SOURCES = new Set(['modal_simple', 'modal_calculator', 'modal_price'])
 
-function checkRateLimit(ip: string): boolean {
+const formatPhoneForEmail = (rawPhone: string): string => {
+  const digits = rawPhone.replace(/\D/g, '')
+  if (digits.length === 11 && digits.startsWith('7')) {
+    const p = digits.slice(1)
+    return `+7 (${p.slice(0, 3)}) ${p.slice(3, 6)}-${p.slice(6, 8)}-${p.slice(8, 10)}`
+  }
+  return rawPhone
+}
+
+const getMailMeta = (formSource: string, tariff?: string) => {
+  if (formSource === 'modal_callback') {
+    return { subject: 'Заявка – Заказать звонок', requestType: 'Заказать звонок' }
+  }
+  if (formSource === 'modal_calculator') {
+    return { subject: 'Заявка – Рассчитать стоимость', requestType: 'Рассчитать стоимость' }
+  }
+  if (formSource === 'modal_price') {
+    const safeTariff = tariff?.trim() || 'Без названия'
+    return {
+      subject: `Заявка – Обсудить проект "${safeTariff}"`,
+      requestType: `Обсудить проект (${safeTariff})`
+    }
+  }
+  return { subject: 'Заявка – Консультация', requestType: 'Консультация' }
+}
+
+const getHousingTypeLabel = (housingType?: string) => {
+  if (housingType === '1') return 'Новостройка'
+  if (housingType === '2') return 'Вторичка'
+  return housingType || '—'
+}
+
+const sendTelegramFormMessage = async ({
+  requestType,
+  formSource,
+  name,
+  phoneMasked,
+  message,
+  includeMessage,
+  housingType,
+  area,
+}: {
+  requestType: string
+  formSource: string
+  name: string
+  phoneMasked: string
+  message?: string
+  includeMessage: boolean
+  housingType?: string
+  area?: number
+}) => {
+  const token = process.env.TELEGRAM_BOT_TOKEN
+  const chatId = process.env.TELEGRAM_CHAT_ID
+
+  if (!token || !chatId) {
+    return
+  }
+
+  const lines = [
+    'Новая заявка!',
+    `Тип заявки: ${requestType}`,
+    `Форма: ${formSource}`,
+    `Имя: ${name}`,
+    `Телефон: ${phoneMasked}`,
+  ]
+
+  if (includeMessage) {
+    lines.push(`Сообщение: ${message?.trim() ? message : '—'}`)
+  }
+
+  if (formSource === 'modal_calculator') {
+    lines.push(`Тип жилья: ${getHousingTypeLabel(housingType)}`)
+    lines.push(`Площадь: ${typeof area === 'number' ? `${area} м²` : '—'}`)
+  }
+
+  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: lines.join('\n'),
+      disable_web_page_preview: true,
+    }),
+  })
+}
+
+function checkRateLimit(ip: string): { allowed: boolean; retryAfterMs: number } {
   const now = Date.now()
   let record = rateLimitMap.get(ip)
 
   // Если записи нет или окно истекло → создаём новую
   if (!record || now > record.resetTime) {
     rateLimitMap.set(ip, { count: 1, resetTime: now + WINDOW_MS })
-    return true
+    return { allowed: true, retryAfterMs: 0 }
   }
 
   // Если лимит превышен → блокируем
-  if (record.count >= MAX_REQUESTS) return false
+  if (record.count >= MAX_REQUESTS) {
+    return { allowed: false, retryAfterMs: Math.max(0, record.resetTime - now) }
+  }
 
   // Иначе увеличиваем счётчик
   record.count++
-  return true
+  return { allowed: true, retryAfterMs: 0 }
 }
 
 // 3. Создаем обработчик запроса (то, что сработает при отправке формы)
@@ -68,8 +159,13 @@ export default defineEventHandler(async (event) => {
 
   const ip = getRequestIP(event) || 'unknown'
 
-  if (!checkRateLimit(ip)) {
-    throw createError({ statusCode: 429, message: 'Слишком много попыток. Подождите 10 минут.' })
+  const rateLimitResult = checkRateLimit(ip)
+  if (!rateLimitResult.allowed) {
+    const retryAfterMinutes = Math.max(1, Math.ceil(rateLimitResult.retryAfterMs / 60000))
+    throw createError({
+      statusCode: 429,
+      message: `Лимит отправок исчерпан. Повторить можно через ${retryAfterMinutes} мин.`
+    })
   }
 
   const body = await readBody(event)
@@ -95,19 +191,37 @@ export default defineEventHandler(async (event) => {
 
   // 📧 Отправка письма
   try {
-    const optionalDetails = [
-      message ? `<p><b>Сообщение:</b> ${message}</p>` : '',
-      tariff ? `<p><b>Тариф/слайд:</b> ${tariff}</p>` : '',
-      housingType ? `<p><b>Тип жилья:</b> ${housingType}</p>` : '',
-      typeof area === 'number' ? `<p><b>Площадь:</b> ${area} м²</p>` : '',
-    ].join('')
+    const { subject, requestType } = getMailMeta(formSource, tariff)
+    const phoneMasked = formatPhoneForEmail(phone)
+    const messageLine = MESSAGE_ENABLED_SOURCES.has(formSource)
+      ? `<p><b>Сообщение:</b> ${message?.trim() ? message : '—'}</p>`
+      : ''
+    const calculatorDetails = formSource === 'modal_calculator'
+      ? `<p><b>Тип жилья:</b> ${getHousingTypeLabel(housingType)}</p><p><b>Площадь:</b> ${typeof area === 'number' ? `${area} м²` : '—'}</p>`
+      : ''
 
     await transporter.sendMail({
       from: `"Заявка с сайта" <${process.env.SMTP_FROM}>`,
       to: 'nigilen@yandex.ru', // 👈 Почта клиента/менеджера
-      subject: `Новая заявка от ${name}`,
-      html: `<h3>Новая заявка!</h3><p><b>Форма:</b> ${formSource}</p><p><b>Имя:</b> ${name}</p><p><b>Телефон:</b> ${phone}</p>${optionalDetails}`
+      subject,
+      html: `<h3>Новая заявка!</h3><p><b>Тип заявки:</b> ${requestType}</p><p><b>Форма:</b> ${formSource}</p><p><b>Имя:</b> ${name}</p><p><b>Телефон:</b> ${phoneMasked}</p>${messageLine}${calculatorDetails}`
     })
+
+    try {
+      await sendTelegramFormMessage({
+        requestType,
+        formSource,
+        name,
+        phoneMasked,
+        message,
+        includeMessage: MESSAGE_ENABLED_SOURCES.has(formSource),
+        housingType,
+        area,
+      })
+    } catch (telegramError) {
+      console.error('Ошибка отправки в Telegram:', telegramError)
+    }
+
     return { status: 'success' }
   } catch (error) {
     console.error('Ошибка отправки:', error)

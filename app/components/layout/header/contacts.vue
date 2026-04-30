@@ -4,12 +4,12 @@ const { open: openCallbackModal } = useCallbackModal()
 
 const socials = [
   {
-    name: 'telegram',
-    to: 'https://t.me/ckgart',
-  },
-  {
     name: 'max',
     to: 'https://max.ru/join/KDLgScGvGTx4rJ9Qx-2feKifi2AckxTOVQgMhK5ThRE',
+  },
+  {
+    name: 'telegram',
+    to: 'https://t.me/ckgart',
   },
 ];
 

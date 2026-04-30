@@ -57,7 +57,7 @@ onBeforeUnmount(() => {
   opacity: 0;
   transform: translateY(28px);
   transition-property: opacity, transform;
-  transition-duration: 700ms;
+  transition-duration: 4500ms;
   transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 

@@ -128,6 +128,9 @@ const playReviewVideo = () => {
 watch(isReviewVideoOpen, (open) => {
   if (open) {
     document.addEventListener('keydown', onReviewVideoEscape);
+    nextTick(() => {
+      playReviewVideo();
+    });
   } else {
     document.removeEventListener('keydown', onReviewVideoEscape);
     if (reviewVideoRef.value) {
@@ -834,7 +837,7 @@ onUnmounted(() => {
   justify-content: center;
   box-sizing: border-box;
   padding: clamp(16px, 4vi, 24px);
-  background-color: rgba(0, 0, 0, 0.45);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .review-video-enter-active {
@@ -880,18 +883,11 @@ onUnmounted(() => {
   display: block;
   position: relative;
   z-index: 1;
-  inline-size: 100%;
-  max-inline-size: 100%;
-  max-block-size: min(70vh, 600px);
+  inline-size: auto;
+  block-size: auto;
+  max-inline-size: min(90vw, 1200px);
+  max-block-size: min(80vh, 700px);
   object-fit: contain;
-}
-
-@media (width >= 768px) {
-  .review-video {
-    inline-size: 72vw;
-    max-inline-size: 72vw;
-    max-block-size: 72vh;
-  }
 }
 
 </style>

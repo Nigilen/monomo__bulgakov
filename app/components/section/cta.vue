@@ -184,8 +184,6 @@ onMounted(() => {
           </div>
         </div>
 
-            <!-- Место для виджета Cloudflare -->
-        
         <button
           class="form__button"
           type="submit"
@@ -197,7 +195,7 @@ onMounted(() => {
           <span v-else-if="success">Готово</span>
           <span v-else>Отправить заявку</span>
         </button>
-        
+        <p v-if="serverError" class="field-error field-error--server">{{ serverError }}</p>
         <p class="form__text">
           Нажимая кнопку “Отправить заявку”, вы соглашаетесь с
           <button class="form__link" type="button" @click="openPolicyModal">
@@ -213,7 +211,6 @@ onMounted(() => {
           tabindex="-1" 
           autocomplete="off" 
         />
-        <p v-if="serverError" class="field-error server-error">{{ serverError }}</p>
       </form>
 
     </div>
@@ -366,6 +363,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   margin-block: auto 0;
+  position: relative;
 
   &__inputs {
     display: flex;
@@ -393,6 +391,12 @@ onMounted(() => {
     font-size: 14px;
     color: #FF3434;
     text-align: center;
+
+    &--server {
+      position: static;
+      margin-block-start: -0.8cqi;
+      margin-block-end: 1.6cqi;
+    }
   }
 
   &__input {
@@ -432,7 +436,7 @@ onMounted(() => {
     inline-size: 100%;
     block-size: 16.3cqi;
     font-size: 3.2cqi;
-    margin-block-end: 3.2cqi;
+    margin-block-end: 2.2cqi;
     font-weight: 600;
     transition-property: transform, box-shadow, filter;
     transition-duration: 460ms;

@@ -540,7 +540,7 @@ async function onSubmit(e: Event) {
 
     &__legend {
       &--area {
-        margin-block-end: 56px;
+        margin-block-end: 36px;
         font-size: 16px;
       }
     }
@@ -603,7 +603,7 @@ async function onSubmit(e: Event) {
     justify-content: center;
     gap: 10px;
     cursor: pointer;
-    font-size: clamp(16px, 4.2cqi, 20px);
+    font-size: clamp(15px, 4.2cqi, 20px);
 
     &:has(.radio-group__input:checked) {
       .radio-group__icon::before {
@@ -615,7 +615,7 @@ async function onSubmit(e: Event) {
   &__icon {
     position: relative;
     display: flex;
-    inline-size: 3.24cqi;
+    inline-size: 4.24cqi;
     block-size: auto;
     aspect-ratio: 1 / 1;
     background-color: transparent;

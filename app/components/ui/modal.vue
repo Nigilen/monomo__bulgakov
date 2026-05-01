@@ -74,7 +74,7 @@ onUnmounted(() => {
     border-radius: var(--border-radius-primary);
     border: 1px solid var(--color-border-primary);
     inline-size: min(30vi, 550px);
-    max-block-size: 98vh;
+    max-block-size: 90dvh;
     container-type: inline-size;
     overflow-y: auto;
 

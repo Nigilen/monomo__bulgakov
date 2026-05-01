@@ -903,6 +903,15 @@ onUnmounted(() => {
   cursor: pointer;
   transition: background-color 0.3s ease;
 
+  @media (width < 768px) {
+    display: block;
+    inset-inline-end: 20px;
+    inset-block-start: 20px;
+    inline-size: 42px;
+    block-size: 42px;
+    font-size: 42px;
+  }
+
 }
 
 .review-video {

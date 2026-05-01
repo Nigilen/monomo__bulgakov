@@ -202,7 +202,7 @@ export default defineEventHandler(async (event) => {
 
     await transporter.sendMail({
       from: `"Заявка с сайта" <${process.env.SMTP_FROM}>`,
-      to: ['skgarant39@yandex.ru', 'nigilen@yandex.ru'], // 👈 Почта клиента/менеджера
+      to: ['skgarant39@yandex.ru', 'nigilen@yandex.ru', 'mariysukovach@mail.ru'], // 👈 Почта клиента/менеджера
       subject,
       html: `<h3>Новая заявка!</h3><p><b>Тип заявки:</b> ${requestType}</p><p><b>Форма:</b> ${formSource}</p><p><b>Имя:</b> ${name}</p><p><b>Телефон:</b> ${phoneMasked}</p>${messageLine}${calculatorDetails}`
     })

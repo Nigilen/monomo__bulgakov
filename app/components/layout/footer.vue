@@ -20,7 +20,7 @@
         </a>
       </li>
       <li class="socials__item">
-        <a class="socials__link" href="https://t.me/ckgart" target="_blank">
+        <a class="socials__link" href="https://t.me/Bpraim" target="_blank">
           <Icon class="socials__icon" name="icons:telegram" />
         </a>
       </li>
@@ -33,7 +33,6 @@
 </template>
 
 <style scoped lang="scss">
-
 .footer {
   display: flex;
   align-items: center;
@@ -60,6 +59,7 @@
     block-size: auto;
     aspect-ratio: 213 / 117;
   }
+
   &__caption {
     inline-size: 18.1cqi;
     padding-inline-start: 1.9cqi;
@@ -88,6 +88,7 @@
     }
   }
 }
+
 .address {
   font-size: 1.13cqi;
   line-height: calc(30 / 20);
@@ -102,12 +103,13 @@
     inline-size: 268px;
   }
 }
+
 .socials {
   display: flex;
   gap: 1.5cqi;
 
-  &__item {
-  }
+  &__item {}
+
   &__icon {
     inline-size: 1.5cqi;
     block-size: auto;
@@ -122,6 +124,7 @@
     }
   }
 }
+
 .phone {
   display: flex;
   flex-direction: column;
@@ -139,6 +142,7 @@
       color: var(--color-accent-primary);
     }
   }
+
   &__description {
     font-size: 0.89cqi;
     line-height: calc(30 / 16);
@@ -150,11 +154,10 @@
     &__link {
       font-size: 18px;
     }
+
     &__description {
       font-size: 16px;
     }
   }
 }
-
-
 </style>

@@ -9,7 +9,7 @@ const socials = [
   },
   {
     name: 'telegram',
-    to: 'https://t.me/ckgart',
+    to: 'https://t.me/Bpraim',
   },
 ];
 
@@ -35,7 +35,6 @@ const socials = [
 </template>
 
 <style scoped lang="scss">
-
 .contacts {
   display: flex;
   align-items: center;
@@ -79,7 +78,7 @@ const socials = [
     align-items: center;
     gap: 0.2vi;
   }
-  
+
   &__phone {
     font-size: 1.25vi;
     white-space: nowrap;
@@ -89,13 +88,13 @@ const socials = [
       color: var(--color-accent-primary);
     }
   }
-  
+
   &__label {
     font-size: 0.835vi;
     color: var(--color-text-secondary);
     white-space: nowrap;
   }
-  
+
   &__button {
     display: block;
     background-color: var(--color-button-background-primary);
@@ -116,7 +115,7 @@ const socials = [
     transition-timing-function: ease;
   }
 
-  @media (hover: hover) and (width >= 768px) {
+  @media (hover: hover) and (width >=768px) {
     &__button:hover {
       transform: translateY(-4px);
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
@@ -136,7 +135,7 @@ const socials = [
     &__socials {
       margin-inline: 0;
       gap: 20px;
-      
+
       &-link {
         inline-size: 20px;
       }
@@ -165,5 +164,4 @@ const socials = [
     }
   }
 }
-
 </style>

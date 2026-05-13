@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     head: {
       meta: [
         { name: 'yandex-verification', content: '7550817aa40196db' },
+        { name: 'google-site-verification', content: 'tYT_MtkFF4ES7FZ7EiNpU-I_BC-VJK3YbkKbJ9hLtLw' },
       ],
       script: [
         {

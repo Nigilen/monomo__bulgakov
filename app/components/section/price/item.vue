@@ -138,6 +138,7 @@ const priceIconColors = computed(() => {
     <div class="item__footer">
       <p class="item__footer-price">
         {{ priceLabel }}
+        <span class="item__footer-price-caption">с учетом материалов</span>
       </p>
       <button class="button button--secondary" type="button" @click="openPriceModal(title)">
         <span class="button__label">
@@ -256,10 +257,23 @@ const priceIconColors = computed(() => {
     margin-block-start: auto;
 
     &-price {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      row-gap: 1cqi;
       font-size: 5.4cqi;
       font-weight: 600;
       color: var(--color-text-primary);
+
+      &-caption {
+        font-size: 3.5cqi;
+
+        @media (width < 768px) {
+          font-size: 16px;
+        }
+      }
     }
+
   }
 
   @media (width < 768px) {

@@ -67,7 +67,10 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
 
     <p class="form__item form__item--price">
       <span class="form__legend form__legend--price">Примерная стоимость</span>
-      <span class="form__value form__value--price">{{ formattedTotalPrice }}</span>
+      <span class="form__value form__value--price">
+        {{ formattedTotalPrice }}
+        <span class="form__value-caption">с учетом материалов</span>
+      </span>
     </p>
   </form>
 </template>
@@ -131,6 +134,8 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
       margin-block: auto 0;
       flex-direction: row;
     }
+
+
 
   }
 
@@ -221,7 +226,10 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
     font-weight: 400;
     line-height: 1;
     color: var(--color-text-primary);
-
+    display: flex;
+    flex-direction: column;
+    row-gap: 1cqi;
+    text-align: right;
 
     &--area {
       white-space: nowrap;
@@ -234,6 +242,16 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
       font-weight: 400;
       line-height: 1;
       color: var(--color-text-primary);
+    }
+
+    &-caption {
+      font-size: 2.65cqi;
+      font-weight: 400;
+      line-height: 1;
+
+      @media (width < 768px) {
+        font-size: 16px;
+      }
     }
   }
 
@@ -321,6 +339,7 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
 
     &__value {
       font-size: 24px;
+      text-align: center;
 
       &--area {
         font-size: 16px;
@@ -328,6 +347,8 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
         inset-inline-start: calc((var(--area-progress) * (100% - 20px)) + 10px);
         transform: translateX(-50%);
       }
+
+      
     }
   }
 }

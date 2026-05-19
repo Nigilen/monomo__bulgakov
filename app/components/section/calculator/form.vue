@@ -16,7 +16,7 @@ const tariffs: TariffOption[] = [
   { id: 'tariff-3', label: 'Комфорт', value: 52000 },
   { id: 'tariff-4', label: 'Прайм', value: 60000 }
 ];
-const defaultTariffValue = tariffs.find((tariff) => tariff.id === 'tariff-2')?.value ?? 33000;
+const defaultTariffValue = tariffs.find((tariff) => tariff.id === 'tariff-1')?.value ?? 33000;
 const selectedTariff = ref(defaultTariffValue);
 const totalPrice = computed(() => selectedTariff.value * area.value);
 const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').format(totalPrice.value)} руб`);

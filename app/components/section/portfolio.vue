@@ -31,19 +31,29 @@ const PORTFOLIO_IMAGES = {
     img06: '/images/portfolio/project-pionersk-45-06.avif',
     img07: '/images/portfolio/project-pionersk-45-07.avif',
   },
-  pionersk75: {
-    img01: '/images/portfolio/project-pionersk-75-01.avif',
-    img02: '/images/portfolio/project-pionersk-75-02.avif',
-    img03: '/images/portfolio/project-pionersk-75-03.avif',
-    img04: '/images/portfolio/project-pionersk-75-04.avif',
-    img05: '/images/portfolio/project-pionersk-75-05.avif',
+  kaliningrad40: {
+    img01: '/images/portfolio/project-kaliningrad-40-01.avif',
+    img02: '/images/portfolio/project-kaliningrad-40-02.avif',
+    img03: '/images/portfolio/project-kaliningrad-40-03.avif',
+    img04: '/images/portfolio/project-kaliningrad-40-04.avif',
+    img05: '/images/portfolio/project-kaliningrad-40-05.avif',
+    img06: '/images/portfolio/project-kaliningrad-40-06.avif',
+    img07: '/images/portfolio/project-kaliningrad-40-07.avif',
+    img08: '/images/portfolio/project-kaliningrad-40-08.avif',
+    img09: '/images/portfolio/project-kaliningrad-40-09.avif',
+    img10: '/images/portfolio/project-kaliningrad-40-10.avif',
+    img11: '/images/portfolio/project-kaliningrad-40-11.avif',
+    img12: '/images/portfolio/project-kaliningrad-40-12.avif',
+    img13: '/images/portfolio/project-kaliningrad-40-13.avif',
+    img14: '/images/portfolio/project-kaliningrad-40-14.avif',
+    img15: '/images/portfolio/project-kaliningrad-40-15.avif',
   },
 } as const
 
 const PROJECT_GALLERY_BY_ID = {
   1: Object.values(PORTFOLIO_IMAGES.pionersk45),
   2: Object.values(PORTFOLIO_IMAGES.kaliningrad120),
-  3: Object.values(PORTFOLIO_IMAGES.pionersk75),
+  3: Object.values(PORTFOLIO_IMAGES.kaliningrad40),
   4: Object.values(PORTFOLIO_IMAGES.kaliningrad35),
 } as const
 
@@ -72,10 +82,10 @@ const items: PortfolioItem[] = [
   },
   {
     id: 3,
-    image: PORTFOLIO_IMAGES.pionersk75.img01,
+    image: PORTFOLIO_IMAGES.kaliningrad40.img01,
     gallery: PROJECT_GALLERY_BY_ID[3],
-    title: 'г. Пионерск',
-    description: 'Однокомнатная квартира в городе Пионерск. Квартира по дизайн-проекту от Анны Шатик. Срок исполнения – 75 дней.',
+    title: 'г. Калининград',
+    description: 'Удаленный ремонт квартиры 40 м² в ЖК Аэро для Полины из Якутска.',
   },
   {
     id: 4,

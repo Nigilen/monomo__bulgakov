@@ -6,6 +6,7 @@ const { isOpen: isCallbackModalOpen, close: closeCallbackModal } = useCallbackMo
 const { isOpen: isCalculatorModalOpen, close: closeCalculatorModal } = useCalculatorModal()
 const { isOpen: isPriceModalOpen, tariffTitle: priceModalTariff, close: closePriceModal } = usePriceModal()
 const { isOpen: isThankModalOpen, close: closeThankModal } = useThankModal()
+const { isOpen: isPromoModalOpen, close: closePromoModal } = usePromoModal()
 const isBackToTopVisible = ref(false)
 const approachStartY = ref(0)
 
@@ -158,6 +159,15 @@ onUnmounted(() => {
         v-if="isPriceModalOpen"
         :tariff-title="priceModalTariff"
         @close="closePriceModal"
+      />
+    </Transition>
+  </Teleport>
+
+  <Teleport to="body">
+    <Transition name="modal-shell">
+      <ModalsPromo
+        v-if="isPromoModalOpen"
+        @close="closePromoModal"
       />
     </Transition>
   </Teleport>

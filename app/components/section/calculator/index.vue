@@ -12,7 +12,7 @@ const { open: openCalculatorModal } = useCalculatorModal()
         <span class="content__title-highlight">стоимость</span>
       </h2>
       <p class="content__description">
-        Рассчитайте примерную стоимость ремонта с учетом материалов в калькуляторе или отправьте заявку на точный расчет с учетом всех ваших пожеланий.
+        Рассчитайте примерную стоимость ремонта без учета материалов в калькуляторе или отправьте заявку на точный расчет с учетом всех ваших пожеланий.
       </p>
     </div>
     <button class="calculator__button" type="button" @click="openCalculatorModal">

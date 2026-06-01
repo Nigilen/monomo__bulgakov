@@ -23,7 +23,7 @@ export const priceSectionItems: PriceSectionItem[] = [
       { term: 'Санузел:', definition: 'базовая комплектация' },
       { term: 'Потолки:', definition: 'натяжные и свет' },
     ],
-    priceLabel: '27 500 руб/м²',
+    priceLabel: '12 900 руб/м²',
   },
   {
     title: 'Мой дом',
@@ -34,7 +34,7 @@ export const priceSectionItems: PriceSectionItem[] = [
       { term: 'Санузел:', definition: 'ванна или душевая на выбор' },
       { term: 'Потолки:', definition: 'натяжные, скрытые карнизы и свет' },
     ],
-    priceLabel: '33 000 руб/м²',
+    priceLabel: '16 900 руб/м²',
   },
   {
     title: 'Комфорт',
@@ -45,7 +45,7 @@ export const priceSectionItems: PriceSectionItem[] = [
       { term: 'Санузел:', definition: 'гигиенический душ и расширенная комплектация + теплая стена' },
       { term: 'Потолки:', definition: 'натяжные, скрытые карнизы и свет' },
     ],
-    priceLabel: '52 000 руб/м²',
+    priceLabel: '24 900 руб/м²',
   },
   {
     title: 'Прайм',
@@ -56,6 +56,6 @@ export const priceSectionItems: PriceSectionItem[] = [
       { term: 'Санузел:', definition: 'керамогранит 1200×600 и подвесная мебель + теплая стена' },
       { term: 'Потолки:', definition: 'натяжные, теневой профиль и скрытый монтаж' },
     ],
-    priceLabel: '60 000 руб/м²',
+    priceLabel: '35 000 руб/м²',
   },
 ];

@@ -24,6 +24,8 @@ const badges: Array<{
     },
 ];
 
+const isMobile = useMobileLayout()
+
 </script>
 
 <template>
@@ -46,28 +48,34 @@ const badges: Array<{
       >
     </picture>
     <div class="hero__container container">
-      <h1 class="hero__title">
-        <span class="hero__title-part hero__title-highlight">Ремонт под ключ </span> 
-        <span class="hero__title-part">когда вы можете</span>
-        <span class="hero__title-part">забыть о стройке</span>
-      </h1>
-      <div class="hero__description">
-        <Icon name="icons:diamonds3" class="hero__description-icon" />
-        <p class="hero__description-text">
-          Создаем готовые пространства для жизни — от планировочных решений и ремонта до мебели, комплектации и декора
-        </p>
-      </div>
-      <div class="hero__buttons">
-        <button class="button button--primary" type="button" @click="openSimpleModal">
-          <span class="button__label">
-            Обсудить проект
-          </span>
-        </button>
-        <a href="#calculator" class="button button--secondary">
-          <span class="button__label">
-            Рассчитать
-          </span>
-        </a>
+      <div class="hero__top">
+        <div class="hero__top-content">
+          <h1 class="hero__title">
+            <span class="hero__title-part hero__title-highlight">Ремонт под ключ </span> 
+            <span class="hero__title-part">когда вы можете</span>
+            <span class="hero__title-part">забыть о стройке</span>
+          </h1>
+          <div class="hero__description">
+            <Icon name="icons:diamonds3" class="hero__description-icon" />
+            <p class="hero__description-text">
+              Создаем готовые пространства для жизни — от планировочных решений и ремонта до мебели, комплектации и декора
+            </p>
+          </div>
+          <SectionHeroPromo v-if="isMobile" />
+          <div class="hero__buttons">
+            <button class="button button--primary" type="button" @click="openSimpleModal">
+              <span class="button__label">
+                Обсудить проект
+              </span>
+            </button>
+            <a href="#calculator" class="button button--secondary">
+              <span class="button__label">
+                Рассчитать
+              </span>
+            </a>
+          </div>
+        </div>
+        <SectionHeroPromo v-if="!isMobile" />
       </div>
       <SectionHeroBadges :badges="badges" />
     </div>
@@ -77,11 +85,6 @@ const badges: Array<{
 <style scoped lang="scss">
 .hero {
   inline-size: 100%;
-  // background-image: url('/images/hero-background.avif');
-  // background-size: 100% 100%;
-  // background-position: top;
-  // background-repeat: no-repeat;
-
   margin-block-end: 12vi;
   position: relative;
 
@@ -92,6 +95,12 @@ const badges: Array<{
     inset: 0;
     line-height: 0;
     z-index: -1;
+  }
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
   }
 
   &__container {

@@ -11,12 +11,12 @@ const areaMax = 250;
 const area = ref(areaMin);
 const areaProgress = computed(() => (area.value - areaMin) / (areaMax - areaMin));
 const tariffs: TariffOption[] = [
-  { id: 'tariff-1', label: 'Инвест', value: 27500 },
-  { id: 'tariff-2', label: 'Мой дом', value: 33000 },
-  { id: 'tariff-3', label: 'Комфорт', value: 52000 },
-  { id: 'tariff-4', label: 'Прайм', value: 60000 }
+  { id: 'tariff-1', label: 'Инвест', value: 12900 },
+  { id: 'tariff-2', label: 'Мой дом', value: 16900 },
+  { id: 'tariff-3', label: 'Комфорт', value: 24900 },
+  { id: 'tariff-4', label: 'Прайм', value: 35000 }
 ];
-const defaultTariffValue = tariffs.find((tariff) => tariff.id === 'tariff-1')?.value ?? 33000;
+const defaultTariffValue = tariffs.find((tariff) => tariff.id === 'tariff-1')?.value ?? 12900;
 const selectedTariff = ref(defaultTariffValue);
 const totalPrice = computed(() => selectedTariff.value * area.value);
 const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').format(totalPrice.value)} руб`);
@@ -69,7 +69,7 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
       <span class="form__legend form__legend--price">Примерная стоимость</span>
       <span class="form__value form__value--price">
         {{ formattedTotalPrice }}
-        <span class="form__value-caption">с учетом материалов</span>
+        <!-- <span class="form__value-caption">с учетом материалов</span> -->
       </span>
     </p>
   </form>

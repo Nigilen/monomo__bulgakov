@@ -138,7 +138,7 @@ const priceIconColors = computed(() => {
     <div class="item__footer">
       <p class="item__footer-price">
         {{ priceLabel }}
-        <span class="item__footer-price-caption">с учетом материалов</span>
+        <!-- <span class="item__footer-price-caption">с учетом материалов</span> -->
       </p>
       <button class="button button--secondary" type="button" @click="openPriceModal(title)">
         <span class="button__label">

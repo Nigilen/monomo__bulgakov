@@ -30,7 +30,7 @@ const {
           <span class="header__title-highlight">тарифы и цены</span> 
           на услуги
         </h2>
-        <p class="header__description">Все пакеты включают работу и материалы. Цена фиксированная и не меняется в процессе.</p>
+        <p class="header__description">В стоимость пакетов включена работа без учета материалов. Цена фиксированная и не меняется в процессе.</p>
     </div>
 
     <div class="price__body">

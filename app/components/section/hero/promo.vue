@@ -20,7 +20,7 @@ const { open: openPromoModal } = usePromoModal()
       </div>
 
       <div class="promo__footer">
-        <p class="promo__price">Всего за 985 000 рублей</p>
+        <p class="promo__price">Всего за 985 000 руб</p>
         <p class="promo__limit">Количество заявок ограничено</p>
       </div>
       <button class="promo__button" type="button" @click="openPromoModal">Подробнее</button>

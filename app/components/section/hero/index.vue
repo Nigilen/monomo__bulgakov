@@ -121,6 +121,10 @@ const isMobile = useMobileLayout()
       display: block;
     }
 
+    &-part:last-child {
+      text-transform: lowercase;
+    }
+
     &-highlight {
       color: var(--color-accent-primary);
       font-weight: 600;

@@ -8,10 +8,10 @@ type TariffOption = {
 
 const areaMin = 20;
 const areaMax = 250;
-const area = ref(areaMin);
+const area = ref(45);
 const areaProgress = computed(() => (area.value - areaMin) / (areaMax - areaMin));
 const tariffs: TariffOption[] = [
-  { id: 'tariff-1', label: 'Инвест', value: 12900 },
+  { id: 'tariff-1', label: 'Инвест', value: 4000 },
   { id: 'tariff-2', label: 'Мой дом', value: 16900 },
   { id: 'tariff-3', label: 'Комфорт', value: 24900 },
   { id: 'tariff-4', label: 'Прайм', value: 35000 }
@@ -26,7 +26,7 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
 
 <template>
   <form class="form">
-    <fieldset class="form__item form__item--tariff">
+    <!-- <fieldset class="form__item form__item--tariff">
       <legend class="form__legend form__legend--tariff">Выберите тариф</legend>
       <div
         v-for="tariff in tariffs"
@@ -43,7 +43,7 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
         >
         <label class="form__label form__label--tariff" :for="tariff.id">{{ tariff.label }}</label>
       </div>
-    </fieldset>
+    </fieldset> -->
     <div class="form__item form__item--area">
       <label class="form__legend form__legend--area" for="area">Площадь помещения</label>
       <div class="form__input-wrapper">
@@ -121,8 +121,10 @@ const formattedTotalPrice = computed(() => `${new Intl.NumberFormat('ru-RU').for
     }
 
     &--area {
+      block-size: 100%;
+      justify-content: space-around;
       grid-column: 1 / -1;
-      grid-row: 2 / 3;
+      grid-row: 1 / 3;
     }
 
     &--price {

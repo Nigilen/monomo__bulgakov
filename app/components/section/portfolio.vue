@@ -51,10 +51,10 @@ const PORTFOLIO_IMAGES = {
 } as const
 
 const PROJECT_GALLERY_BY_ID = {
-  1: Object.values(PORTFOLIO_IMAGES.pionersk45),
-  2: Object.values(PORTFOLIO_IMAGES.kaliningrad120),
-  3: Object.values(PORTFOLIO_IMAGES.kaliningrad40),
-  4: Object.values(PORTFOLIO_IMAGES.kaliningrad35),
+  1: Object.values(PORTFOLIO_IMAGES.kaliningrad40),
+  2: Object.values(PORTFOLIO_IMAGES.pionersk45),
+  3: Object.values(PORTFOLIO_IMAGES.kaliningrad35),
+  4: Object.values(PORTFOLIO_IMAGES.kaliningrad120),
 } as const
 
 type PortfolioItem = {
@@ -68,31 +68,31 @@ type PortfolioItem = {
 const items: PortfolioItem[] = [
   {
     id: 1,
-    image: PORTFOLIO_IMAGES.pionersk45.img01,
-    gallery: PROJECT_GALLERY_BY_ID[1],
-    title: 'г. Пионерск',
-    description: 'Ремонт квартиры в городе Пионерск. Дизайн-проект от Анны Шатик. Ремонт по просьбе заказчиков сделать за 45 дней был готов на 101%.',
-  },
-  {
-    id: 2,
-    image: PORTFOLIO_IMAGES.kaliningrad120.img01,
-    gallery: PROJECT_GALLERY_BY_ID[2],
-    title: 'г. Калининград',
-    description: 'Удаленный ремонт двухкомнатной квартиры в  Калининграде. Заказчики из Якутии. Все работы провели онлайн. Дизайн-проект от Александра и Оксаны. Срок исполнения – 120 дней.',
-  },
-  {
-    id: 3,
     image: PORTFOLIO_IMAGES.kaliningrad40.img01,
-    gallery: PROJECT_GALLERY_BY_ID[3],
+    gallery: PROJECT_GALLERY_BY_ID[1],
     title: 'г. Калининград',
     description: 'Удаленный ремонт квартиры 40 м² в ЖК Аэро для Полины из Якутска.',
   },
   {
-    id: 4,
+    id: 2,
+    image: PORTFOLIO_IMAGES.pionersk45.img01,
+    gallery: PROJECT_GALLERY_BY_ID[2],
+    title: 'г. Пионерск',
+    description: 'Ремонт квартиры в городе Пионерск. Дизайн-проект от Анны Шатик. Ремонт по просьбе заказчиков сделать за 45 дней был готов на 101%.',
+  },
+  {
+    id: 3,
     image: PORTFOLIO_IMAGES.kaliningrad35.img01,
-    gallery: PROJECT_GALLERY_BY_ID[4],
+    gallery: PROJECT_GALLERY_BY_ID[3],
     title: 'г. Калининград',
     description: 'Косметический ремонт двухкомнатной квартиры в Калининграде. Срок исполнения – 35 дней.',
+  },
+  {
+    id: 4,
+    image: PORTFOLIO_IMAGES.kaliningrad120.img01,
+    gallery: PROJECT_GALLERY_BY_ID[4],
+    title: 'г. Калининград',
+    description: 'Удаленный ремонт двухкомнатной квартиры в  Калининграде. Заказчики из Якутии. Все работы провели онлайн. Дизайн-проект от Александра и Оксаны. Срок исполнения – 120 дней.',
   },
 ];
 

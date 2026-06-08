@@ -5,10 +5,10 @@ const emit = defineEmits<{
 }>();
 
 const items = [
-  {
-    label: 'Цены',
-    to: '#prices',
-  },
+  // {
+  //   label: 'Цены',
+  //   to: '#prices',
+  // },
   {
     label: 'О нас',
     to: '#about',

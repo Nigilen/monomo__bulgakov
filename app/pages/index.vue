@@ -78,9 +78,7 @@ onUnmounted(() => {
   <UiReveal>
     <SectionApproach />
   </UiReveal>
-  <UiReveal>
-    <SectionPrice />
-  </UiReveal>
+
   <UiReveal>
     <SectionCta />
   </UiReveal>
@@ -153,7 +151,7 @@ onUnmounted(() => {
     </Transition>
   </Teleport>
 
-  <Teleport to="body">
+  <!-- <Teleport to="body">
     <Transition name="modal-shell">
       <ModalsPrice
         v-if="isPriceModalOpen"
@@ -161,7 +159,7 @@ onUnmounted(() => {
         @close="closePriceModal"
       />
     </Transition>
-  </Teleport>
+  </Teleport> -->
 
   <Teleport to="body">
     <Transition name="modal-shell">

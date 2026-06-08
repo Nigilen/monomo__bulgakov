@@ -6,7 +6,7 @@ const emit = defineEmits<{
 
 const areaMin = 20
 const areaMax = 250
-const area = ref(areaMin)
+const area = ref(45)
 const areaProgress = computed(() => (area.value - areaMin) / (areaMax - areaMin))
 const housingType = ref<string | null>(null)
 

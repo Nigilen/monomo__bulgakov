@@ -52,13 +52,13 @@ const isMobile = useMobileLayout()
         <div class="hero__top-content">
           <h1 class="hero__title">
             <span class="hero__title-part hero__title-highlight">Ремонт под ключ </span> 
-            <span class="hero__title-part">когда вы можете</span>
-            <span class="hero__title-part">забыть о стройке</span>
+            <span class="hero__title-part">доступный каждому </span>
+            <span class="hero__title-part">от 4000 руб/м²</span>
           </h1>
           <div class="hero__description">
             <Icon name="icons:diamonds3" class="hero__description-icon" />
             <p class="hero__description-text">
-              Создаем готовые пространства для жизни — от планировочных решений и ремонта до мебели, комплектации и декора
+              Мы делаем ремонты от простого до премиального класса, воплощая мечты в реальность для любого бюджета
             </p>
           </div>
           <SectionHeroPromo v-if="isMobile" />

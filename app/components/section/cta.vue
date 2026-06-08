@@ -77,7 +77,7 @@ async function submitForm() {
       body: {
         name: form.name,
         phone: phoneDigits(),
-        formSource: 'section_cta',
+        formSource: 'free__measurement',
         honeypot: honeypot.value,
         timeElapsed: timeElapsed
       }
@@ -140,16 +140,12 @@ onMounted(() => {
     <div class="cta__content content">
       <div class="header">
         <h2 class="header__title">
-          Не знаете,
-          <span class="header__title-highlight">с чего начать</span>
-          ремонт?
+          Закажите  
+          <span class="header__title-highlight">бесплатный</span>
+          замер
         </h2>
         <p class="header__text">
-          <span>
-            Предлагаем начать с
-            <span class="header__text-highlight">бесплатной консультации. </span>
-          </span>
-          <span>Оставьте заявку, мы ответим на все вопросы</span>
+          Бесплатный выезд на замер в удобное для вас время, даже сегодня
         </p>
       </div>
 

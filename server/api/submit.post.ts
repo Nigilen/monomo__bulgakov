@@ -65,6 +65,9 @@ const getMailMeta = (formSource: string, tariff?: string) => {
       requestType: `Обсудить проект (${safeTariff})`
     }
   }
+  if (formSource === 'free__measurement') {
+    return { subject: 'Заявка – Бесплатный замер', requestType: 'Бесплатный замер' }
+  }
   return { subject: 'Заявка – Консультация', requestType: 'Консультация' }
 }
 
@@ -117,17 +120,6 @@ const sendTelegramFormMessage = async ({
     lines.push(`Площадь: ${typeof area === 'number' ? `${area} м²` : '—'}`)
   }
 
-  // await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     chat_id: chatId,
-  //     text: lines.join('\n'),
-  //     disable_web_page_preview: true,
-  //   }),
-  // })
 }
 
 function checkRateLimit(ip: string): { allowed: boolean; retryAfterMs: number } {
@@ -202,7 +194,13 @@ export default defineEventHandler(async (event) => {
 
     await transporter.sendMail({
       from: `"Заявка с сайта" <${process.env.SMTP_FROM}>`,
-      to: ['skgarant39@yandex.ru', 'nigilen@yandex.ru', 'mariysukovach@mail.ru', 'ninelle16@yandex.ru'], // 👈 Почта клиента/менеджера
+      to: [
+        'skgarant39@yandex.ru',
+        'nigilen@yandex.ru',
+        'mariysukovach@mail.ru',
+        'ninelle16@yandex.ru',
+        'bulgakov.prime@yandex.ru',
+      ],
       subject,
       html: `<h3>Новая заявка!</h3><p><b>Тип заявки:</b> ${requestType}</p><p><b>Форма:</b> ${formSource}</p><p><b>Имя:</b> ${name}</p><p><b>Телефон:</b> ${phoneMasked}</p>${messageLine}${calculatorDetails}`
     })

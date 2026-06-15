@@ -24,8 +24,6 @@ const badges: Array<{
     },
 ];
 
-const isMobile = useMobileLayout()
-
 </script>
 
 <template>
@@ -61,7 +59,6 @@ const isMobile = useMobileLayout()
               Мы делаем ремонты от простого до премиального класса, воплощая мечты в реальность для любого бюджета
             </p>
           </div>
-          <SectionHeroPromo v-if="isMobile" />
           <div class="hero__buttons">
             <button class="button button--primary" type="button" @click="openSimpleModal">
               <span class="button__label">
@@ -75,7 +72,7 @@ const isMobile = useMobileLayout()
             </a>
           </div>
         </div>
-        <SectionHeroPromo v-if="!isMobile" />
+        <SectionHeroPromo class="hero__promo" />
       </div>
       <SectionHeroBadges :badges="badges" />
     </div>
@@ -101,6 +98,10 @@ const isMobile = useMobileLayout()
     display: flex;
     justify-content: space-between;
     align-items: start;
+  }
+
+  &__promo {
+    flex-shrink: 0;
   }
 
   &__container {
@@ -168,17 +169,23 @@ const isMobile = useMobileLayout()
 
     margin-block-end: 100px;
 
-    &__container {
-      padding-block-start: 152px;
+    &__top {
+      flex-direction: column;
+    }
+
+    &__top-content {
+      display: contents;
     }
 
     &__title {
+      order: 1;
       margin-block-end: 30px;
       font-size: 28px;
       line-height: calc(40 / 28);
     }
 
     &__description {
+      order: 2;
       flex-direction: column;
       align-items: flex-start;
       gap: 10px;
@@ -195,11 +202,21 @@ const isMobile = useMobileLayout()
       }
     }
 
+    &__promo {
+      order: 3;
+    }
+
     &__buttons {
+      order: 4;
       flex-direction: column;
       margin-block-end: 80px;
       gap: 20px;
       align-items: flex-start;
+      inline-size: 100%;
+    }
+
+    &__container {
+      padding-block-start: 152px;
     }
   }
 }

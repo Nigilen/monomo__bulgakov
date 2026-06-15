@@ -102,6 +102,21 @@ const openProjectGallery = (item: PortfolioItem) => {
   galleryProject.value = item
 }
 
+/**
+ * Тап по превью в мобильном слайдере.
+ * После горизонтального свайпа браузер обычно не шлёт click — галерея не откроется.
+ */
+const onPortfolioImageClick = (event: MouseEvent, item: PortfolioItem) => {
+  const el = event.target
+  if (!(el instanceof Element)) {
+    return
+  }
+  if (!el.closest('.portfolio-item__image-wrapper')) {
+    return
+  }
+  openProjectGallery(item)
+}
+
 const closeProjectGallery = () => {
   galleryProject.value = null
 }
@@ -172,14 +187,19 @@ onUnmounted(() => {
 
     <ul v-if="!isMobileLayout" class="portfolio__list">
       <li v-for="item in items" :key="item.id" class="portfolio-item">
-        <img
-          class="portfolio-item__image" 
-          :src="item.image" 
-          :alt="item.title" 
-          width="760" 
-          height="760" 
-          decoding="async"
-        />
+        <div
+          class="portfolio-item__image-wrapper"
+          @click="openProjectGallery(item)"
+        >
+          <img
+            class="portfolio-item__image"
+            :src="item.image"
+            :alt="item.title"
+            width="760"
+            height="760"
+            decoding="async"
+          />
+        </div>
         <div class="portfolio-item__content">
           <h3 class="portfolio-item__title">{{ item.title }}</h3>
           <p class="portfolio-item__description">{{ item.description }}</p>
@@ -196,14 +216,19 @@ onUnmounted(() => {
           @pointercancel="onPointerUp" @selectstart.prevent>
           <ul ref="trackRef" class="portfolio__list portfolio__list--slider" :style="trackStyle">
             <li v-for="item in items" :key="item.id" class="portfolio-item">
-              <img 
-                class="portfolio-item__image" 
-                :src="item.image" 
-                :alt="item.title" 
-                width="760" 
-                height="760" 
-                decoding="async"
-              />
+              <div
+                class="portfolio-item__image-wrapper"
+                @click="onPortfolioImageClick($event, item)"
+              >
+                <img
+                  class="portfolio-item__image"
+                  :src="item.image"
+                  :alt="item.title"
+                  width="760"
+                  height="760"
+                  decoding="async"
+                />
+              </div>
               <div class="portfolio-item__content">
                 <h3 class="portfolio-item__title">{{ item.title }}</h3>
                 <p class="portfolio-item__description">{{ item.description }}</p>
@@ -352,8 +377,14 @@ onUnmounted(() => {
     display: flex;
     align-items: flex-start;
 
-    &__image {
+    &__image-wrapper {
       inline-size: 48.75%;
+      cursor: pointer;
+    }
+
+    &__image {
+      display: block;
+      inline-size: 100%;
       block-size: auto;
       aspect-ratio: 1 / 1;
       object-fit: cover;
@@ -525,9 +556,8 @@ onUnmounted(() => {
         }
       }
 
-      &__image {
+      &__image-wrapper {
         inline-size: 100%;
-        pointer-events: none;
       }
 
       &__content {

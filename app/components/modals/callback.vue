@@ -4,12 +4,12 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-const { open: openPolicyModal } = usePolicyModal()
 const { open: openThankModal } = useThankModal()
 const { display: phoneDisplay, onPhoneInput, onPhoneKeydown, digits: phoneDigits, reset: resetPhone } = useRuPhoneField()
 
 const name = ref('')
-const errors = reactive({ name: false, phone: false })
+const consent = ref(false)
+const errors = reactive({ name: false, phone: false, consent: false })
 const submitAttempt = ref(false)
 const loading = ref(false)
 const success = ref(false)
@@ -20,6 +20,7 @@ const formLoadTime = ref(Date.now())
 function syncErrors() {
   errors.name = !isValidName(name.value)
   errors.phone = !isCompleteRuPhone(phoneDigits())
+  errors.consent = !consent.value
 }
 
 function onPhoneInputWrapped(e: Event) {
@@ -39,7 +40,7 @@ async function onSubmit(e: Event) {
   e.preventDefault()
   submitAttempt.value = true
   syncErrors()
-  if (errors.name || errors.phone) {
+  if (errors.name || errors.phone || errors.consent) {
     return
   }
   loading.value = true
@@ -63,6 +64,7 @@ async function onSubmit(e: Event) {
     emit('close')
     name.value = ''
     resetPhone()
+    consent.value = false
     honeypot.value = ''
     submitAttempt.value = false
     formLoadTime.value = Date.now()
@@ -125,6 +127,7 @@ async function onSubmit(e: Event) {
           <span v-else-if="success">Готово</span>
           <span v-else>Позвоните мне</span>
         </button>
+        <UiConsentCheckbox v-model="consent" :error="errors.consent" @change="onDirtySync" />
         <input
           v-model="honeypot"
           type="text"
@@ -135,12 +138,6 @@ async function onSubmit(e: Event) {
         >
         <p v-if="serverError" class="field-error field-error--server">{{ serverError }}</p>
       </form>
-
-      <footer class="footer">
-        <p class="footer__text">Нажимая кнопку “Позвоните мне”, вы соглашаетесь
-          с <button class="footer__link" type="button" @click="openPolicyModal">политикой конфиденциальности</button>
-        </p>
-      </footer>
     </div>
   </UiModal>
 </template>
@@ -263,7 +260,6 @@ async function onSubmit(e: Event) {
     inline-size: 100%;
     block-size: 22cqi;
     font-size: clamp(16px, 4.2cqi, 20px);
-    margin-block-end: clamp(16px, 4.2cqi, 20px);
     font-weight: 600;
   }
 
@@ -300,33 +296,10 @@ async function onSubmit(e: Event) {
 
     &__button {
       font-size: 16px;
-      margin-block-end: 32px;
       block-size: 75px;
       border-radius: 16px;
     }
 
-  }
-}
-
-.footer {
-  text-align: center;
-  font-size: 3cqi;
-  color: var(--color-text-secondary);
-
-  &__link {
-    display: inline;
-    padding: 0;
-    border: none;
-    background: none;
-    font: inherit;
-    cursor: pointer;
-    text-decoration: underline;
-    color: var(--color-accent-primary);
-    transition: color 0.3s ease-in-out;
-
-    &:hover {
-      color: var(--color-text-primary);
-    }
   }
 }
 </style>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
-const { open: openPolicyModal } = usePolicyModal()
 const { open: openThankModal } = useThankModal()
 const { display: phoneDisplay, onPhoneInput, onPhoneKeydown, digits: phoneDigits, reset: resetPhone } = useRuPhoneField()
 
 const name = ref('')
-const errors = reactive({ name: false, phone: false })
+const consent = ref(false)
+const errors = reactive({ name: false, phone: false, consent: false })
 const submitAttempt = ref(false)
 const loading = ref(false)
 const success = ref(false)
@@ -17,6 +17,7 @@ function syncErrors() {
   const phoneNorm = phoneDigits()
   errors.name = !isValidName(name.value)
   errors.phone = !isCompleteRuPhone(phoneNorm)
+  errors.consent = !consent.value
 }
 
 function onNameInput() {
@@ -32,11 +33,17 @@ function onPhoneInputWrapped(e: Event) {
   }
 }
 
+function onConsentChange() {
+  if (submitAttempt.value) {
+    errors.consent = !consent.value
+  }
+}
+
 async function onSubmit(e: Event) {
   e.preventDefault()
   submitAttempt.value = true
   syncErrors()
-  if (errors.name || errors.phone) {
+  if (errors.name || errors.phone || errors.consent) {
     return
   }
   loading.value = true
@@ -59,6 +66,7 @@ async function onSubmit(e: Event) {
     openThankModal()
     name.value = ''
     resetPhone()
+    consent.value = false
     honeypot.value = ''
     submitAttempt.value = false
     formLoadTime.value = Date.now()
@@ -136,12 +144,12 @@ async function onSubmit(e: Event) {
           autocomplete="off"
         >
         <p v-if="serverError" class="field-error field-error--server">{{ serverError }}</p>
-        <p class="form__content-description">
-          Нажимая кнопку “Отправить заявку”, вы соглашаетесь с
-          <button class="form__content-description-link" type="button" @click="openPolicyModal">
-            политикой конфиденциальности
-          </button>
-        </p>
+        <UiConsentCheckbox
+          v-model="consent"
+          class="form__content-consent"
+          :error="errors.consent"
+          @change="onConsentChange"
+        />
       </form>
     </div>
     <div class="image">
@@ -351,7 +359,6 @@ async function onSubmit(e: Event) {
       color: var(--color-button-text-primary);
       font-weight: 600;
       text-transform: uppercase;
-      margin-block-end: -2.7cqi;
       line-height: 1;
       transition-property: transform, box-shadow, filter;
       transition-duration: 460ms;
@@ -366,27 +373,8 @@ async function onSubmit(e: Event) {
       }
     }
 
-    &-description {
+    &-consent {
       font-size: 2.58cqi;
-      line-height: calc(20 / 16);
-      text-align: center;
-      color: var(--color-text-secondary);
-
-      &-link {
-        display: inline;
-        padding: 0;
-        border: none;
-        background: none;
-        font: inherit;
-        cursor: pointer;
-        text-decoration: underline;
-        color: var(--color-accent-primary);
-        transition: color 0.3s ease;
-
-        &:hover {
-          color: var(--color-text-primary);
-        }
-      }
     }
 
     .field-error {
@@ -439,7 +427,7 @@ async function onSubmit(e: Event) {
         border-radius: 16px;
       }
 
-      &-description {
+      &-consent {
         font-size: 14px;
       }
     }

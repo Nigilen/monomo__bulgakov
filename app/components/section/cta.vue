@@ -7,7 +7,6 @@ declare global {
   }
 }
 
-const { open: openPolicyModal } = usePolicyModal()
 const { open: openThankModal } = useThankModal()
 const {
   display: phoneDisplay,
@@ -21,10 +20,13 @@ const form = reactive({
   name: '',
 });
 
+const consent = ref(false)
+
 const errors = reactive({
   name: '',
   phone: '',
   turnstile: '',
+  consent: false,
 });
 
 
@@ -37,6 +39,7 @@ function validateLocal(): boolean {
   let isValid = true
   errors.name = ''
   errors.phone = ''
+  errors.consent = false
 
   if (form.name.trim().length < 2) {
     errors.name = 'Введите корректное имя'
@@ -45,6 +48,11 @@ function validateLocal(): boolean {
   
   if (!isCompleteRuPhone(phoneDigits())) {
     errors.phone = 'Введите корректный телефон'
+    isValid = false
+  }
+
+  if (!consent.value) {
+    errors.consent = true
     isValid = false
   }
 
@@ -87,6 +95,7 @@ async function submitForm() {
     success.value = true
     form.name = ''
     resetPhone()
+    consent.value = false
     honeypot.value = ''
     formLoadTime.value = Date.now()
     openThankModal();
@@ -192,12 +201,12 @@ onMounted(() => {
           <span v-else>Отправить заявку</span>
         </button>
         <p v-if="serverError" class="field-error field-error--server">{{ serverError }}</p>
-        <p class="form__text">
-          Нажимая кнопку “Отправить заявку”, вы соглашаетесь с
-          <button class="form__link" type="button" @click="openPolicyModal">
-            политикой конфиденциальности
-          </button>
-        </p>
+        <UiConsentCheckbox
+          v-model="consent"
+          class="form__consent"
+          :error="errors.consent"
+          @change="errors.consent = !consent"
+        />
         <!-- Общая ошибка от сервера -->
         <input 
           type="text" 
@@ -447,28 +456,8 @@ onMounted(() => {
     }
   }
 
-  &__text {
+  &__consent {
     font-size: 2.6cqi;
-    font-weight: 400;
-    line-height: 1.6em;
-    text-align: center;
-    color: var(--color-text-secondary);
-  }
-
-  &__link {
-    display: inline;
-    padding: 0;
-    border: none;
-    background: none;
-    font: inherit;
-    cursor: pointer;
-    text-decoration: underline;
-    color: var(--color-accent-primary);
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: var(--color-text-primary);
-    }
   }
 
   @media (width < 768px) {
@@ -481,7 +470,7 @@ onMounted(() => {
       }
     }
 
-    &__text {
+    &__consent {
       font-size: 16px;
     }
 

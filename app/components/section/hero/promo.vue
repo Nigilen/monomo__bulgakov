@@ -10,7 +10,7 @@ const { open: openPromoModal } = usePromoModal()
 
       <h2 class="promo__title">
         <span class="promo__title-accent">Акция</span>
-        <span>до 31 октября</span>
+        <!-- <span>до </span> -->
       </h2>
 
       <div class="promo__content">

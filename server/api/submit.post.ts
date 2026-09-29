@@ -153,7 +153,7 @@ export default defineEventHandler(async (event) => {
 
   const rateLimitResult = checkRateLimit(ip)
   if (!rateLimitResult.allowed) {
-    const retryAfterMinutes = Math.max(1, Math.ceil(rateLimitResult.retryAfterMs / 60000))
+    const retryAfterMinutes = Math.max(1, Math.ceil(rateLimitResult.retryAfterMs / (60 * 1000)))
     throw createError({
       statusCode: 429,
       message: `Лимит отправок исчерпан. Повторить можно через ${retryAfterMinutes} мин.`

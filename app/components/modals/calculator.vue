@@ -10,13 +10,13 @@ const area = ref(45)
 const areaProgress = computed(() => (area.value - areaMin) / (areaMax - areaMin))
 const housingType = ref<string | null>(null)
 
-const { open: openPolicyModal } = usePolicyModal()
 const { open: openThankModal } = useThankModal()
 const { display: phoneDisplay, onPhoneInput, onPhoneKeydown, digits: phoneDigits, reset: resetPhone } = useRuPhoneField()
 
 const name = ref('')
 const message = ref('')
-const errors = reactive({ housing: false, name: false, phone: false, message: false })
+const consent = ref(false)
+const errors = reactive({ housing: false, name: false, phone: false, message: false, consent: false })
 const submitAttempt = ref(false)
 const loading = ref(false)
 const success = ref(false)
@@ -29,6 +29,7 @@ function syncErrors() {
   errors.name = !isValidName(name.value)
   errors.phone = !isCompleteRuPhone(phoneDigits())
   errors.message = !isValidLeadMessage(message.value)
+  errors.consent = !consent.value
 }
 
 function onPhoneInputWrapped(e: Event) {
@@ -54,7 +55,7 @@ async function onSubmit(e: Event) {
   e.preventDefault()
   submitAttempt.value = true
   syncErrors()
-  if (errors.housing || errors.name || errors.phone || errors.message) {
+  if (errors.housing || errors.name || errors.phone || errors.message || errors.consent) {
     return
   }
   loading.value = true
@@ -84,6 +85,7 @@ async function onSubmit(e: Event) {
     name.value = ''
     resetPhone()
     message.value = ''
+    consent.value = false
     honeypot.value = ''
     submitAttempt.value = false
     formLoadTime.value = Date.now()
@@ -206,6 +208,7 @@ async function onSubmit(e: Event) {
           <span v-else-if="success">Готово</span>
           <span v-else>Отправить заявку</span>
         </button>
+        <UiConsentCheckbox v-model="consent" :error="errors.consent" @change="onDirtySync" />
         <input
           v-model="honeypot"
           type="text"
@@ -216,12 +219,6 @@ async function onSubmit(e: Event) {
         >
         <p v-if="serverError" class="field-error field-error--server">{{ serverError }}</p>
       </form>
-
-      <footer class="footer">
-        <p class="footer__text">Нажимая кнопку “Отправить”, вы соглашаетесь
-          с <button class="footer__link" type="button" @click="openPolicyModal">политикой конфиденциальности</button>
-        </p>
-      </footer>
     </div>
   </UiModal>
 </template>
@@ -475,7 +472,6 @@ async function onSubmit(e: Event) {
     inline-size: 100%;
     block-size: 22cqi;
     font-size: clamp(16px, 4.2cqi, 20px);
-    margin-block-end: clamp(16px, 4.2cqi, 20px);
     font-weight: 600;
     transition-property: transform, box-shadow, filter;
     transition-duration: 460ms;
@@ -560,7 +556,6 @@ async function onSubmit(e: Event) {
 
     &__button {
       font-size: 16px;
-      margin-block-end: 32px;
       block-size: 75px;
       border-radius: 16px;
     }
@@ -638,29 +633,6 @@ async function onSubmit(e: Event) {
 
   &__input {
     display: none;
-  }
-}
-
-
-.footer {
-  text-align: center;
-  font-size: 3cqi;
-  color: var(--color-text-secondary);
-
-  &__link {
-    display: inline;
-    padding: 0;
-    border: none;
-    background: none;
-    font: inherit;
-    cursor: pointer;
-    text-decoration: underline;
-    color: var(--color-accent-primary);
-    transition: color 0.3s ease-in-out;
-
-    &:hover {
-      color: var(--color-text-primary);
-    }
   }
 }
 </style>
